@@ -13,9 +13,13 @@ from fastapi.staticfiles import StaticFiles
 from pydantic import BaseModel
 import asyncio
 import json
+import os
 import time
 import uuid
 from pathlib import Path
+
+# Resolve all paths relative to this file's location
+BASE_DIR = Path(__file__).parent
 
 from core.policy_engine import PolicyEngine
 from core.executor import Executor, PolicyViolationError
@@ -35,9 +39,12 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
-# Serve static files
-static_dir = Path("web/static")
-static_dir.mkdir(parents=True, exist_ok=True)
+# Ensure required directories exist on startup
+(BASE_DIR / "web" / "static").mkdir(parents=True, exist_ok=True)
+(BASE_DIR / "logs").mkdir(parents=True, exist_ok=True)
+(BASE_DIR / "output").mkdir(parents=True, exist_ok=True)
+(BASE_DIR / "memory" / "cases").mkdir(parents=True, exist_ok=True)
+
 
 
 # ──────────────────────────────────────────────
