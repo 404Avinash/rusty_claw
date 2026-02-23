@@ -933,6 +933,226 @@
       font-style: italic
     }
 
+    /* ─── Client advice section ─── */
+    .client-advice-box {
+      margin-top: 8px;
+      padding: 11px 13px;
+      border-radius: 8px;
+      background: rgba(99, 179, 237, .05);
+      border: 1px solid rgba(99, 179, 237, .15);
+    }
+
+    .client-advice-box.blocked {
+      background: rgba(252, 129, 129, .04);
+      border-color: rgba(252, 129, 129, .15);
+    }
+
+    .ca-section-lbl {
+      font-size: 10px;
+      font-weight: 700;
+      letter-spacing: .08em;
+      text-transform: uppercase;
+      margin-bottom: 5px;
+      display: flex;
+      align-items: center;
+      gap: 5px;
+    }
+
+    .ca-section-lbl.ok {
+      color: var(--cyan);
+    }
+
+    .ca-section-lbl.no {
+      color: var(--red);
+    }
+
+    .ca-advice-text {
+      font-size: 13px;
+      color: var(--t1);
+      line-height: 1.65;
+      margin-bottom: 8px;
+    }
+
+    .ca-next-step {
+      display: flex;
+      align-items: flex-start;
+      gap: 8px;
+      padding: 8px 10px;
+      background: rgba(246, 224, 94, .06);
+      border: 1px solid rgba(246, 224, 94, .15);
+      border-radius: 6px;
+      font-size: 12px;
+      color: var(--t2);
+      line-height: 1.5;
+    }
+
+    .ca-next-icon {
+      flex-shrink: 0;
+      font-size: 14px;
+      margin-top: 1px;
+    }
+
+    /* ─── Action Plan Summary Card ─── */
+    .summary-card {
+      border-radius: var(--r);
+      overflow: hidden;
+      animation: slidein .5s ease-out;
+      border: 1px solid rgba(99, 179, 237, .25);
+    }
+
+    .summary-hdr {
+      padding: 16px 18px;
+      background: linear-gradient(135deg, rgba(99, 179, 237, .1), rgba(183, 148, 244, .08));
+      border-bottom: 1px solid rgba(99, 179, 237, .15);
+      display: flex;
+      align-items: center;
+      gap: 14px;
+    }
+
+    .summary-icon {
+      font-size: 32px;
+      flex-shrink: 0;
+    }
+
+    .summary-title {
+      font-size: 16px;
+      font-weight: 800;
+      background: linear-gradient(90deg, var(--cyan), var(--purple));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+
+    .summary-subtitle {
+      font-size: 12px;
+      color: var(--t3);
+      margin-top: 2px;
+    }
+
+    .summary-body {
+      padding: 16px 18px;
+      background: var(--bg-2);
+    }
+
+    .summary-section {
+      margin-bottom: 16px;
+    }
+
+    .summary-section:last-child {
+      margin-bottom: 0;
+    }
+
+    .summary-sec-lbl {
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: .08em;
+      text-transform: uppercase;
+      color: var(--t3);
+      margin-bottom: 9px;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .finding-item {
+      display: flex;
+      align-items: flex-start;
+      gap: 8px;
+      padding: 7px 10px;
+      background: var(--green-dim);
+      border: 1px solid rgba(104, 211, 145, .15);
+      border-radius: 7px;
+      font-size: 13px;
+      color: var(--t1);
+      line-height: 1.5;
+      margin-bottom: 5px;
+    }
+
+    .finding-item-icon {
+      flex-shrink: 0;
+      color: var(--green);
+      font-size: 14px;
+      margin-top: 1px;
+    }
+
+    .step-item {
+      display: flex;
+      align-items: flex-start;
+      gap: 12px;
+      padding: 10px 12px;
+      background: var(--bg-3);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      margin-bottom: 6px;
+      transition: border-color .2s;
+    }
+
+    .step-item:hover {
+      border-color: var(--border-hi);
+    }
+
+    .step-num {
+      width: 22px;
+      height: 22px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, var(--cyan), var(--purple));
+      color: #050810;
+      font-size: 11px;
+      font-weight: 800;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+      margin-top: 1px;
+    }
+
+    .step-text {
+      font-size: 13px;
+      color: var(--t1);
+      line-height: 1.55;
+    }
+
+    .summary-stats {
+      display: flex;
+      gap: 12px;
+      margin-top: 4px;
+    }
+
+    .sum-stat {
+      flex: 1;
+      padding: 10px;
+      border-radius: 8px;
+      text-align: center;
+    }
+
+    .sum-stat.ok {
+      background: var(--green-dim);
+      border: 1px solid rgba(104, 211, 145, .2);
+    }
+
+    .sum-stat.no {
+      background: var(--red-dim);
+      border: 1px solid rgba(252, 129, 129, .2);
+    }
+
+    .sum-stat-n {
+      font-size: 22px;
+      font-weight: 800;
+    }
+
+    .sum-stat.ok .sum-stat-n {
+      color: var(--green);
+    }
+
+    .sum-stat.no .sum-stat-n {
+      color: var(--red);
+    }
+
+    .sum-stat-l {
+      font-size: 10px;
+      color: var(--t3);
+      margin-top: 2px;
+    }
+
     .think-card {
       display: flex;
       align-items: center;
@@ -1632,24 +1852,31 @@
       updateStats();
 
       const del = data.delegated_by ? `<span class="del-tag">via ${data.delegated_by}</span>` : '';
+      const advice = data.client_advice || '';
+      const nextStep = data.next_step || '';
+      const readable = data.readable_result || '';
+
       const d = document.createElement('div');
       d.className = 'decision-card';
       d.innerHTML = `
     <div class="dc-header">
       <div class="dc-icon">${actionIcon(data.action)}</div>
-      <div class="dc-action">${data.action}</div>
+      <div class="dc-action">${data.action.replace(/_/g, '_\u200b')}</div>
       <div class="dc-agent">${del} ${data.agent}</div>
     </div>
     <div class="dc-body">
-      <div class="dc-row"><span class="dc-key">Target</span><span class="dc-val">${data.target || '—'}</span></div>
-      <div class="dc-row"><span class="dc-key">Content</span><span class="dc-val">${(data.content || '').slice(0, 90)}${(data.content || '').length > 90 ? '...' : ''}</span></div>
       <div class="verdict ${ok ? 'ok' : 'no'}">
         <div class="verdict-top">
           <span class="verdict-badge ${ok ? 'ok' : 'no'}">${ok ? 'ALLOWED' : data.enforcement_type || 'BLOCKED'}</span>
+          <span style="font-size:11px;color:var(${ok ? '--green' : '--red'});font-weight:600">${ok ? 'Action executed' : 'Action blocked by policy'}</span>
         </div>
-        <div class="verdict-reason">${data.reason || ''}</div>
         ${data.rule_violated ? `<div class="verdict-rule">${data.rule_violated}</div>` : ''}
-        ${data.result && ok ? `<div class="verdict-result">${data.result}</div>` : ''}
+        ${readable ? `<div class="verdict-result" style="font-size:12px;font-style:normal;color:var(--t2);margin-top:4px">${readable}</div>` : ''}
+      </div>
+      <div class="client-advice-box ${ok ? '' : 'blocked'}">
+        <div class="ca-section-lbl ${ok ? 'ok' : 'no'}">&#128100; What this means for you</div>
+        <div class="ca-advice-text">${advice}</div>
+        ${nextStep ? `<div class="ca-next-step"><span class="ca-next-icon">&#9654;</span><span><strong>Your next step:</strong> ${nextStep}</span></div>` : ''}
       </div>
     </div>`;
       $$('feed').appendChild(d); scrollFeed();
@@ -1671,17 +1898,66 @@
     }
 
     function addDoneCard(allowed, blocked) {
+      // kept for backward compat — use addSummaryCard for rich output
       const d = document.createElement('div');
       d.className = 'done-card';
       d.innerHTML = `<div style="font-size:44px">&#9878;</div>
     <div>
-      <div style="font-size:16px;font-weight:800;background:linear-gradient(90deg,var(--cyan),var(--purple));-webkit-background-clip:text;-webkit-text-fill-color:transparent">Demo Complete — ArmorIQ x OpenClaw</div>
-      <div style="font-size:12px;color:var(--t3);margin-bottom:12px">Policy enforcement demonstrated across 5 scenes. Full audit trail logged.</div>
+      <div style="font-size:16px;font-weight:800;background:linear-gradient(90deg,var(--cyan),var(--purple));-webkit-background-clip:text;-webkit-text-fill-color:transparent">Analysis Complete — ArmorIQ x OpenClaw</div>
+      <div style="font-size:12px;color:var(--t3);margin-bottom:12px">Scroll up to read your full action plan below.</div>
       <div class="done-nums">
         <div class="done-stat ok"><div class="done-stat-n">${allowed}</div><div class="done-stat-l">ALLOWED</div></div>
         <div class="done-stat no"><div class="done-stat-n">${blocked}</div><div class="done-stat-l">BLOCKED</div></div>
       </div>
     </div>`;
+      $$('feed').appendChild(d); scrollFeed();
+    }
+
+    function addSummaryCard(data) {
+      clearWelcome();
+      const findings = data.findings || [];
+      const steps = data.next_steps || [];
+      const blocked = data.blocked || 0;
+      const allowed = data.allowed || 0;
+
+      const d = document.createElement('div');
+      d.className = 'summary-card';
+      d.innerHTML = `
+        <div class="summary-hdr">
+          <div class="summary-icon">&#128203;</div>
+          <div>
+            <div class="summary-title">Your Legal Action Plan</div>
+            <div class="summary-subtitle">Generated by AI Legal Agent &mdash; ${new Date().toLocaleDateString('en-IN', { day: 'numeric', month: 'long', year: 'numeric' })}</div>
+          </div>
+          <div style="margin-left:auto">
+            <div class="summary-stats">
+              <div class="sum-stat ok"><div class="sum-stat-n">${allowed}</div><div class="sum-stat-l">Actions Taken</div></div>
+              <div class="sum-stat no"><div class="sum-stat-n">${blocked}</div><div class="sum-stat-l">Requests Blocked</div></div>
+            </div>
+          </div>
+        </div>
+        <div class="summary-body">
+          ${findings.length ? `
+          <div class="summary-section">
+            <div class="summary-sec-lbl">&#9989; What your lawyer has done</div>
+            ${findings.map(f => `<div class="finding-item"><span class="finding-item-icon">&#9679;</span><span>${f}</span></div>`).join('')}
+          </div>` : ''}
+          ${steps.length ? `
+          <div class="summary-section">
+            <div class="summary-sec-lbl">&#9654; What YOU should do next</div>
+            ${steps.map((s, i) => `<div class="step-item"><div class="step-num">${i + 1}</div><div class="step-text">${s}</div></div>`).join('')}
+          </div>` : ''}
+          ${blocked > 0 ? `
+          <div class="summary-section">
+            <div class="summary-sec-lbl">&#128683; Why some requests were blocked</div>
+            <div style="font-size:13px;color:var(--t2);line-height:1.65;padding:10px 12px;background:var(--red-dim);border:1px solid rgba(252,129,129,.15);border-radius:8px">
+              The AI legal agent is <strong>constitutionally incapable</strong> of assisting with requests that
+              violate professional ethics, bar council rules, or Indian law. This is not a limitation &mdash;
+              it is a <strong>safety feature</strong> enforced by the ArmorIQ policy engine at every step.
+              Your lawyer will guide you toward legal and ethical alternatives.
+            </div>
+          </div>` : ''}
+        </div>`;
       $$('feed').appendChild(d); scrollFeed();
     }
 
@@ -1775,7 +2051,7 @@
       $$('auditCnt').textContent = '0'; updateStats(); setProgress(5);
       caseRegistered = true;
 
-      const progMap = { 1: 12, 2: 35, 3: 58, 4: 74, 5: 90 };
+      const progMap = { 1: 10, 2: 30, 3: 55, 4: 70, 5: 85, 6: 96 };
       let lastTc = null;
       const base = activeCase;
       const c = CASES[base];
@@ -1790,6 +2066,12 @@
           case 'client_says': addClientCard(data.text); break;
           case 'thinking': setThinking(true, data.text); lastTc = addThinkCard(data.text); break;
           case 'decision': setThinking(false); addDecisionCard(data); break;
+          case 'summary':
+            setThinking(false); setProgress(100);
+            addSummaryCard(data);
+            es.close();
+            btn.disabled = false; btn.innerHTML = '&#9654;&nbsp; Play Again';
+            break;
           case 'done':
             setProgress(100); setThinking(false);
             addDoneCard(data.allowed, data.blocked);
@@ -1800,6 +2082,7 @@
       };
       es.onerror = () => { es.close(); btn.disabled = false; btn.innerHTML = '&#9654;&nbsp; Play Demo'; setThinking(false); };
     }
+
   </script>
 </body>
 
