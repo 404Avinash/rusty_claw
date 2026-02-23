@@ -6,7 +6,30 @@ An autonomous legal AI agent demonstrating **intent-aware execution** with **det
 
 ---
 
-## 🚀 Quick Start
+## 🌐 Live Demo
+
+**[![Live on Render](https://img.shields.io/badge/Live%20Demo-ai--lawyer--armoriq.onrender.com-brightgreen?style=for-the-badge&logo=render)](https://ai-lawyer-armoriq.onrender.com/)**
+
+> 🔗 **[https://ai-lawyer-armoriq.onrender.com/](https://ai-lawyer-armoriq.onrender.com/)**
+
+Click **"Play Full Demo"** to watch the ArmorIQ policy engine enforce ethical boundaries in real time across 6 scenes.
+
+---
+
+## 🖥️ Web UI Features
+
+| Feature | Description |
+|---------|-------------|
+| 4 Practice Areas | Landlord/Tenant · Employment · Contract · Criminal |
+| Live Activity Feed | Real-time intent proposals via Server-Sent Events (SSE) |
+| Policy Engine Enforcement | Every action validated live — ALLOWED or BLOCKED |
+| Client Advice Panel | Plain-English "What this means for you" on every decision |
+| Legal Action Plan | Scene 6: Numbered next steps generated for the client |
+| Audit Log | Full decision trace in the right sidebar |
+
+---
+
+## 🚀 Quick Start (Local)
 
 ```bash
 pip install rich
