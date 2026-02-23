@@ -1,63 +1,59 @@
 """
-lead_lawyer.py — ArmorIQ x OpenClaw Hackathon
-The main reasoning agent. Powered by LLM (or simulation mode).
-
-Key design principle:
-    The lead lawyer NEVER executes tools directly.
-    It PROPOSES actions as IntentObjects.
-    The Executor validates each one via the PolicyEngine before running.
-
-This enforces clear SEPARATION between REASONING and EXECUTION.
+lead_lawyer.py — Lead Lawyer Agent
+Multi-practice-area AI legal agent. Proposes IntentObjects for PolicyEngine validation.
+Covers: Landlord/Tenant, Employment, Contract Dispute, Criminal Consultation.
 """
 
-import os
-import time
-from core.intent_model import IntentObject
-from core.policy_engine import PolicyEngine
+from core.intent_model import IntentObject, PolicyDecision
 from core.executor import Executor, PolicyViolationError
 from memory.case_store import CaseStore
+import os
 
-
-# LLM Integration (optional — simulation mode works without API key)
-OPENAI_API_KEY = os.getenv("OPENAI_API_KEY", None)
-GEMINI_API_KEY = os.getenv("GEMINI_API_KEY", None)
+ARMORIQ_API_KEY = os.getenv("ARMORIQ_API_KEY")
 
 
 class LeadLawyer:
-    """
-    The principal legal agent.
-    Handles: case intake → analysis → strategy → action proposals → execution.
-    """
-
     ROLE = "lead_lawyer"
 
     def __init__(self, executor: Executor, case_store: CaseStore):
         self.executor = executor
         self.case_store = case_store
-        self.use_llm = bool(OPENAI_API_KEY or GEMINI_API_KEY)
+
+    # ──────────────────────────────────────────────
+    # Case Intake
+    # ──────────────────────────────────────────────
 
     def intake_case(self, client_statement: str, case_id: str) -> dict:
-        """
-        Step 1: Receive and store the client's case description.
-        """
         case_data = {
             "case_id": case_id,
             "client_statement": client_statement,
-            "status": "intake",
+            "practice_area": self._detect_practice_area(client_statement),
+            "status": "active",
         }
         self.case_store.save(case_id, case_data)
         return case_data
 
+    def _detect_practice_area(self, text: str) -> str:
+        text = text.lower()
+        if any(kw in text for kw in ["landlord", "tenant", "rent", "evict", "apartment", "lease", "property"]):
+            return "landlord_tenant"
+        if any(kw in text for kw in ["employer", "employee", "fired", "termination", "salary", "wage", "job", "workplace", "hr"]):
+            return "employment"
+        if any(kw in text for kw in ["contract", "breach", "vendor", "agreement", "delivery", "payment terms", "supplier"]):
+            return "contract"
+        if any(kw in text for kw in ["bail", "arrest", "accused", "fir", "crime", "police", "prison", "charge", "fraud", "murder"]):
+            return "criminal_consultation"
+        return "general"
+
+    # ──────────────────────────────────────────────
+    # Main Agent Loop
+    # ──────────────────────────────────────────────
+
     def analyze_and_act(self, case_id: str, client_instruction: str) -> list[dict]:
-        """
-        Main reasoning loop.
-        1. Understand what the client wants
-        2. Generate a list of proposed IntentObjects (the "plan")
-        3. Submit each to the Executor
-        4. Collect allowed/blocked results
-        """
         results = []
-        proposed_intents = self._generate_plan(case_id, client_instruction)
+        case_data = self.case_store.load(case_id) or {}
+        practice_area = case_data.get("practice_area", self._detect_practice_area(client_instruction))
+        proposed_intents = self._generate_plan(case_id, client_instruction, practice_area)
 
         for intent in proposed_intents:
             try:
@@ -65,9 +61,10 @@ class LeadLawyer:
                 results.append({
                     "intent": intent,
                     "decision": "ALLOWED",
-                    "enforcement_type": outcome["enforcement_type"],
-                    "reason": outcome["reason"],
+                    "enforcement_type": "ALLOWED",
+                    "reason": outcome.get("reason", "Action within authorized scope."),
                     "result": outcome.get("result", ""),
+                    "rule_violated": None,
                 })
             except PolicyViolationError as e:
                 results.append({
@@ -75,135 +72,140 @@ class LeadLawyer:
                     "decision": "BLOCKED",
                     "enforcement_type": e.decision.enforcement_type,
                     "reason": e.decision.reason,
+                    "result": "",
                     "rule_violated": e.decision.rule_violated,
                 })
-
         return results
 
-    def spawn_research_agent(self, case_id: str) -> "ResearchAgent":
-        """
-        Delegation: spawns a research sub-agent with a constrained policy scope.
-        The research agent inherits its permissions from the delegation_rules
-        in legal_rules.json — NOT a copy of the lead lawyer's full permissions.
-        """
+    # ──────────────────────────────────────────────
+    # Multi-area Plan Generator (Simulated LLM)
+    # ──────────────────────────────────────────────
+
+    def _generate_plan(self, case_id: str, instruction: str, practice_area: str) -> list[IntentObject]:
+        instr_lower = instruction.lower()
+
+        # ── BLOCKED scenarios (detected universally) ──
+        if any(k in instr_lower for k in ["never received", "didn't get it", "say we", "lie", "false statement", "deny receiving"]):
+            return [self._intent("suborning_perjury", "court_record", 
+                "Coach client to deny receiving legal notice — fabrication of false statement", case_id)]
+
+        if any(k in instr_lower for k in ["contact them directly", "message opposing", "reach out to landlord",
+                                           "call the employer", "call opposing", "contact the other party"]):
+            return [self._intent("contact_opposing_party_directly", "opposing_party",
+                "Directly contacting represented opposing party", case_id)]
+
+        if any(k in instr_lower for k in ["destroy", "delete document", "shred", "burn", "get rid of evidence"]):
+            return [self._intent("advise_evidence_destruction", "evidence_file",
+                "Client asked to destroy or delete evidence", case_id)]
+
+        if any(k in instr_lower for k in ["bribe", "pay the judge", "pay off", "corrupt"]):
+            return [self._intent("bribe_court_official", "court_official",
+                "Client suggested bribing a court official", case_id)]
+
+        if any(k in instr_lower for k in ["threaten witness", "scare witness", "silence them"]):
+            return [self._intent("threaten_witness", "witness",
+                "Client requested threatening a witness", case_id)]
+
+        if any(k in instr_lower for k in ["fabricate", "make up evidence", "create fake", "forge"]):
+            return [self._intent("fabricate_evidence", "case_record",
+                "Client requested fabrication of evidence", case_id)]
+
+        # ── Practice-area-aware ALLOWED plans ──
+        if practice_area == "landlord_tenant":
+            return self._plan_landlord(case_id, instr_lower)
+        elif practice_area == "employment":
+            return self._plan_employment(case_id, instr_lower)
+        elif practice_area == "contract":
+            return self._plan_contract(case_id, instr_lower)
+        elif practice_area == "criminal_consultation":
+            return self._plan_criminal(case_id, instr_lower)
+        else:
+            return self._plan_general(case_id, instr_lower)
+
+    # ── Landlord / Tenant ──
+    def _plan_landlord(self, case_id: str, instr: str) -> list[IntentObject]:
+        return [
+            self._intent("summarize_case", "case_summary",
+                "Summarize landlord illegal entry dispute", case_id),
+            self._intent("search_case_law", "legal_precedents",
+                "Search precedents: landlord unauthorized entry, tenant rights, Rent Control Act", case_id),
+            self._intent("draft_document", f"output/legal_notice_{case_id}.txt",
+                "Draft legal notice to landlord — illegal entry violation under TPA and Rent Control Act", case_id),
+            self._intent("advise_client", "client",
+                "Advise client to document all incidents with timestamps, photos, and witnesses. File police complaint under IPC 441.", case_id),
+        ]
+
+    # ── Employment ──
+    def _plan_employment(self, case_id: str, instr: str) -> list[IntentObject]:
+        return [
+            self._intent("summarize_case", "case_summary",
+                "Summarize wrongful termination / unpaid wages dispute", case_id),
+            self._intent("search_case_law", "labour_law_db",
+                "Search: wrongful termination Industrial Disputes Act, unpaid wages claim, Labour Court jurisdiction", case_id),
+            self._intent("calculate_damages", "damages_report",
+                "Calculate claim amount: 3 months unpaid salary + severance + compensation under ID Act", case_id),
+            self._intent("draft_document", f"output/demand_notice_{case_id}.txt",
+                "Draft demand notice to employer for unpaid wages and reinstatement", case_id),
+            self._intent("advise_client", "client",
+                "Advise client to preserve all employment records, salary slips, and termination email.", case_id),
+        ]
+
+    # ── Contract Dispute ──
+    def _plan_contract(self, case_id: str, instr: str) -> list[IntentObject]:
+        return [
+            self._intent("analyze_contract", "contract_docs",
+                "Analyze contract terms for breach clauses, liability caps, and dispute resolution mechanism", case_id),
+            self._intent("search_case_law", "contract_law_db",
+                "Search: breach of contract Indian Contract Act 1872, specific performance, damages assessment", case_id),
+            self._intent("calculate_damages", "damages_report",
+                "Calculate financial losses from defective software delivery and contract breach", case_id),
+            self._intent("draft_document", f"output/legal_notice_{case_id}.txt",
+                "Draft legal notice invoking breach of contract, demanding compensation within 15 days", case_id),
+            self._intent("prepare_strategy", "litigation_strategy",
+                "Prepare litigation strategy: negotiation first, then Consumer Court / civil suit", case_id),
+        ]
+
+    # ── Criminal Consultation ──
+    def _plan_criminal(self, case_id: str, instr: str) -> list[IntentObject]:
+        return [
+            self._intent("review_evidence", "evidence_file",
+                "Review all available evidence: FIR, arrest memo, alleged documents", case_id),
+            self._intent("search_case_law", "criminal_law_db",
+                "Search: bail jurisprudence CrPC Section 437/439, financial fraud IPC 420, wrongful arrest", case_id),
+            self._intent("draft_bail_application", f"output/bail_application_{case_id}.txt",
+                "Draft urgent bail application under CrPC Section 437 citing clean record and cooperation", case_id),
+            self._intent("prepare_strategy", "defence_strategy",
+                "Prepare defence strategy: challenge FIR validity, establish alibi, request document disclosure", case_id),
+            self._intent("advise_client", "client",
+                "Advise client to exercise right to silence, cooperate procedurally but not answer questions without counsel present.", case_id),
+        ]
+
+    # ── General ──
+    def _plan_general(self, case_id: str, instr: str) -> list[IntentObject]:
+        return [
+            self._intent("summarize_case", "case_summary", "Summarize the legal matter", case_id),
+            self._intent("search_case_law", "legal_db", "Research applicable laws and precedents", case_id),
+            self._intent("advise_client", "client", "Provide preliminary legal advisory", case_id),
+        ]
+
+    # ──────────────────────────────────────────────
+    # Helpers
+    # ──────────────────────────────────────────────
+
+    def _intent(self, action: str, target: str, content: str, case_id: str) -> IntentObject:
+        return IntentObject(
+            action=action,
+            initiated_by=self.ROLE,
+            target=target,
+            content=content,
+            case_id=case_id,
+        )
+
+    def spawn_research_agent(self, case_id: str):
         from agents.research_agent import ResearchAgent
         return ResearchAgent(
             executor=self.executor,
             case_store=self.case_store,
             delegated_by=self.ROLE,
-            case_id=None,
+            case_id=case_id,
         )
-
-    def _generate_plan(self, case_id: str, client_instruction: str) -> list[IntentObject]:
-        """
-        Translates a client instruction into a list of proposed IntentObjects.
-        In LLM mode: calls GPT/Gemini with a structured prompt.
-        In simulation mode: uses deterministic plan templates.
-        """
-        if self.use_llm:
-            return self._llm_generate_plan(case_id, client_instruction)
-        return self._simulate_plan(case_id, client_instruction)
-
-    def _simulate_plan(self, case_id: str, instruction: str) -> list[IntentObject]:
-        """
-        Simulation mode: deterministic plans for demo scenarios.
-        Maps natural language instructions to known ethical/unethical action sequences.
-        """
-        instruction_lower = instruction.lower()
-
-        # Scenario 1: Legitimate landlord dispute
-        if any(k in instruction_lower for k in ["landlord", "apartment", "illegal entry", "eviction"]):
-            return [
-                IntentObject(
-                    action="summarize_case",
-                    initiated_by=self.ROLE,
-                    target="case_summary",
-                    content="Summarize the landlord illegal entry case",
-                    case_id=case_id,
-                ),
-                IntentObject(
-                    action="search_case_law",
-                    initiated_by=self.ROLE,
-                    target="legal_precedents",
-                    content="Search for precedents on illegal landlord entry, tenant rights",
-                    case_id=case_id,
-                ),
-                IntentObject(
-                    action="draft_document",
-                    initiated_by=self.ROLE,
-                    target=f"output/legal_notice_{case_id}.txt",
-                    content="Draft a legal notice to the landlord for illegal entry under Rent Control Act",
-                    case_id=case_id,
-                ),
-                IntentObject(
-                    action="advise_client",
-                    initiated_by=self.ROLE,
-                    target="client",
-                    content="Advise client to document all instances of illegal entry with timestamps and witnesses",
-                    case_id=case_id,
-                ),
-            ]
-
-        # Scenario 2: Client wants to lie (triggers perjury block)
-        if any(k in instruction_lower for k in ["never received", "say we didn't", "tell them we never", "deny receiving"]):
-            return [
-                IntentObject(
-                    action="suborning_perjury",
-                    initiated_by=self.ROLE,
-                    target="opposing_counsel",
-                    content=f"Client instruction: {instruction}",
-                    case_id=case_id,
-                ),
-            ]
-
-        # Scenario 3: Client wants direct contact with opposing party
-        if any(k in instruction_lower for k in ["contact them", "call them", "message opposing", "reach out to landlord directly"]):
-            return [
-                IntentObject(
-                    action="contact_opposing_party_directly",
-                    initiated_by=self.ROLE,
-                    target="opposing_party@email.com",
-                    content=f"Client instruction: {instruction}",
-                    case_id=case_id,
-                ),
-            ]
-
-        # Scenario 4: Evidence destruction
-        if any(k in instruction_lower for k in ["delete", "destroy evidence", "get rid of", "shred"]):
-            return [
-                IntentObject(
-                    action="advise_evidence_destruction",
-                    initiated_by=self.ROLE,
-                    target="client",
-                    content=f"Client instruction: {instruction}",
-                    case_id=case_id,
-                ),
-            ]
-
-        # Default: general strategy + advice
-        return [
-            IntentObject(
-                action="summarize_case",
-                initiated_by=self.ROLE,
-                target="case_summary",
-                content="Summarize the client's situation",
-                case_id=case_id,
-            ),
-            IntentObject(
-                action="advise_client",
-                initiated_by=self.ROLE,
-                target="client",
-                content=f"Provide legal advice based on: {instruction}",
-                case_id=case_id,
-            ),
-        ]
-
-    def _llm_generate_plan(self, case_id: str, instruction: str) -> list[IntentObject]:
-        """
-        LLM-powered plan generation. Calls OpenAI or Gemini.
-        The LLM outputs a structured JSON list of proposed actions.
-        We parse this into IntentObjects.
-        """
-        # This would call OpenAI/Gemini in production
-        # Falls back to simulation for the hackathon
-        return self._simulate_plan(case_id, instruction)

@@ -1,8 +1,13 @@
 {
-  "version": "1.0",
+  "version": "2.0",
   "jurisdiction": "General / India",
-  "description": "Legal AI Agent Policy Rulebook — enforced at runtime by ArmorIQ PolicyEngine",
-
+  "description": "Legal AI Agent Policy Rulebook — multi-practice-area, enforced at runtime by ArmorIQ PolicyEngine",
+  "practice_areas": [
+    "landlord_tenant",
+    "employment",
+    "contract_dispute",
+    "criminal_consultation"
+  ],
   "lead_lawyer": {
     "role": "lead_lawyer",
     "allowed_actions": [
@@ -12,7 +17,13 @@
       "summarize_case",
       "read_case_files",
       "file_motion",
-      "prepare_strategy"
+      "prepare_strategy",
+      "research_precedents",
+      "analyze_contract",
+      "calculate_damages",
+      "draft_bail_application",
+      "review_evidence",
+      "send_legal_notice"
     ],
     "blocked_actions": [
       "contact_opposing_party_directly",
@@ -22,50 +33,143 @@
       "suborning_perjury",
       "act_outside_jurisdiction",
       "file_frivolous_motion",
-      "threaten_witness"
+      "threaten_witness",
+      "bribe_court_official",
+      "conceal_relevant_facts",
+      "misrepresent_law",
+      "advise_illegal_activity"
     ]
   },
-
   "delegation_rules": {
     "research_agent": {
       "delegated_by": "lead_lawyer",
-      "description": "Read-only research sub-agent. Cannot communicate externally or draft anything.",
-      "allowed": [
+      "allowed_actions": [
         "search_case_law",
         "read_case_files",
-        "summarize_precedents"
+        "research_precedents",
+        "summarize_case"
       ],
-      "blocked": [
+      "blocked_actions": [
         "draft_document",
         "send_communication",
-        "contact_external",
+        "contact_opposing_party_directly",
         "advise_client",
-        "file_motion",
-        "write_file"
-      ]
+        "file_motion"
+      ],
+      "scope_description": "Read-only legal research. Cannot communicate externally or make legal decisions."
     }
   },
-
-  "ethical_constraints": {
-    "attorney_client_privilege": {
-      "description": "All client communications are privileged and cannot be shared externally",
-      "rule_ref": "Bar Council Rule 7"
+  "ethical_constraints": [
+    {
+      "id": "EC-001",
+      "rule": "attorney_client_privilege",
+      "description": "All client communications are strictly privileged and cannot be disclosed.",
+      "blocks": [
+        "share_privileged_info_externally"
+      ]
     },
-    "no_direct_opposing_contact": {
-      "description": "Lawyer may not contact opposing party who is represented by counsel",
-      "rule_ref": "Rule 4.2 — No Contact With Represented Person"
+    {
+      "id": "EC-002",
+      "rule": "no_direct_opposing_contact",
+      "legal_ref": "Bar Council of India Rule 4.2",
+      "description": "Lawyers must not communicate directly with the opposing party if they are represented.",
+      "blocks": [
+        "contact_opposing_party_directly"
+      ]
     },
-    "no_perjury": {
-      "description": "Agent cannot coach client to make false statements",
-      "rule_ref": "IPC Section 191 — Giving False Evidence"
+    {
+      "id": "EC-003",
+      "rule": "no_perjury",
+      "legal_ref": "IPC Section 191-193",
+      "description": "Suborning perjury — coaching a witness or client to lie — is a criminal offense.",
+      "blocks": [
+        "suborning_perjury"
+      ]
     },
-    "no_evidence_tampering": {
-      "description": "Agent cannot advise hiding, destroying or altering evidence",
-      "rule_ref": "IPC Section 201 — Causing Disappearance of Evidence"
+    {
+      "id": "EC-004",
+      "rule": "no_evidence_tampering",
+      "legal_ref": "IPC Section 201, 204",
+      "description": "Destruction, concealment, or fabrication of evidence is a criminal offense.",
+      "blocks": [
+        "advise_evidence_destruction",
+        "fabricate_evidence"
+      ]
     },
-    "no_frivolous_filings": {
-      "description": "Agent must assess merit before filing any motion",
-      "rule_ref": "CPC Order 7 Rule 11"
+    {
+      "id": "EC-005",
+      "rule": "no_court_corruption",
+      "legal_ref": "Prevention of Corruption Act, 1988",
+      "description": "Bribing any court official, judge, or government servant is strictly prohibited.",
+      "blocks": [
+        "bribe_court_official"
+      ]
+    },
+    {
+      "id": "EC-006",
+      "rule": "no_illegal_activity_advice",
+      "description": "The agent must never advise the client to take any illegal action.",
+      "blocks": [
+        "advise_illegal_activity"
+      ]
+    }
+  ],
+  "case_templates": {
+    "landlord_tenant": {
+      "label": "Landlord / Tenant Dispute",
+      "icon": "house",
+      "color": "cyan",
+      "example_statement": "My landlord is illegally entering my apartment without notice and threatening to evict me without cause.",
+      "example_instruction": "landlord illegal entry tenant rights",
+      "blocked_demo": "tell them we never received that notice, say we didn't get it",
+      "blocked_demo_label": "Perjury attempt",
+      "applicable_laws": [
+        "Rent Control Act",
+        "Transfer of Property Act 1882",
+        "IPC 441 (Criminal Trespass)"
+      ]
+    },
+    "employment": {
+      "label": "Employment / Labour Dispute",
+      "icon": "briefcase",
+      "color": "purple",
+      "example_statement": "My employer terminated me without cause after I raised concerns about wage theft. I haven't received my last 3 months salary.",
+      "example_instruction": "wrongful termination unpaid wages employment dispute",
+      "blocked_demo": "destroy the performance improvement plan documents so they can't use them against us",
+      "blocked_demo_label": "Evidence destruction attempt",
+      "applicable_laws": [
+        "Industrial Disputes Act 1947",
+        "Payment of Wages Act",
+        "Shops & Establishments Act"
+      ]
+    },
+    "contract": {
+      "label": "Contract Dispute",
+      "icon": "contract",
+      "color": "gold",
+      "example_statement": "A vendor delivered defective software that has caused us significant financial losses. They are refusing to compensate despite breach of contract.",
+      "example_instruction": "breach of contract software vendor defective delivery compensation",
+      "blocked_demo": "contact the other party's CEO directly and threaten to go public",
+      "blocked_demo_label": "Direct opposing contact attempt",
+      "applicable_laws": [
+        "Indian Contract Act 1872",
+        "Consumer Protection Act 2019",
+        "Specific Relief Act"
+      ]
+    },
+    "criminal_consultation": {
+      "label": "Criminal Defence Consultation",
+      "icon": "shield",
+      "color": "red",
+      "example_statement": "My client has been wrongly accused of financial fraud. They were arrested yesterday and we need an urgent bail application.",
+      "example_instruction": "bail application wrongful arrest financial fraud defence strategy",
+      "blocked_demo": "advise the client to bribe the investigating officer",
+      "blocked_demo_label": "Court corruption attempt",
+      "applicable_laws": [
+        "CrPC Section 437/439 (Bail)",
+        "IPC",
+        "Prevention of Corruption Act"
+      ]
     }
   }
 }
