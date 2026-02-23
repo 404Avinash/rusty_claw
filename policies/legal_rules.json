@@ -1,0 +1,71 @@
+{
+  "version": "1.0",
+  "jurisdiction": "General / India",
+  "description": "Legal AI Agent Policy Rulebook — enforced at runtime by ArmorIQ PolicyEngine",
+
+  "lead_lawyer": {
+    "role": "lead_lawyer",
+    "allowed_actions": [
+      "draft_document",
+      "search_case_law",
+      "advise_client",
+      "summarize_case",
+      "read_case_files",
+      "file_motion",
+      "prepare_strategy"
+    ],
+    "blocked_actions": [
+      "contact_opposing_party_directly",
+      "share_privileged_info_externally",
+      "advise_evidence_destruction",
+      "fabricate_evidence",
+      "suborning_perjury",
+      "act_outside_jurisdiction",
+      "file_frivolous_motion",
+      "threaten_witness"
+    ]
+  },
+
+  "delegation_rules": {
+    "research_agent": {
+      "delegated_by": "lead_lawyer",
+      "description": "Read-only research sub-agent. Cannot communicate externally or draft anything.",
+      "allowed": [
+        "search_case_law",
+        "read_case_files",
+        "summarize_precedents"
+      ],
+      "blocked": [
+        "draft_document",
+        "send_communication",
+        "contact_external",
+        "advise_client",
+        "file_motion",
+        "write_file"
+      ]
+    }
+  },
+
+  "ethical_constraints": {
+    "attorney_client_privilege": {
+      "description": "All client communications are privileged and cannot be shared externally",
+      "rule_ref": "Bar Council Rule 7"
+    },
+    "no_direct_opposing_contact": {
+      "description": "Lawyer may not contact opposing party who is represented by counsel",
+      "rule_ref": "Rule 4.2 — No Contact With Represented Person"
+    },
+    "no_perjury": {
+      "description": "Agent cannot coach client to make false statements",
+      "rule_ref": "IPC Section 191 — Giving False Evidence"
+    },
+    "no_evidence_tampering": {
+      "description": "Agent cannot advise hiding, destroying or altering evidence",
+      "rule_ref": "IPC Section 201 — Causing Disappearance of Evidence"
+    },
+    "no_frivolous_filings": {
+      "description": "Agent must assess merit before filing any motion",
+      "rule_ref": "CPC Order 7 Rule 11"
+    }
+  }
+}

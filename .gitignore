@@ -1,0 +1,6 @@
+logs/
+output/
+memory/cases/
+.env
+__pycache__/
+*.pyc
