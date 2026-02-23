@@ -1,0 +1,1074 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>AI Legal Agent — ArmorIQ x OpenClaw</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
+<style>
+/* ─── Reset & Base ─── */
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+:root {
+  --bg-0: #050810;
+  --bg-1: #0b0f1e;
+  --bg-2: #111827;
+  --bg-3: #1a2235;
+  --border: rgba(99,179,237,0.12);
+  --border-bright: rgba(99,179,237,0.3);
+  --cyan: #63b3ed;
+  --cyan-glow: rgba(99,179,237,0.15);
+  --gold: #f6e05e;
+  --gold-dim: rgba(246,224,94,0.12);
+  --green: #68d391;
+  --green-dim: rgba(104,211,145,0.12);
+  --red: #fc8181;
+  --red-dim: rgba(252,129,129,0.12);
+  --purple: #b794f4;
+  --text-1: #e2e8f0;
+  --text-2: #94a3b8;
+  --text-3: #475569;
+  --font: 'Inter', sans-serif;
+  --mono: 'JetBrains Mono', monospace;
+}
+html, body { height: 100%; overflow: hidden; }
+body {
+  background: var(--bg-0);
+  color: var(--text-1);
+  font-family: var(--font);
+  font-size: 14px;
+  display: flex;
+  flex-direction: column;
+}
+
+/* ─── Scrollbar ─── */
+::-webkit-scrollbar { width: 5px; }
+::-webkit-scrollbar-track { background: transparent; }
+::-webkit-scrollbar-thumb { background: var(--border-bright); border-radius: 3px; }
+
+/* ─── Header ─── */
+.header {
+  background: rgba(11,15,30,0.95);
+  border-bottom: 1px solid var(--border);
+  padding: 0 24px;
+  height: 56px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-shrink: 0;
+  backdrop-filter: blur(20px);
+  position: relative;
+  z-index: 10;
+}
+.header-brand {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+.brand-icon {
+  width: 32px; height: 32px;
+  background: linear-gradient(135deg, var(--cyan), var(--purple));
+  border-radius: 8px;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 16px;
+  box-shadow: 0 0 16px rgba(99,179,237,0.3);
+}
+.brand-name {
+  font-size: 15px;
+  font-weight: 600;
+  background: linear-gradient(90deg, var(--cyan), var(--purple));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+.brand-sub { font-size: 11px; color: var(--text-3); letter-spacing: 0.05em; }
+.header-status {
+  display: flex; align-items: center; gap: 8px;
+  font-size: 12px; color: var(--text-2);
+}
+.status-dot {
+  width: 8px; height: 8px; border-radius: 50%;
+  background: var(--green);
+  box-shadow: 0 0 8px var(--green);
+  animation: pulse-dot 2s ease-in-out infinite;
+}
+@keyframes pulse-dot {
+  0%, 100% { opacity: 1; transform: scale(1); }
+  50% { opacity: 0.5; transform: scale(0.8); }
+}
+.mode-badge {
+  padding: 3px 10px;
+  border-radius: 20px;
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.06em;
+  border: 1px solid var(--gold-dim);
+  color: var(--gold);
+  background: var(--gold-dim);
+}
+
+/* ─── Layout ─── */
+.layout {
+  display: grid;
+  grid-template-columns: 300px 1fr 320px;
+  height: calc(100vh - 56px);
+  overflow: hidden;
+}
+
+/* ─── Sidebar (Left) ─── */
+.sidebar {
+  background: var(--bg-1);
+  border-right: 1px solid var(--border);
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+.sidebar-section {
+  padding: 16px;
+  border-bottom: 1px solid var(--border);
+}
+.sidebar-label {
+  font-size: 10px;
+  font-weight: 600;
+  letter-spacing: 0.1em;
+  color: var(--text-3);
+  text-transform: uppercase;
+  margin-bottom: 12px;
+}
+.case-form { display: flex; flex-direction: column; gap: 10px; }
+textarea, input, select {
+  width: 100%;
+  background: var(--bg-2);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 10px 12px;
+  color: var(--text-1);
+  font-family: var(--font);
+  font-size: 13px;
+  outline: none;
+  transition: border-color 0.2s;
+  resize: none;
+}
+textarea:focus, input:focus {
+  border-color: var(--cyan);
+  box-shadow: 0 0 0 3px rgba(99,179,237,0.1);
+}
+textarea { height: 100px; }
+.case-id-row { display: flex; gap: 8px; align-items: center; }
+.case-id-row label { font-size: 11px; color: var(--text-3); white-space: nowrap; }
+.case-id-row input { flex: 1; }
+
+.btn {
+  padding: 10px 16px;
+  border-radius: 8px;
+  border: none;
+  font-family: var(--font);
+  font-size: 13px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s;
+  display: flex; align-items: center; justify-content: center; gap: 6px;
+}
+.btn-primary {
+  background: linear-gradient(135deg, #2b6cb0, #553c9a);
+  color: white;
+  box-shadow: 0 4px 12px rgba(43,108,176,0.3);
+}
+.btn-primary:hover { transform: translateY(-1px); box-shadow: 0 6px 16px rgba(43,108,176,0.4); }
+.btn-primary:active { transform: translateY(0); }
+.btn-danger {
+  background: linear-gradient(135deg, #c53030, #6b21a8);
+  color: white;
+  box-shadow: 0 4px 12px rgba(197,48,48,0.3);
+}
+.btn-demo {
+  background: linear-gradient(135deg, var(--cyan), var(--purple));
+  color: #0b0f1e;
+  box-shadow: 0 4px 16px rgba(99,179,237,0.3);
+  font-size: 14px;
+  padding: 12px;
+}
+.btn-demo:hover { transform: translateY(-2px); box-shadow: 0 8px 24px rgba(99,179,237,0.4); }
+.btn:disabled { opacity: 0.4; cursor: not-allowed; transform: none !important; }
+
+/* Quick action buttons */
+.quick-actions { display: flex; flex-direction: column; gap: 6px; flex: 1; overflow-y: auto; padding: 12px 16px; }
+.quick-btn {
+  display: flex; align-items: flex-start; gap: 10px;
+  padding: 10px 12px;
+  border-radius: 8px;
+  background: var(--bg-2);
+  border: 1px solid var(--border);
+  cursor: pointer;
+  transition: all 0.2s;
+  text-align: left;
+}
+.quick-btn:hover { border-color: var(--border-bright); background: var(--bg-3); }
+.quick-btn-icon { font-size: 16px; flex-shrink: 0; margin-top: 1px; }
+.quick-btn-text { display: flex; flex-direction: column; gap: 2px; }
+.quick-btn-title { font-size: 12px; font-weight: 600; color: var(--text-1); }
+.quick-btn-desc { font-size: 11px; color: var(--text-3); line-height: 1.4; }
+.quick-btn.allowed .quick-btn-icon { filter: hue-rotate(120deg); }
+.quick-btn.blocked .quick-btn-icon { filter: hue-rotate(330deg); }
+
+/* ─── Main Feed ─── */
+.main-feed {
+  background: var(--bg-0);
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+.feed-header {
+  padding: 16px 20px;
+  border-bottom: 1px solid var(--border);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-shrink: 0;
+}
+.feed-title { font-size: 14px; font-weight: 600; color: var(--text-1); }
+.feed-subtitle { font-size: 12px; color: var(--text-3); margin-top: 2px; }
+.thinking-indicator {
+  display: none;
+  align-items: center;
+  gap: 8px;
+  font-size: 12px;
+  color: var(--cyan);
+}
+.thinking-indicator.active { display: flex; }
+.dots { display: flex; gap: 4px; }
+.dots span {
+  width: 5px; height: 5px; border-radius: 50%;
+  background: var(--cyan);
+  animation: dot-bounce 1s ease-in-out infinite;
+}
+.dots span:nth-child(2) { animation-delay: 0.15s; }
+.dots span:nth-child(3) { animation-delay: 0.3s; }
+@keyframes dot-bounce {
+  0%, 80%, 100% { transform: translateY(0); opacity: 0.4; }
+  40% { transform: translateY(-5px); opacity: 1; }
+}
+
+.feed-scroll { flex: 1; overflow-y: auto; padding: 16px 20px; display: flex; flex-direction: column; gap: 12px; }
+
+/* ─── Cards ─── */
+.scene-divider {
+  display: flex; align-items: center; gap: 12px;
+  margin: 4px 0;
+}
+.scene-divider-line { flex: 1; height: 1px; background: var(--border); }
+.scene-divider-text {
+  font-size: 11px; font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--cyan);
+  background: var(--bg-3);
+  padding: 4px 12px;
+  border-radius: 20px;
+  border: 1px solid rgba(99,179,237,0.2);
+}
+
+.client-card {
+  background: linear-gradient(135deg, rgba(246,224,94,0.05), rgba(246,224,94,0.02));
+  border: 1px solid rgba(246,224,94,0.2);
+  border-radius: 12px;
+  padding: 14px 16px;
+  position: relative;
+  animation: slide-in 0.4s ease-out;
+}
+.client-card::before {
+  content: '';
+  position: absolute;
+  left: 0; top: 0; bottom: 0;
+  width: 3px;
+  background: var(--gold);
+  border-radius: 3px 0 0 3px;
+}
+.client-card-label {
+  font-size: 10px; font-weight: 700;
+  letter-spacing: 0.1em;
+  color: var(--gold);
+  margin-bottom: 6px;
+}
+.client-card-text { font-size: 13px; color: var(--text-1); line-height: 1.6; font-style: italic; }
+
+.intent-card {
+  background: var(--bg-2);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  overflow: hidden;
+  animation: slide-in 0.4s ease-out;
+}
+.intent-card-header {
+  padding: 10px 14px;
+  background: rgba(255,255,255,0.02);
+  border-bottom: 1px solid var(--border);
+  display: flex; align-items: center; gap: 8px;
+}
+.intent-icon {
+  width: 24px; height: 24px;
+  border-radius: 6px;
+  background: rgba(99,179,237,0.15);
+  display: flex; align-items: center; justify-content: center;
+  font-size: 12px;
+}
+.intent-action {
+  font-family: var(--mono);
+  font-size: 12px;
+  color: var(--cyan);
+  font-weight: 500;
+}
+.intent-agent {
+  margin-left: auto;
+  font-size: 11px;
+  color: var(--text-3);
+  display: flex; align-items: center; gap: 4px;
+}
+.delegated-badge {
+  font-size: 10px;
+  padding: 2px 6px;
+  border-radius: 4px;
+  background: rgba(183,148,244,0.15);
+  color: var(--purple);
+  border: 1px solid rgba(183,148,244,0.3);
+}
+.intent-card-body { padding: 10px 14px; display: flex; flex-direction: column; gap: 6px; }
+.intent-row { display: flex; gap: 8px; font-size: 12px; }
+.intent-row-key { color: var(--text-3); width: 52px; flex-shrink: 0; }
+.intent-row-val { color: var(--text-1); flex: 1; }
+
+.decision-banner {
+  display: flex; align-items: flex-start; gap: 10px;
+  padding: 12px 14px;
+  border-radius: 10px;
+  margin-top: 2px;
+  animation: slide-in 0.3s ease-out;
+}
+.decision-banner.allowed {
+  background: var(--green-dim);
+  border: 1px solid rgba(104,211,145,0.25);
+}
+.decision-banner.blocked {
+  background: var(--red-dim);
+  border: 1px solid rgba(252,129,129,0.25);
+}
+.decision-verdict {
+  font-size: 11px; font-weight: 700;
+  letter-spacing: 0.06em;
+  padding: 3px 8px;
+  border-radius: 6px;
+  white-space: nowrap;
+  flex-shrink: 0;
+}
+.decision-verdict.allowed { background: rgba(104,211,145,0.2); color: var(--green); }
+.decision-verdict.blocked { background: rgba(252,129,129,0.2); color: var(--red); }
+.decision-text {
+  font-size: 12px;
+  line-height: 1.5;
+  color: var(--text-2);
+  flex: 1;
+}
+.decision-rule {
+  font-size: 11px;
+  font-family: var(--mono);
+  color: var(--red);
+  margin-top: 4px;
+  padding: 4px 8px;
+  background: rgba(252,129,129,0.08);
+  border-radius: 4px;
+  border-left: 2px solid var(--red);
+}
+.decision-result {
+  font-size: 11px;
+  color: var(--text-3);
+  margin-top: 4px;
+  font-style: italic;
+}
+
+.thinking-card {
+  display: flex; align-items: center; gap: 10px;
+  padding: 10px 14px;
+  background: rgba(99,179,237,0.03);
+  border: 1px solid rgba(99,179,237,0.1);
+  border-radius: 8px;
+  font-size: 12px;
+  color: var(--text-3);
+  animation: fade-in 0.3s ease-out;
+}
+
+@keyframes slide-in {
+  from { opacity: 0; transform: translateY(8px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+@keyframes fade-in {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+/* ─── Done Banner ─── */
+.done-banner {
+  margin-top: 8px;
+  padding: 20px;
+  border-radius: 12px;
+  background: linear-gradient(135deg, rgba(99,179,237,0.08), rgba(183,148,244,0.08));
+  border: 1px solid rgba(99,179,237,0.25);
+  display: flex; align-items: center; gap: 16px;
+  animation: slide-in 0.5s ease-out;
+}
+.done-title { font-size: 15px; font-weight: 700; color: var(--cyan); margin-bottom: 4px; }
+.done-stats { display: flex; gap: 12px; }
+.done-stat { text-align: center; }
+.done-stat-num { font-size: 22px; font-weight: 700; }
+.done-stat-label { font-size: 11px; color: var(--text-3); }
+.done-stat.allowed .done-stat-num { color: var(--green); }
+.done-stat.blocked .done-stat-num { color: var(--red); }
+
+/* ─── Audit Log (Right) ─── */
+.audit-panel {
+  background: var(--bg-1);
+  border-left: 1px solid var(--border);
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+.audit-header {
+  padding: 14px 16px;
+  border-bottom: 1px solid var(--border);
+  display: flex; align-items: center; justify-content: space-between;
+  flex-shrink: 0;
+}
+.audit-title { font-size: 13px; font-weight: 600; }
+.audit-count {
+  font-size: 11px;
+  padding: 2px 8px;
+  border-radius: 20px;
+  background: var(--cyan-glow);
+  color: var(--cyan);
+  border: 1px solid rgba(99,179,237,0.2);
+}
+.audit-scroll { flex: 1; overflow-y: auto; padding: 10px; display: flex; flex-direction: column; gap: 4px; }
+
+.log-entry {
+  padding: 8px 10px;
+  border-radius: 8px;
+  background: var(--bg-2);
+  border: 1px solid var(--border);
+  border-left-width: 3px;
+  font-size: 11px;
+  animation: slide-in 0.3s ease-out;
+}
+.log-entry.allowed { border-left-color: var(--green); }
+.log-entry.blocked { border-left-color: var(--red); }
+.log-entry-top { display: flex; align-items: center; justify-content: space-between; margin-bottom: 4px; }
+.log-action { font-family: var(--mono); font-size: 11px; color: var(--text-1); font-weight: 500; }
+.log-status {
+  font-size: 10px; font-weight: 700;
+  padding: 1px 6px; border-radius: 4px;
+}
+.log-status.allowed { background: rgba(104,211,145,0.15); color: var(--green); }
+.log-status.blocked { background: rgba(252,129,129,0.15); color: var(--red); }
+.log-agent { color: var(--text-3); font-size: 10px; }
+.log-rule { color: var(--red); font-size: 10px; font-family: var(--mono); margin-top: 2px; }
+
+/* Policy panel */
+.policy-panel {
+  border-top: 1px solid var(--border);
+  padding: 12px;
+  flex-shrink: 0;
+}
+.policy-label { font-size: 10px; font-weight: 600; letter-spacing: 0.1em; color: var(--text-3); text-transform: uppercase; margin-bottom: 8px; }
+.policy-chips { display: flex; flex-wrap: wrap; gap: 4px; }
+.policy-chip {
+  font-size: 10px;
+  padding: 2px 7px;
+  border-radius: 4px;
+  font-family: var(--mono);
+}
+.policy-chip.allow { background: rgba(104,211,145,0.1); color: var(--green); border: 1px solid rgba(104,211,145,0.2); }
+.policy-chip.block { background: rgba(252,129,129,0.1); color: var(--red); border: 1px solid rgba(252,129,129,0.2); }
+
+/* ─── Demo progress ─── */
+.progress-bar {
+  height: 2px;
+  background: var(--border);
+  margin: 0;
+  overflow: hidden;
+  flex-shrink: 0;
+}
+.progress-fill {
+  height: 100%;
+  background: linear-gradient(90deg, var(--cyan), var(--purple));
+  width: 0%;
+  transition: width 0.5s ease;
+}
+
+/* ─── Custom input area ─── */
+.custom-input-area {
+  padding: 12px 20px;
+  border-top: 1px solid var(--border);
+  display: flex; gap: 8px;
+  flex-shrink: 0;
+  background: var(--bg-1);
+}
+.custom-input-area input {
+  flex: 1;
+  height: 38px;
+  resize: none;
+}
+.send-btn {
+  width: 38px; height: 38px;
+  background: linear-gradient(135deg, var(--cyan), var(--purple));
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 16px;
+  flex-shrink: 0;
+  transition: all 0.2s;
+}
+.send-btn:hover { transform: scale(1.05); }
+
+/* ─── Toast ─── */
+.toast {
+  position: fixed;
+  bottom: 20px;
+  left: 50%;
+  transform: translateX(-50%) translateY(60px);
+  background: var(--bg-3);
+  border: 1px solid var(--border-bright);
+  padding: 10px 20px;
+  border-radius: 8px;
+  font-size: 13px;
+  font-weight: 500;
+  transition: transform 0.3s ease;
+  z-index: 100;
+  pointer-events: none;
+}
+.toast.visible { transform: translateX(-50%) translateY(0); }
+
+/* Responsive */
+@media (max-width: 900px) {
+  .layout { grid-template-columns: 260px 1fr; }
+  .audit-panel { display: none; }
+}
+</style>
+</head>
+<body>
+
+<!-- HEADER -->
+<header class="header">
+  <div class="header-brand">
+    <div class="brand-icon">&#9878;</div>
+    <div>
+      <div class="brand-name">AI Legal Agent</div>
+      <div class="brand-sub">ArmorIQ x OpenClaw Intent Enforcement</div>
+    </div>
+  </div>
+  <div class="header-status">
+    <div class="status-dot"></div>
+    <span>Engine Active</span>
+    <div class="mode-badge">SIMULATION MODE</div>
+  </div>
+</header>
+
+<div class="layout">
+
+  <!-- LEFT SIDEBAR -->
+  <aside class="sidebar">
+    <div class="sidebar-section">
+      <div class="sidebar-label">Run Full Demo</div>
+      <button class="btn btn-demo" id="demoBtn" onclick="runDemo()">
+        &#9654; Play 3-Min Demo
+      </button>
+    </div>
+
+    <div class="sidebar-section">
+      <div class="sidebar-label">Case Intake</div>
+      <div class="case-form">
+        <div class="case-id-row">
+          <label>Case ID</label>
+          <input id="caseId" type="text" value="CASE-2026-001" />
+        </div>
+        <textarea id="caseStatement" placeholder="Describe the client's situation...">My landlord has been illegally entering my apartment without notice, multiple times in the past month.</textarea>
+        <button class="btn btn-primary" onclick="intakeCase()">Register Case</button>
+      </div>
+    </div>
+
+    <div class="sidebar-section" style="border-bottom:none;">
+      <div class="sidebar-label">Quick Actions</div>
+    </div>
+    <div class="quick-actions">
+      <div class="quick-btn allowed" onclick="sendInstruction('landlord apartment illegal entry')">
+        <div class="quick-btn-icon">&#9889;</div>
+        <div class="quick-btn-text">
+          <div class="quick-btn-title">Build Legal Strategy</div>
+          <div class="quick-btn-desc">Search precedents, draft notice, advise client</div>
+        </div>
+      </div>
+      <div class="quick-btn blocked" onclick="sendInstruction('tell them we never received that email, say we didn\'t get it')">
+        <div class="quick-btn-icon">&#128683;</div>
+        <div class="quick-btn-text">
+          <div class="quick-btn-title">Perjury Request [BLOCKED]</div>
+          <div class="quick-btn-desc">"Say we never got that email"</div>
+        </div>
+      </div>
+      <div class="quick-btn blocked" onclick="sendInstruction('contact them directly, message opposing party landlord')">
+        <div class="quick-btn-icon">&#128683;</div>
+        <div class="quick-btn-text">
+          <div class="quick-btn-title">Direct Contact [BLOCKED]</div>
+          <div class="quick-btn-desc">"Reach out to landlord directly"</div>
+        </div>
+      </div>
+      <div class="quick-btn blocked" onclick="runDelegationTest()">
+        <div class="quick-btn-icon">&#128279;</div>
+        <div class="quick-btn-text">
+          <div class="quick-btn-title">Delegation Test [BONUS]</div>
+          <div class="quick-btn-desc">Research agent tries to send email</div>
+        </div>
+      </div>
+      <div class="quick-btn allowed" onclick="sendInstruction('summarize case and advise client')">
+        <div class="quick-btn-icon">&#128196;</div>
+        <div class="quick-btn-text">
+          <div class="quick-btn-title">Summarize & Advise</div>
+          <div class="quick-btn-desc">Case summary + client advisory</div>
+        </div>
+      </div>
+    </div>
+  </aside>
+
+  <!-- MAIN FEED -->
+  <main class="main-feed">
+    <div class="progress-bar"><div class="progress-fill" id="progressFill"></div></div>
+    <div class="feed-header">
+      <div>
+        <div class="feed-title">Agent Activity Feed</div>
+        <div class="feed-subtitle">Real-time intent proposals and policy decisions</div>
+      </div>
+      <div class="thinking-indicator" id="thinkingIndicator">
+        <div class="dots"><span></span><span></span><span></span></div>
+        <span id="thinkingText">Processing...</span>
+      </div>
+    </div>
+
+    <div class="feed-scroll" id="feedScroll">
+      <!-- Welcome card -->
+      <div style="text-align:center; padding: 40px 20px; color: var(--text-3);">
+        <div style="font-size:40px; margin-bottom:12px;">&#9878;</div>
+        <div style="font-size:16px; font-weight:600; color:var(--text-2); margin-bottom:8px;">
+          AI Legal Agent — Intent-Aware Execution
+        </div>
+        <div style="font-size:13px; line-height:1.7; max-width: 380px; margin: 0 auto;">
+          "We built an AI lawyer. But unlike a human lawyer, this one
+          <em>literally cannot cut corners.</em>"
+        </div>
+        <div style="margin-top:20px; font-size:12px;">
+          Press <strong style="color:var(--cyan)">Play Demo</strong> or use the quick actions to explore.
+        </div>
+      </div>
+    </div>
+
+    <div class="custom-input-area">
+      <input id="customInstruction" type="text" placeholder="Type a client instruction and press Enter..." onkeydown="if(event.key==='Enter') sendCustom()" />
+      <button class="send-btn" onclick="sendCustom()">&#10148;</button>
+    </div>
+  </main>
+
+  <!-- AUDIT LOG (Right) -->
+  <aside class="audit-panel">
+    <div class="audit-header">
+      <div class="audit-title">Audit Log</div>
+      <div class="audit-count" id="auditCount">0 entries</div>
+    </div>
+    <div class="audit-scroll" id="auditScroll">
+      <div style="padding: 20px; text-align:center; color: var(--text-3); font-size: 12px;">
+        No decisions yet. Audit trail will appear here.
+      </div>
+    </div>
+    <div class="policy-panel">
+      <div class="policy-label">Policy: Allowed Actions</div>
+      <div class="policy-chips" id="allowedChips">
+        <span class="policy-chip allow">draft_document</span>
+        <span class="policy-chip allow">search_case_law</span>
+        <span class="policy-chip allow">advise_client</span>
+        <span class="policy-chip allow">summarize_case</span>
+        <span class="policy-chip allow">read_case_files</span>
+      </div>
+      <div class="policy-label" style="margin-top:8px;">Blocked Actions</div>
+      <div class="policy-chips">
+        <span class="policy-chip block">contact_opposing_party</span>
+        <span class="policy-chip block">suborning_perjury</span>
+        <span class="policy-chip block">fabricate_evidence</span>
+        <span class="policy-chip block">share_privileged_info</span>
+      </div>
+    </div>
+  </aside>
+</div>
+
+<div class="toast" id="toast"></div>
+
+<script>
+const API = '';
+let auditEntries = 0;
+let caseRegistered = false;
+
+// ─── Utilities ───────────────────────────────
+
+function toast(msg, type='info') {
+  const t = document.getElementById('toast');
+  t.textContent = msg;
+  t.style.color = type === 'error' ? 'var(--red)' : type === 'success' ? 'var(--green)' : 'var(--text-1)';
+  t.classList.add('visible');
+  setTimeout(() => t.classList.remove('visible'), 2500);
+}
+
+function scrollFeed() {
+  const s = document.getElementById('feedScroll');
+  s.scrollTop = s.scrollHeight;
+}
+
+function setThinking(active, text='Processing...') {
+  const el = document.getElementById('thinkingIndicator');
+  const txt = document.getElementById('thinkingText');
+  txt.textContent = text;
+  el.classList.toggle('active', active);
+}
+
+function setProgress(pct) {
+  document.getElementById('progressFill').style.width = pct + '%';
+}
+
+function actionIcon(action) {
+  const icons = {
+    draft_document: '&#128196;',
+    search_case_law: '&#128269;',
+    advise_client: '&#128172;',
+    summarize_case: '&#128203;',
+    read_case_files: '&#128193;',
+    send_communication: '&#128231;',
+    contact_opposing_party_directly: '&#128222;',
+    suborning_perjury: '&#128683;',
+    fabricate_evidence: '&#128683;',
+    advise_evidence_destruction: '&#128683;',
+    default: '&#9889;'
+  };
+  return icons[action] || icons.default;
+}
+
+function clearFeed() {
+  document.getElementById('feedScroll').innerHTML = '';
+}
+
+// ─── DOM Builders ─────────────────────────────
+
+function addSceneDivider(scene, title) {
+  const el = document.createElement('div');
+  el.className = 'scene-divider';
+  el.innerHTML = `
+    <div class="scene-divider-line"></div>
+    <div class="scene-divider-text">Scene ${scene} &mdash; ${title}</div>
+    <div class="scene-divider-line"></div>
+  `;
+  document.getElementById('feedScroll').appendChild(el);
+  scrollFeed();
+}
+
+function addClientCard(text) {
+  const el = document.createElement('div');
+  el.className = 'client-card';
+  el.innerHTML = `
+    <div class="client-card-label">&#128100; CLIENT SAYS</div>
+    <div class="client-card-text">${text}</div>
+  `;
+  document.getElementById('feedScroll').appendChild(el);
+  scrollFeed();
+}
+
+function addThinkingCard(text) {
+  const el = document.createElement('div');
+  el.className = 'thinking-card';
+  el.innerHTML = `
+    <div class="dots"><span></span><span></span><span></span></div>
+    <span>${text}</span>
+  `;
+  document.getElementById('feedScroll').appendChild(el);
+  scrollFeed();
+  return el;
+}
+
+function addDecisionCard(data) {
+  const allowed = data.decision === 'ALLOWED';
+  const delegated = data.delegated_by
+    ? `<span class="delegated-badge">via ${data.delegated_by}</span>`
+    : '';
+
+  const el = document.createElement('div');
+  el.className = 'intent-card';
+  el.innerHTML = `
+    <div class="intent-card-header">
+      <div class="intent-icon">${actionIcon(data.action)}</div>
+      <div class="intent-action">${data.action}</div>
+      <div class="intent-agent">${delegated} <span>${data.agent}</span></div>
+    </div>
+    <div class="intent-card-body">
+      <div class="intent-row">
+        <span class="intent-row-key">Target</span>
+        <span class="intent-row-val">${data.target || '-'}</span>
+      </div>
+      <div class="intent-row">
+        <span class="intent-row-key">Content</span>
+        <span class="intent-row-val">${(data.content||'').slice(0,90)}${data.content?.length>90?'...':''}</span>
+      </div>
+      <div class="decision-banner ${allowed ? 'allowed' : 'blocked'}">
+        <div>
+          <span class="decision-verdict ${allowed ? 'allowed' : 'blocked'}">
+            ${allowed ? 'ALLOWED' : data.enforcement_type || 'BLOCKED'}
+          </span>
+          <div class="decision-text">${data.reason||''}</div>
+          ${data.rule_violated ? `<div class="decision-rule">${data.rule_violated}</div>` : ''}
+          ${data.result && allowed ? `<div class="decision-result">${data.result}</div>` : ''}
+        </div>
+      </div>
+    </div>
+  `;
+  document.getElementById('feedScroll').appendChild(el);
+  scrollFeed();
+
+  // Add to audit log
+  addAuditEntry(data);
+}
+
+function addIntakeCard(caseId, statement) {
+  const el = document.createElement('div');
+  el.className = 'client-card';
+  el.innerHTML = `
+    <div class="client-card-label">&#9989; CASE REGISTERED — ${caseId}</div>
+    <div class="client-card-text">${statement}</div>
+  `;
+  document.getElementById('feedScroll').appendChild(el);
+  scrollFeed();
+}
+
+function addDoneBanner(allowed, blocked) {
+  const el = document.createElement('div');
+  el.className = 'done-banner';
+  el.innerHTML = `
+    <div style="font-size:32px;">&#9878;</div>
+    <div style="flex:1">
+      <div class="done-title">Demo Complete — ArmorIQ x OpenClaw</div>
+      <div style="font-size:12px; color: var(--text-3); margin-bottom:10px;">Full audit trace saved. Enforcement demonstrated.</div>
+      <div class="done-stats">
+        <div class="done-stat allowed">
+          <div class="done-stat-num">${allowed}</div>
+          <div class="done-stat-label">ALLOWED</div>
+        </div>
+        <div class="done-stat blocked">
+          <div class="done-stat-num">${blocked}</div>
+          <div class="done-stat-label">BLOCKED</div>
+        </div>
+      </div>
+    </div>
+  `;
+  document.getElementById('feedScroll').appendChild(el);
+  scrollFeed();
+}
+
+function addAuditEntry(data) {
+  const panel = document.getElementById('auditScroll');
+  if (auditEntries === 0) panel.innerHTML = '';
+  auditEntries++;
+
+  const allowed = data.decision === 'ALLOWED';
+  const el = document.createElement('div');
+  el.className = `log-entry ${allowed ? 'allowed' : 'blocked'}`;
+  el.innerHTML = `
+    <div class="log-entry-top">
+      <div class="log-action">${data.action}</div>
+      <div class="log-status ${allowed ? 'allowed' : 'blocked'}">${allowed ? 'OK' : 'BLOCKED'}</div>
+    </div>
+    <div class="log-agent">${data.agent}${data.delegated_by ? ` (via ${data.delegated_by})` : ''} &bull; ${data.case_id}</div>
+    ${data.rule_violated ? `<div class="log-rule">${data.rule_violated}</div>` : ''}
+  `;
+  panel.appendChild(el);
+  panel.scrollTop = panel.scrollHeight;
+  document.getElementById('auditCount').textContent = auditEntries + ' entr' + (auditEntries === 1 ? 'y' : 'ies');
+}
+
+// ─── API Calls ────────────────────────────────
+
+async function intakeCase() {
+  const caseId = document.getElementById('caseId').value.trim();
+  const statement = document.getElementById('caseStatement').value.trim();
+  if (!statement) { toast('Enter a case statement', 'error'); return; }
+  setThinking(true, 'Registering case...');
+  try {
+    const res = await fetch('/api/intake', {
+      method: 'POST',
+      headers: {'Content-Type': 'application/json'},
+      body: JSON.stringify({case_id: caseId, client_statement: statement})
+    });
+    const data = await res.json();
+    caseRegistered = true;
+    if (document.getElementById('feedScroll').children.length === 1) {
+      document.getElementById('feedScroll').innerHTML = '';
+    }
+    addIntakeCard(caseId, statement);
+    toast('Case registered!', 'success');
+  } catch(e) { toast('Server error', 'error'); }
+  setThinking(false);
+}
+
+async function sendInstruction(instruction) {
+  if (!caseRegistered) { await intakeCase(); }
+  const caseId = document.getElementById('caseId').value.trim();
+  setThinking(true, 'Lead Lawyer reasoning...');
+
+  // Show client says for unethical instructions
+  const lower = instruction.toLowerCase();
+  if (lower.includes('never received') || lower.includes('contact them directly') ||
+      lower.includes('destroy') || lower.includes('delete')) {
+    addClientCard(`"${instruction}"`);
+  }
+
+  try {
+    const tc = addThinkingCard('PolicyEngine validating intent against legal_rules.json...');
+    const res = await fetch('/api/act', {
+      method: 'POST',
+      headers: {'Content-Type': 'application/json'},
+      body: JSON.stringify({case_id: caseId, instruction})
+    });
+    const data = await res.json();
+    tc.remove();
+    for (const r of data.results) { addDecisionCard(r); await sleep(200); }
+  } catch(e) { toast('Server error', 'error'); }
+  setThinking(false);
+}
+
+async function sendCustom() {
+  const input = document.getElementById('customInstruction');
+  const instruction = input.value.trim();
+  if (!instruction) return;
+  input.value = '';
+  await sendInstruction(instruction);
+}
+
+async function runDelegationTest() {
+  if (!caseRegistered) { await intakeCase(); }
+  const caseId = document.getElementById('caseId').value.trim();
+  addSceneDivider(5, 'Delegation Enforcement (Bonus)');
+
+  const tc1 = addThinkingCard('Lead Lawyer spawns Research Agent with scoped permissions...');
+  await sleep(1200);
+  tc1.remove();
+
+  // Allowed action
+  setThinking(true, 'Research Agent: searching case law...');
+  try {
+    const r1 = await fetch('/api/delegate', {
+      method: 'POST',
+      headers: {'Content-Type': 'application/json'},
+      body: JSON.stringify({
+        case_id: caseId,
+        action: 'search_case_law',
+        target: 'legal_database',
+        content: 'Tenant rights illegal landlord entry India',
+      })
+    });
+    addDecisionCard(await r1.json());
+    await sleep(400);
+
+    const tc2 = addThinkingCard('Research Agent tries to send an external email...');
+    await sleep(1000);
+    tc2.remove();
+
+    // Blocked action
+    const r2 = await fetch('/api/delegate', {
+      method: 'POST',
+      headers: {'Content-Type': 'application/json'},
+      body: JSON.stringify({
+        case_id: caseId,
+        action: 'send_communication',
+        target: 'landlord@property.com',
+        content: 'We are aware of the situation and taking action.',
+      })
+    });
+    addDecisionCard(await r2.json());
+  } catch(e) { toast('Server error', 'error'); }
+  setThinking(false);
+}
+
+function sleep(ms) { return new Promise(r => setTimeout(r, ms)); }
+
+// ─── Full SSE Demo ─────────────────────────────
+
+async function runDemo() {
+  const btn = document.getElementById('demoBtn');
+  btn.disabled = true;
+  btn.innerHTML = '&#9646;&#9646; Running Demo...';
+  clearFeed();
+  auditEntries = 0;
+  document.getElementById('auditScroll').innerHTML = '<div style="padding:20px;text-align:center;color:var(--text-3);font-size:12px;">Waiting for events...</div>';
+  document.getElementById('auditCount').textContent = '0 entries';
+  setProgress(5);
+  caseRegistered = true;
+
+  const es = new EventSource('/api/demo/stream');
+  const sceneProgress = {1:10, 2:30, 3:55, 4:70, 5:88, 6:100};
+  let lastThink = null;
+
+  es.onmessage = async (e) => {
+    const data = JSON.parse(e.data);
+    if (lastThink) { lastThink.remove(); lastThink = null; }
+
+    switch(data.type) {
+      case 'scene':
+        addSceneDivider(data.scene, data.title);
+        setProgress(sceneProgress[data.scene] || 50);
+        break;
+      case 'intake':
+        addIntakeCard(data.case_id, data.statement);
+        break;
+      case 'client_says':
+        addClientCard(data.text);
+        break;
+      case 'thinking':
+        setThinking(true, data.text);
+        lastThink = addThinkingCard(data.text);
+        break;
+      case 'decision':
+        setThinking(false);
+        addDecisionCard(data);
+        break;
+      case 'done':
+        setProgress(100);
+        setThinking(false);
+        addDoneBanner(data.allowed, data.blocked);
+        es.close();
+        btn.disabled = false;
+        btn.innerHTML = '&#9654; Play Again';
+        break;
+    }
+  };
+
+  es.onerror = () => {
+    es.close();
+    btn.disabled = false;
+    btn.innerHTML = '&#9654; Play Demo';
+    toast('Demo stream ended', 'info');
+    setThinking(false);
+  };
+}
+
+// Init: register case on load
+window.onload = () => {
+  // Pre-register silently so quick actions work immediately
+  fetch('/api/intake', {
+    method: 'POST',
+    headers: {'Content-Type':'application/json'},
+    body: JSON.stringify({
+      case_id: 'CASE-2026-001',
+      client_statement: 'My landlord has been illegally entering my apartment without notice.'
+    })
+  }).then(() => { caseRegistered = true; }).catch(() => {});
+};
+</script>
+</body>
+</html>
