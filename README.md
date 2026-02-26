@@ -1,8 +1,8 @@
-# ⚖️ AI Lawyer — ARMORIQ x OPENCLAW Hackathon
+# ⚖️ CLAW — AI Legal Assistant
 
 > *"We built an AI lawyer. But unlike a human lawyer, this one literally cannot cut corners."*
 
-An autonomous legal AI agent demonstrating **intent-aware execution** with **deterministic policy enforcement** using OpenClaw + ArmorIQ.
+An autonomous legal AI agent demonstrating **intent-aware execution** with **deterministic policy enforcement**, powered by **ArmorIQ CSRG Merkle-proof verification** and the **Bharatiya Nyaya Sanhita (BNS) 2023**.
 
 ---
 
@@ -12,25 +12,38 @@ An autonomous legal AI agent demonstrating **intent-aware execution** with **det
 
 > 🔗 **[https://ai-lawyer-armoriq.onrender.com/](https://ai-lawyer-armoriq.onrender.com/)**
 
-Click **"Play Full Demo"** to watch the ArmorIQ policy engine enforce ethical boundaries in real time across 6 scenes.
+Click **"▶ Run Full Demo"** to watch the ArmorIQ policy engine enforce ethical boundaries in real time across **7 scenes** — including prompt injection blocking.
 
 ---
 
-## 🖥️ Web UI Features
+## ✨ Key Features
 
 | Feature | Description |
 |---------|-------------|
-| 4 Practice Areas | Landlord/Tenant · Employment · Contract · Criminal |
-| Live Activity Feed | Real-time intent proposals via Server-Sent Events (SSE) |
-| Policy Engine Enforcement | Every action validated live — ALLOWED or BLOCKED |
-| Client Advice Panel | Plain-English "What this means for you" on every decision |
-| Legal Action Plan | Scene 6: Numbered next steps generated for the client |
-| Audit Log | Full decision trace in the right sidebar |
+| **Chat-first Interface** | Conversational UX with real-time agent responses |
+| **4 Practice Areas** | Landlord/Tenant · Employment · Contract · Criminal |
+| **BNS 2023 Knowledge Base** | 21 sections of Bharatiya Nyaya Sanhita embedded |
+| **Indian Constitution KB** | 20+ Articles + 7 landmark Supreme Court cases |
+| **General Q&A Mode** | Ask any legal question — no case registration needed |
+| **ArmorIQ CSRG** | Cryptographic Merkle-proof intent chain for every decision |
+| **Prompt Injection Shield** | 4-layer defense: harmful query, system override, action injection, privilege escalation |
+| **Live Agent Feed** | Real-time SSE decision cards with verdict, rule, and ArmorIQ signature |
+| **Audit Trail** | Filterable audit table with JSON export |
+| **Collapsible Panels** | Sidebar + drawer toggle for focused workflows |
+| **Tamper Detection** | Live Merkle chain visualization with tamper-test button |
 
 ---
 
-## 🚀 Quick Start (Local)
+## 🚀 Quick Start
 
+### Web UI (recommended)
+```bash
+pip install -r requirements.txt
+uvicorn server:app --reload --port 8000
+# Open http://localhost:8000
+```
+
+### CLI Demo
 ```bash
 pip install rich
 python main.py
@@ -42,24 +55,32 @@ python main.py
 
 ```
 claw/
-├── main.py                 # 🎬 Demo entry point (run this!)
+├── server.py               # 🌐 FastAPI backend (all API endpoints)
+├── main.py                 # 🎬 CLI demo entry point
+├── web/
+│   └── index.html          # 💎 Chat-first responsive UI
 ├── policies/
-│   └── legal_rules.json    # 📜 Policy rulebook (the enforcement source of truth)
+│   ├── legal_rules.json    # 📜 Policy rulebook (enforcement source of truth)
+│   ├── bns_2023.json       # ⚖️  BNS 2023 sections (replaces IPC)
+│   └── constitution_india.json # 🏛️ Constitution articles + landmark cases
 ├── core/
 │   ├── intent_model.py     # 📋 IntentObject + PolicyDecision schemas
-│   ├── policy_engine.py    # 🛡️ THE enforcement layer (ArmorIQ integration)
+│   ├── policy_engine.py    # 🛡️ Enforcement layer (ArmorIQ SDK integration)
 │   ├── executor.py         # ⚙️  Only gateway to tool execution
+│   ├── injection_detector.py # 🔒 4-layer prompt injection + harmful query blocker
+│   ├── csrg.py             # 🌳 CSRG Merkle tree implementation
+│   ├── llm_brain.py        # 🧠 LLM reasoning (Gemini / simulation)
 │   └── audit_logger.py     # 📝 JSONL decision trace
 ├── agents/
-│   ├── lead_lawyer.py      # 🧠 Main reasoning agent
+│   ├── lead_lawyer.py      # 🧠 Main reasoning agent (4 practice areas)
 │   └── research_agent.py   # 🔍 Delegated sub-agent (bounded scope)
 ├── tools/
-│   └── legal_tools.py      # 🔧 Tool implementations + registry
+│   └── legal_tools.py      # 🔧 16 tools + BNS/Constitution search
 ├── memory/
 │   └── case_store.py       # 💾 Case file storage
 ├── output/                 # Generated legal documents
 └── logs/
-    └── audit_log.jsonl     # Full decision trace (auto-generated)
+    └── audit_log.jsonl     # Full decision trace
 ```
 
 ---
@@ -69,86 +90,78 @@ claw/
 ```
 Client Input
      ↓
-[Lead Lawyer Agent] ← reasons, proposes IntentObjects only
+[Injection Detector] ← Layer 0: harmful queries + prompt injection
+     ↓ (clean)
+[Lead Lawyer Agent] ← reason, propose IntentObjects
      ↓ IntentObject
-[Policy Engine] ← reads legal_rules.json + optional ArmorIQ IAP
+[Policy Engine] ← legal_rules.json + ArmorIQ CSRG token verification
      ↓              ↓
- ALLOWED         BLOCKED (with rule + reason)
+ ALLOWED         BLOCKED (rule + reason + BNS section)
      ↓              ↓
 [Executor]     PolicyViolationError
   runs tool      logged + shown
      ↓
-[Audit Logger] ← every decision logged to audit_log.jsonl
+[CSRG Merkle Tree] ← every decision → Merkle node
+     ↓
+[Audit Logger] ← full trace → audit_log.jsonl
 ```
 
-**Core principle:** Agents never execute tools directly. Every action is expressed as a structured `IntentObject`, validated by the `PolicyEngine`, then either executed or blocked with a clear reason.
+**Core principle:** Agents never execute tools directly. Every action flows through a structured `IntentObject` → `PolicyEngine` → `Executor` pipeline. No shortcuts possible.
 
 ---
 
-## 📜 Intent Model
+## 🛡️ Safety Layers
 
-Every proposed action is a typed `IntentObject`:
-
-```python
-IntentObject(
-    action="draft_document",         # What to do
-    initiated_by="lead_lawyer",      # Who wants it
-    target="output/legal_notice.txt",# Target resource
-    content="Draft legal notice...", # What it does
-    case_id="CASE-2026-001",         # Case context
-    delegated_by=None,               # None = lead agent
-)
-```
+| Layer | Component | What it catches |
+|-------|-----------|----------------|
+| **0** | Harmful Query Blocker | Explosives, drugs, violence, hacking, trafficking, fraud |
+| **1** | Prompt Injection Detector | System override, jailbreak, role-play attacks |
+| **2** | Action Injection Scanner | Hidden bribery, evidence destruction, witness threats |
+| **3** | Privilege Escalation Guard | Unauthorized commands, admin-mode attempts |
+| **4** | Policy Engine | BNS-aware blocked actions, delegation scope enforcement |
+| **5** | ArmorIQ CSRG | Cryptographic Merkle-proof: intent drift = hard block |
 
 ---
 
-## 🛡️ Policy Model
-
-Rules loaded at runtime from `policies/legal_rules.json`:
-
-| Category | Examples |
-|----------|---------|
-| **Allowed** | `draft_document`, `search_case_law`, `advise_client` |
-| **Blocked** | `contact_opposing_party_directly`, `suborning_perjury`, `fabricate_evidence` |
-| **Delegation** | `research_agent` → only `search_case_law`, `read_case_files` |
-
-**Not hardcoded if/else** — rules are loaded from JSON and evaluated dynamically.
-
----
-
-## 🚫 Enforcement Mechanism
-
-The `PolicyEngine`:
-
-1. Loads `legal_rules.json` at runtime
-2. Checks if action is in `blocked_actions` → **HARD_BLOCK** immediately
-3. Checks if action is in `allowed_actions` → **ALLOWED**
-4. For delegated agents: checks `delegation_rules` scope → **DELEGATION_EXCEEDED** if exceeded
-5. If `ARMORIQ_API_KEY` is set: calls ArmorIQ IAP for cryptographic token verification
-6. Logs every decision to `logs/audit_log.jsonl`
-7. Fails **closed** by default (deny-by-default)
-
----
-
-## 🎬 Demo Scenes
+## 🎬 Demo Scenes (7 Scenes)
 
 | Scene | What Happens | Verdict |
 |-------|-------------|---------|
-| 1 | Client describes landlord case | Case registered |
-| 2 | Agent builds strategy, drafts legal notice | ✅ ALLOWED |
-| 3 | Client: "say we never got that email" | 🚫 Suborning Perjury — BLOCKED |
+| 1 | Client describes landlord case | ✅ Case registered |
+| 2 | Agent builds legal strategy | ✅ ALLOWED — documents drafted |
+| 3 | Client: "say we never got that email" | 🚫 Perjury — BLOCKED (BNS S.227) |
 | 4 | Agent tries to contact landlord directly | 🚫 Rule 4.2 — BLOCKED |
-| 5 | Research sub-agent tries to send email | 🚫 Delegation Exceeded — BLOCKED |
-| 6 | Live audit log displayed | Full trace shown |
+| 5 | Research agent tries unauthorized email | 🚫 Delegation Exceeded — BLOCKED |
+| 6 | Prompt injection embedded in text | 🚫 Injection Severed — BLOCKED |
+| 7 | Legal Action Plan + Merkle root displayed | 📋 Summary |
 
 ---
 
-## ⚙️ With API Keys (Optional)
+## ⚙️ API Endpoints
+
+| Endpoint | Method | Description |
+|----------|--------|-------------|
+| `/` | GET | Serve the web UI |
+| `/health` | GET | Health check |
+| `/api/intake` | POST | Register a new case |
+| `/api/act` | POST | Execute case instruction |
+| `/api/ask` | POST | General legal Q&A (no case needed) |
+| `/api/delegate` | POST | Test delegation enforcement |
+| `/api/demo/stream` | GET | SSE streaming demo (7 scenes) |
+| `/api/merkle` | GET | CSRG Merkle intent chain |
+| `/api/merkle/tamper` | POST | Simulate tamper for demo |
+| `/api/injection/test` | POST | Test prompt injection detection |
+| `/api/audit/export` | GET | Export audit log as JSON |
+| `/api/policy` | GET | View loaded policy rules |
+| `/api/summary/{id}` | GET | Case summary with findings |
+
+---
+
+## ⚙️ Environment Variables (Optional)
 
 ```bash
-# .env
-ARMORIQ_API_KEY=ak_live_xxx       # Enables cryptographic IAP verification
-OPENAI_API_KEY=sk-xxx             # Enables real LLM reasoning
+ARMORIQ_API_KEY=ak_live_xxx    # Enables cryptographic CSRG token verification
+GEMINI_API_KEY=xxx             # Enables real Gemini LLM reasoning
 ```
 
 Without keys: simulation mode (identical demo, mock LLM + local policy enforcement).

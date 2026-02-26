@@ -127,6 +127,11 @@ def serialize(r: dict, intent: IntentObject) -> dict:
 # Routes — Core
 # ──────────────────────────────────────────────
 
+@app.get("/health")
+async def health():
+    return {"status": "ok", "system": "CLAW — AI Legal Assistant", "session": get_session_id()}
+
+
 @app.get("/", response_class=HTMLResponse)
 async def serve_ui():
     p = BASE_DIR / "web/index.html"
@@ -149,6 +154,8 @@ async def agent_act(req: InstructionRequest):
         return {"status": "ok", "results": [{
             "action": "blocked",
             "action_label": "⚠️ Query Refused",
+            "agent": "policy_engine",
+            "decision": "BLOCKED",
             "allowed": False,
             "blocked": True,
             "reason": harm.explanation,
@@ -157,6 +164,8 @@ async def agent_act(req: InstructionRequest):
             "client_advice": "This AI is a legal assistant only. Please ask a genuine legal question.",
             "next_step": "",
             "type_override": "blocked",
+            "session_id": get_session_id(),
+            "timestamp": datetime.now().isoformat(),
         }]}
     results = _ll.analyze_and_act(req.case_id, req.instruction)
     return {"status": "ok", "results": [serialize(r, r["intent"]) for r in results]}
@@ -170,6 +179,8 @@ async def ask_general(req: AskRequest):
         return {"status": "ok", "results": [{
             "action": "blocked",
             "action_label": "⚠️ Query Refused",
+            "agent": "policy_engine",
+            "decision": "BLOCKED",
             "allowed": False,
             "blocked": True,
             "reason": harm.explanation,
@@ -178,6 +189,8 @@ async def ask_general(req: AskRequest):
             "client_advice": "This AI is a legal assistant only. Please ask a genuine legal question.",
             "next_step": "",
             "type_override": "blocked",
+            "session_id": get_session_id(),
+            "timestamp": datetime.now().isoformat(),
         }]}
 
     from tools.legal_tools import search_legal_knowledge as _slk, advise_client as _ac
@@ -205,6 +218,8 @@ async def ask_general(req: AskRequest):
     return {"status": "ok", "results": [{
         "action": "search_legal_knowledge",
         "action_label": "Legal Q&A",
+        "agent": "lead_lawyer",
+        "decision": "ALLOWED",
         "allowed": True,
         "blocked": False,
         "reason": "",
@@ -213,6 +228,8 @@ async def ask_general(req: AskRequest):
         "client_advice": "Here is what Indian law says about your query. For case-specific actions (notices, documents, representation), fill in the Client Statement field and register your case.",
         "next_step": "To get full legal support: fill in \"Client Statement\" → click \"Execute Action\".",
         "type_override": None,
+        "session_id": get_session_id(),
+        "timestamp": datetime.now().isoformat(),
     }]}
 
 

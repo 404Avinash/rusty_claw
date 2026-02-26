@@ -60,9 +60,6 @@ def _get_armoriq_client():
         warnings.warn(f"[ArmorIQ SDK] Could not initialise client: {e}")
         return None
 
-# IST timezone
-IST = timezone(timedelta(hours=5, minutes=30))
-
 
 def _load_policy() -> dict:
     if not POLICY_FILE.exists():
