@@ -36,6 +36,7 @@ from agents.lead_lawyer import LeadLawyer
 from agents.research_agent import ResearchAgent
 from memory.case_store import CaseStore
 from tools.legal_tools import TOOL_REGISTRY
+from core.injection_detector import detect_injection
 
 app = FastAPI(title="AI Lawyer — ArmorIQ x OpenClaw")
 app.add_middleware(CORSMiddleware, allow_origins=["*"], allow_methods=["*"], allow_headers=["*"])
@@ -56,6 +57,9 @@ class CaseRequest(BaseModel):
 class InstructionRequest(BaseModel):
     case_id: str
     instruction: str
+
+class AskRequest(BaseModel):
+    question: str
 
 class DelegationRequest(BaseModel):
     case_id: str
@@ -140,8 +144,76 @@ async def intake_case(req: CaseRequest):
 
 @app.post("/api/act")
 async def agent_act(req: InstructionRequest):
+    harm = detect_injection(req.instruction)
+    if harm.detected:
+        return {"status": "ok", "results": [{
+            "action": "blocked",
+            "action_label": "⚠️ Query Refused",
+            "allowed": False,
+            "blocked": True,
+            "reason": harm.explanation,
+            "plain_english": harm.explanation,
+            "readable_result": harm.explanation,
+            "client_advice": "This AI is a legal assistant only. Please ask a genuine legal question.",
+            "next_step": "",
+            "type_override": "blocked",
+        }]}
     results = _ll.analyze_and_act(req.case_id, req.instruction)
     return {"status": "ok", "results": [serialize(r, r["intent"]) for r in results]}
+
+
+@app.post("/api/ask")
+async def ask_general(req: AskRequest):
+    """General legal Q&A — no case registration required."""
+    harm = detect_injection(req.question)
+    if harm.detected:
+        return {"status": "ok", "results": [{
+            "action": "blocked",
+            "action_label": "⚠️ Query Refused",
+            "allowed": False,
+            "blocked": True,
+            "reason": harm.explanation,
+            "plain_english": harm.explanation,
+            "readable_result": harm.explanation,
+            "client_advice": "This AI is a legal assistant only. Please ask a genuine legal question.",
+            "next_step": "",
+            "type_override": "blocked",
+        }]}
+
+    from tools.legal_tools import search_legal_knowledge as _slk, advise_client as _ac
+    knowledge = _slk(IntentObject(
+        action="search_legal_knowledge",
+        initiated_by="lead_lawyer",
+        target="legal_resource",
+        content=req.question,
+        case_id="GENERAL",
+    ))
+    advice = _ac(IntentObject(
+        action="advise_client",
+        initiated_by="lead_lawyer",
+        target="client",
+        content=req.question,
+        case_id="GENERAL",
+    ))
+    combined = knowledge.strip() + "\n\n" + advice.strip()
+    no_hits = ("BNS 2023" not in combined and "CONSTITUTION" not in combined)
+    readable = combined if not no_hits else (
+        f"No specific BNS or Constitution sections found for: \"{req.question}\".\n\n"
+        f"Please try more specific terms (e.g. \"cheating\", \"bail\", \"tenant rights\", \"Article 21\") "
+        f"or register a case using the Client Statement field for full legal analysis."
+    )
+    return {"status": "ok", "results": [{
+        "action": "search_legal_knowledge",
+        "action_label": "Legal Q&A",
+        "allowed": True,
+        "blocked": False,
+        "reason": "",
+        "plain_english": "Your question has been researched using BNS 2023 and the Constitution of India.",
+        "readable_result": readable,
+        "client_advice": "Here is what Indian law says about your query. For case-specific actions (notices, documents, representation), fill in the Client Statement field and register your case.",
+        "next_step": "To get full legal support: fill in \"Client Statement\" → click \"Execute Action\".",
+        "type_override": None,
+    }]}
 
 
 @app.post("/api/delegate")

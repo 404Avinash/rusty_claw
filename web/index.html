@@ -1681,6 +1681,18 @@
       transform: scale(1.08)
     }
 
+    .mode-badge {
+      font-size: 10px;
+      font-weight: 700;
+      padding: 3px 8px;
+      border-radius: 5px;
+      flex-shrink: 0;
+      letter-spacing: .3px;
+      white-space: nowrap;
+    }
+    .mode-badge.qa   { background: #101d30; color: #5b9bd5; border: 1px solid #1e3f6a; }
+    .mode-badge.case { background: #0e2215; color: #4caf50; border: 1px solid #1a5c2a; }
+
     .hidden-row {
       display: none !important
     }
@@ -1861,7 +1873,8 @@
           </div>
         </div>
         <div class="chat-bar">
-          <input class="chat-input" id="chatIn" placeholder="Type an instruction or try a blocked scenario..."
+          <span id="modeTag" class="mode-badge qa">💬 General Q&A</span>
+          <input class="chat-input" id="chatIn" placeholder="Ask any legal question — or fill in Client Statement to register a case"
             onkeydown="if(event.key==='Enter')runAct()" />
           <button class="send-btn" onclick="runAct()">➤</button>
         </div>
@@ -1933,6 +1946,21 @@
     const API = '';
     let allowed = 0, blocked = 0, total = 0;
     let auditFilter = 'all';
+    let _caseReady = false;
+
+    function updateModeTag() {
+      const tag = document.getElementById('modeTag');
+      if (!tag) return;
+      if (_caseReady) {
+        tag.textContent = '⚖️ Case Mode';
+        tag.className = 'mode-badge case';
+        document.getElementById('chatIn').placeholder = 'Type an instruction for your case…';
+      } else {
+        tag.textContent = '💬 General Q&A';
+        tag.className = 'mode-badge qa';
+        document.getElementById('chatIn').placeholder = 'Ask any legal question — or fill in Client Statement to register a case';
+      }
+    }
     const CASES = {
       lt: { stmt: "My landlord is illegally entering my apartment without notice and threatening to evict me without cause.", instr: "landlord apartment illegal entry" },
       emp: { stmt: "My employer fired me without cause after I raised concerns about wage theft. I haven't received 3 months salary.", instr: "wrongful termination unpaid wages employment dispute" },
@@ -2210,16 +2238,35 @@
 
     // Act (manual)
     async function runAct() {
-      const instr = document.getElementById('chatIn').value || document.getElementById('instrTxt').value;
-      if (!instr.trim()) return;
+      const chatInEl = document.getElementById('chatIn');
+      const instrTxtEl = document.getElementById('instrTxt');
+      const instr = (chatInEl.value || instrTxtEl.value || '').trim();
+      if (!instr) return;
       hideWelcome();
       showThinking('Agent processing: ' + instr.substring(0, 40) + '...');
       addChatBubble('client', '"' + instr + '"', {});
+      const stmtTxt = (document.getElementById('stmtTxt').value || '').trim();
+      const caseId = document.getElementById('caseId').value || 'CASE-2026-001';
       try {
-        const resp = await fetch('/api/act', {
+        // Auto-register case if a Client Statement is filled but not yet registered
+        if (stmtTxt && !_caseReady) {
+          await fetch('/api/intake', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ case_id: caseId, client_statement: stmtTxt })
+          });
+          _caseReady = true;
+          updateModeTag();
+          addChatBubble('system', 'Case registered: ' + caseId + '. Your lawyer is now reviewing your situation.');
+        }
+        const endpoint = _caseReady ? '/api/act' : '/api/ask';
+        const body = _caseReady
+          ? { case_id: caseId, instruction: instr }
+          : { question: instr };
+        const resp = await fetch(endpoint, {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ case_id: document.getElementById('caseId').value || 'CASE-2026-001', instruction: instr })
+          body: JSON.stringify(body)
         });
         const data = await resp.json();
         hideThinking();
@@ -2228,12 +2275,14 @@
         hideThinking();
         addChatBubble('system', 'Server error. Is the backend running? (uvicorn server:app --port 8000)', {});
       }
-      document.getElementById('chatIn').value = '';
+      chatInEl.value = '';
     }
 
     // Full Demo via SSE
     async function runDemo() {
       hideWelcome();
+      _caseReady = false;
+      updateModeTag();
       allowed = 0; blocked = 0; total = 0;
       updateStats(0, 0, 0);
       document.getElementById('feedScroll').innerHTML = '';
@@ -2260,6 +2309,8 @@
           addScene(d.scene, d.title);
           addChatBubble('system', 'Scene ' + d.scene + ': ' + d.title);
         } else if (d.type === 'intake') {
+          _caseReady = true;
+          updateModeTag();
           addToFeed(`<div class="icrd"><div class="icrd-lbl">✅ CASE REGISTERED</div><div style="font-size:12px;color:var(--t1)">${d.statement}</div><div style="font-size:10px;color:var(--t3);margin-top:4px">Case ID: ${d.case_id}</div></div>`);
           addChatBubble('system', 'Case registered: ' + d.case_id + '. Your lawyer is now reviewing your situation.');
           if (d.session_id) document.getElementById('sessLabel').textContent = 'Session ' + d.session_id;
