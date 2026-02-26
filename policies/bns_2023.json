@@ -1,0 +1,231 @@
+﻿{
+  "title": "Bharatiya Nyaya Sanhita (BNS), 2023",
+  "short_title": "BNS 2023",
+  "replaced": "Indian Penal Code (IPC), 1860",
+  "effective_date": "1 July 2024",
+  "total_sections": 358,
+  "note": "BNS 2023 is the primary criminal law of India, enacted alongside BNSS 2023 (replacing CrPC) and BSA 2023 (replacing Indian Evidence Act). All IPC references in prior judgements now map to BNS sections.",
+  "sections": [
+
+    {
+      "section": "1",
+      "title": "Short title, extent and commencement",
+      "text": "This Act may be called the Bharatiya Nyaya Sanhita, 2023. It extends to the whole of India. It shall come into force on such date as the Central Government may, by notification in the Official Gazette, appoint.",
+      "tags": ["general", "commencement"],
+      "ipc_equivalent": "IPC Section 1"
+    },
+
+    {
+      "section": "61",
+      "title": "Criminal conspiracy to commit offence",
+      "text": "When two or more persons agree to do, or cause to be done, an illegal act, or an act which is not illegal by illegal means, such an agreement is designated a criminal conspiracy. A person guilty of criminal conspiracy shall be punished with rigorous imprisonment for a term not less than 6 months and not more than 5 years, or with fine, or with both.",
+      "punishment": "Rigorous imprisonment 6 months–5 years + fine",
+      "tags": ["conspiracy", "criminal_law", "corruption"],
+      "ipc_equivalent": "IPC Section 120A/120B",
+      "relevance": "Applies when lawyers advise concerted illegal action. Also applies to bribery rings targeting courts."
+    },
+
+    {
+      "section": "85",
+      "title": "Husband or relative of husband of a woman subjecting her to cruelty",
+      "text": "Whoever, being the husband or the relative of the husband of a woman, subjects such woman to cruelty shall be punished with imprisonment of either description for a term which may extend to 3 years and shall also be liable to fine.",
+      "punishment": "Imprisonment up to 3 years + fine",
+      "tags": ["domestic_violence", "cruelty", "matrimonial", "family_law"],
+      "ipc_equivalent": "IPC Section 498A",
+      "relevance": "Primary provision for domestic violence / matrimonial cruelty complaints."
+    },
+
+    {
+      "section": "115",
+      "title": "Voluntarily causing hurt",
+      "text": "Whoever does any act with the intention of thereby causing hurt to any person, or with the knowledge that he is likely thereby to cause hurt to any person, and does thereby cause hurt to any person, is said 'voluntarily to cause hurt'. Punishment: imprisonment up to 1 year or fine up to Rs.10,000 or both.",
+      "punishment": "Imprisonment up to 1 year or fine Rs.10,000 or both",
+      "tags": ["assault", "hurt", "violence", "criminal_law"],
+      "ipc_equivalent": "IPC Section 323",
+      "relevance": "Physical assault without grievous injury. Common in tenant/landlord disputes, workplace violence."
+    },
+
+    {
+      "section": "117",
+      "title": "Voluntarily causing grievous hurt",
+      "text": "Whoever voluntarily causes grievous hurt shall be punished with imprisonment of either description for a term which may extend to 7 years, and shall also be liable to fine.",
+      "punishment": "Imprisonment up to 7 years + fine",
+      "tags": ["grievous_hurt", "violence", "criminal_law"],
+      "ipc_equivalent": "IPC Section 325",
+      "relevance": "Serious physical assault causing permanent damage, broken bones, disfigurement."
+    },
+
+    {
+      "section": "191",
+      "title": "Voluntarily causing miscarriage",
+      "text": "Whoever voluntarily causes a woman with child to miscarry, shall, if such miscarriage be not caused in good faith for the purpose of saving the life of the woman, be punished with imprisonment of either description for a term which may extend to 3 years, or with fine, or with both.",
+      "punishment": "Imprisonment up to 3 years or fine or both",
+      "tags": ["medical", "reproductive_rights"],
+      "ipc_equivalent": "IPC Section 312"
+    },
+
+    {
+      "section": "227",
+      "title": "Giving false evidence",
+      "text": "Whoever, being legally bound by an oath or by an express provision of law to state the truth, or being bound by law to make a declaration upon any subject, makes any statement which is false, and which he either knows or believes to be false or does not believe to be true, is said to give false evidence.",
+      "punishment": "Imprisonment up to 7 years + fine",
+      "tags": ["perjury", "false_evidence", "court", "ethics"],
+      "ipc_equivalent": "IPC Section 191/193",
+      "relevance": "This is the perjury provision. Suborning perjury (coaching a witness to lie) is also covered under abetment rules."
+    },
+
+    {
+      "section": "228",
+      "title": "Fabricating false evidence",
+      "text": "Whoever causes any circumstance to exist, or makes any false entry in any book or record, or electronic record or makes any document or electronic record containing a false statement, intending that such circumstance, false entry or false statement may appear in evidence in a judicial proceeding... shall be punished with imprisonment of either description for a term which may extend to 7 years, and shall also be liable to fine.",
+      "punishment": "Imprisonment up to 7 years + fine",
+      "tags": ["fabrication", "false_evidence", "evidence_tampering"],
+      "ipc_equivalent": "IPC Section 192",
+      "relevance": "Critical: Creating fake documents, forging records, or planting false evidence."
+    },
+
+    {
+      "section": "229",
+      "title": "Punishment for false evidence",
+      "text": "Whoever intentionally gives false evidence in any stage of a judicial proceeding, or fabricates false evidence for the purpose of being used in any stage of a judicial proceeding, shall be punished with imprisonment of either description for a term which may extend to 7 years, and shall also be liable to fine.",
+      "punishment": "Imprisonment up to 7 years + fine",
+      "tags": ["perjury", "false_evidence"],
+      "ipc_equivalent": "IPC Section 193",
+      "relevance": "Direct consequences for giving perjured testimony in court."
+    },
+
+    {
+      "section": "238",
+      "title": "Causing disappearance of evidence of offence, or giving false information to screen offender",
+      "text": "If any person, knowing or having reason to believe that an offence has been committed, causes any evidence of the commission of that offence to disappear, with the intention of screening the offender from legal punishment... shall be punished with imprisonment of the description provided for the offence.",
+      "punishment": "Same grade as the original offence",
+      "tags": ["evidence_destruction", "screening", "obstruction_of_justice"],
+      "ipc_equivalent": "IPC Section 201",
+      "relevance": "Destroying, hiding, or altering evidence to protect oneself or another from prosecution."
+    },
+
+    {
+      "section": "303",
+      "title": "Theft",
+      "text": "Whoever, intending to take dishonestly, takes any movable property out of the possession of any person without that person's consent, moves that property in order to such taking, is said to commit theft.",
+      "punishment": "Imprisonment up to 3 years or fine or both",
+      "tags": ["theft", "property"],
+      "ipc_equivalent": "IPC Section 378/379",
+      "relevance": "Basic theft provision. Used in employment disputes involving asset misappropriation."
+    },
+
+    {
+      "section": "308",
+      "title": "Extortion",
+      "text": "Whoever intentionally puts any person in fear of any injury to that person, or to any other, and thereby dishonestly induces the person so put in fear to deliver to any person any property or valuable security... commits extortion.",
+      "punishment": "Imprisonment up to 3 years or fine or both",
+      "tags": ["extortion", "coercion", "blackmail"],
+      "ipc_equivalent": "IPC Section 383/384",
+      "relevance": "Blackmail, threats to expose private information unless money is paid, coercing signatures."
+    },
+
+    {
+      "section": "316",
+      "title": "Criminal breach of trust",
+      "text": "Whoever, being in any manner entrusted with property, or with any dominion over property, dishonestly misappropriates or converts to his own use that property... commits criminal breach of trust.",
+      "punishment": "Imprisonment up to 7 years + fine",
+      "tags": ["breach_of_trust", "financial_crime", "employment"],
+      "ipc_equivalent": "IPC Section 405/406",
+      "relevance": "Employee/director misappropriating company funds. Fiduciary duty violations."
+    },
+
+    {
+      "section": "318",
+      "title": "Cheating",
+      "text": "Whoever, by deceiving any person, fraudulently or dishonestly induces the person so deceived to deliver any property to any person, or to consent that any person shall retain any property, or intentionally induces the person so deceived to do or omit to do anything which he would not do... commits cheating.",
+      "punishment": "Imprisonment up to 3 years or fine or both; aggravated: up to 7 years",
+      "tags": ["fraud", "cheating", "deception", "financial_crime"],
+      "ipc_equivalent": "IPC Section 415/420",
+      "relevance": "The go-to provision for financial fraud — replaces the well-known IPC 420. Online fraud, investment scams, contract fraud."
+    },
+
+    {
+      "section": "329",
+      "title": "Criminal trespass",
+      "text": "Whoever enters into or upon property in the possession of another with intent to commit an offence or to intimidate, insult or annoy any person in possession of such property... commits criminal trespass.",
+      "punishment": "Imprisonment up to 3 months or fine up to Rs.5,000 or both; aggravated: up to 2 years",
+      "tags": ["trespass", "landlord_tenant", "property_rights"],
+      "ipc_equivalent": "IPC Section 441/447",
+      "relevance": "Landlords entering tenant premises without notice. Unauthorized entry to workplaces or homes."
+    },
+
+    {
+      "section": "351",
+      "title": "Criminal intimidation",
+      "text": "Whoever threatens another with any injury to his person, reputation or property, or to the person or reputation or property of any one in whom that person is interested, with intent to cause alarm to that person, or to cause that person to do any act which he is not legally bound to do... commits criminal intimidation.",
+      "punishment": "Imprisonment up to 2 years or fine or both",
+      "tags": ["intimidation", "threats", "harassment"],
+      "ipc_equivalent": "IPC Section 503/506",
+      "relevance": "Employer threatening employees, landlord threatening tenants with eviction, online threats."
+    },
+
+    {
+      "section": "353",
+      "title": "Statements conducing to public mischief / Threatening public servant",
+      "text": "Whoever makes, publishes or circulates any statement, rumour or report with intent to cause, or which is likely to cause, fear or alarm to the public, or to any section of the public whereby any person may be induced to commit an offence against the State or against the public tranquility; or threatens any public servant or witness with injury to his person, reputation or property... shall be punished.",
+      "punishment": "Imprisonment up to 3 years or fine or both",
+      "tags": ["witness_intimidation", "public_mischief", "threats"],
+      "ipc_equivalent": "IPC Section 505 + 189",
+      "relevance": "Witness tampering, threatening judges or investigating officers. Absolute ethics violation."
+    },
+
+    {
+      "section": "356",
+      "title": "Defamation",
+      "text": "Whoever, by words either spoken or intended to be read, or by signs or by visible representations, makes or publishes any imputation concerning any person intending to harm, or knowing or having reason to believe that such imputation will harm, the reputation of such person, is said, except in the hereinafter excepted cases, to defame that person.",
+      "punishment": "Simple imprisonment up to 2 years or fine or both",
+      "tags": ["defamation", "reputation", "media_law"],
+      "ipc_equivalent": "IPC Section 499/500",
+      "relevance": "Online defamation, false reviews, smear campaigns. Civil suit also possible under tort law."
+    },
+
+    {
+      "section": "64",
+      "title": "Punishment for rape",
+      "text": "Whoever, except in the cases provided for by sub-section (2), commits rape shall be punished with rigorous imprisonment of either description for a term which shall not be less than 10 years but which may extend to imprisonment for life, and shall also be liable to fine.",
+      "punishment": "Rigorous imprisonment minimum 10 years to life + fine",
+      "tags": ["sexual_assault", "rape", "women_safety"],
+      "ipc_equivalent": "IPC Section 376",
+      "relevance": "Sexual assault cases. POCSO Act also applies for minors."
+    },
+
+    {
+      "section": "75",
+      "title": "Sexual harassment",
+      "text": "A man committing any of the following acts—(i) physical contact and advances involving unwelcome and explicit sexual overtures; or (ii) a demand or request for sexual favours; or (iii) showing pornography against the will of a woman; or (iv) making sexually coloured remarks—shall be guilty of the offence of sexual harassment.",
+      "punishment": "Rigorous imprisonment up to 3 years or fine or both",
+      "tags": ["sexual_harassment", "workplace", "women_safety"],
+      "ipc_equivalent": "IPC Section 354A",
+      "relevance": "Workplace sexual harassment. POSH Act 2013 also governs internal committee processes."
+    },
+
+    {
+      "section": "173",
+      "title": "Dowry death",
+      "text": "Where the death of a woman is caused by any burns or bodily injury or occurs under suspicious circumstances within 7 years of marriage, and it is shown that soon before her death she was subjected to cruelty or harassment by her husband or any relative of her husband for, or in connection with, any demand for dowry, such death shall be called 'dowry death'.",
+      "punishment": "Imprisonment not less than 7 years up to life",
+      "tags": ["dowry", "women_rights", "family_law"],
+      "ipc_equivalent": "IPC Section 304B"
+    }
+  ],
+
+  "quick_reference": {
+    "financial_fraud":        ["BNS 318 (Cheating, replaces IPC 420)", "BNS 316 (Criminal Breach of Trust)"],
+    "illegal_entry":          ["BNS 329 (Criminal Trespass, replaces IPC 441)"],
+    "perjury":                ["BNS 227 (False Evidence)", "BNS 229 (Punishment for Perjury)", "BNS 228 (Fabricating Evidence)"],
+    "evidence_tampering":     ["BNS 228 (Fabricating False Evidence)", "BNS 238 (Disappearance of Evidence)"],
+    "witness_intimidation":   ["BNS 353 (Threatening Witness/Public Servant)"],
+    "extortion_blackmail":    ["BNS 308 (Extortion)"],
+    "conspiracy":             ["BNS 61 (Criminal Conspiracy, replaces IPC 120A)"],
+    "domestic_violence":      ["BNS 85 (Cruelty by Husband, replaces IPC 498A)", "BNS 173 (Dowry Death)"],
+    "defamation":             ["BNS 356 (Defamation, replaces IPC 499)"],
+    "sexual_harassment":      ["BNS 75 (Sexual Harassment, replaces IPC 354A)", "BNS 64 (Rape, replaces IPC 376)"],
+    "threats_intimidation":   ["BNS 351 (Criminal Intimidation, replaces IPC 506)"],
+    "assault":                ["BNS 115 (Voluntarily Causing Hurt)", "BNS 117 (Grievous Hurt)"]
+  }
+}

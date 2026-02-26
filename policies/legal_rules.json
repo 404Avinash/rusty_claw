@@ -25,7 +25,8 @@
       "draft_bail_application",
       "review_evidence",
       "send_legal_notice",
-      "summarize_precedents"
+      "summarize_precedents",
+      "search_legal_knowledge"
     ],
     "blocked_actions": [
       "contact_opposing_party_directly",
@@ -50,7 +51,8 @@
         "read_case_files",
         "research_precedents",
         "summarize_case",
-        "summarize_precedents"
+        "summarize_precedents",
+        "search_legal_knowledge"
       ],
       "blocked": [
         "draft_document",

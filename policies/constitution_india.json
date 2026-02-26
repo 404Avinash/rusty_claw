@@ -1,0 +1,298 @@
+{
+  "title": "The Constitution of India",
+  "adopted": "26 January 1950",
+  "preamble": "WE, THE PEOPLE OF INDIA, having solemnly resolved to constitute India into a SOVEREIGN SOCIALIST SECULAR DEMOCRATIC REPUBLIC and to secure to all its citizens: JUSTICE, social, economic and political; LIBERTY of thought, expression, belief, faith and worship; EQUALITY of status and of opportunity; and to promote among them all FRATERNITY assuring the dignity of the individual and the unity and integrity of the Nation.",
+  "total_articles": 395,
+  "total_schedules": 12,
+  "note": "The Constitution of India is the supreme law. All other laws — including BNS 2023, civil and procedural codes — must be consistent with it. Any law violating a Fundamental Right (Part III, Articles 12–35) can be struck down.",
+
+  "parts": {
+    "Part_I":   "The Union and its Territory (Articles 1–4)",
+    "Part_II":  "Citizenship (Articles 5–11)",
+    "Part_III": "Fundamental Rights (Articles 12–35)",
+    "Part_IV":  "Directive Principles (Articles 36–51)",
+    "Part_IVA": "Fundamental Duties (Article 51A)",
+    "Part_V":   "The Union (Articles 52–151)",
+    "Part_VI":  "The States (Articles 152–237)",
+    "Part_XI":  "Relations between Union and States",
+    "Part_XVIII":"Emergency Provisions",
+    "Part_XX":  "Amendment of the Constitution (Article 368)"
+  },
+
+  "fundamental_rights": [
+
+    {
+      "article": "14",
+      "title": "Equality before law",
+      "text": "The State shall not deny to any person equality before the law or the equal protection of the laws within the territory of India.",
+      "tags": ["equality", "anti_discrimination", "protection"],
+      "legal_relevance": "Foundation of any challenge to arbitrary state action. Employer/landlord discrimination, arbitrary termination, biased court orders can all be challenged under Article 14.",
+      "landmark_cases": [
+        "E.P. Royappa v. State of Tamil Nadu (1974) — Arbitrariness is antithetic to equality",
+        "Maneka Gandhi v. Union of India (1978) — Article 14 applies to procedure also",
+        "Shayara Bano v. Union of India (2017) — Triple talaq struck down as arbitrary"
+      ]
+    },
+
+    {
+      "article": "15",
+      "title": "Prohibition of discrimination on grounds of religion, race, caste, sex or place of birth",
+      "text": "The State shall not discriminate against any citizen on grounds only of religion, race, caste, sex, place of birth or any of them. No citizen shall be denied access to shops, public restaurants, hotels, on grounds only of religion, race, caste, sex, place of birth.",
+      "tags": ["discrimination", "equality", "caste", "gender"],
+      "legal_relevance": "Workplace discrimination based on caste, gender, religion. Refusal of service to SC/ST persons. Positive obligations on employers.",
+      "landmark_cases": [
+        "Navtej Singh Johar v. Union of India (2018) — Section 377 reading down, LGBTQ+ rights",
+        "Indra Sawhney v. Union of India (1992) — Reservations and the creamy layer doctrine"
+      ]
+    },
+
+    {
+      "article": "19",
+      "title": "Protection of certain rights regarding freedom of speech etc.",
+      "text": "All citizens shall have the right to freedom of speech and expression; to assemble peaceably and without arms; to form associations or unions or co-operative societies; to move freely throughout the territory of India; to reside and settle in any part of India; to practice any profession, or to carry on any occupation, trade or business.",
+      "reasonable_restrictions": "Subject to Article 19(2)-(6): sovereignty, security, public order, decency, contempt of court, defamation, incitement.",
+      "tags": ["freedom_of_speech", "expression", "assembly", "occupation"],
+      "legal_relevance": "Press freedom, social media posts, protest rights, right to practice a profession. Restrictions must be reasonable and narrowly tailored.",
+      "landmark_cases": [
+        "Romesh Thappar v. State of Madras (1950) — Free speech vs. public order",
+        "Shreya Singhal v. Union of India (2015) — Section 66A IT Act struck down",
+        "Maneka Gandhi v. Union of India (1978) — Right to go abroad part of personal liberty"
+      ]
+    },
+
+    {
+      "article": "20",
+      "title": "Protection in respect of conviction for offences",
+      "text": "(1) No person shall be convicted of any offence except for violation of a law in force at the time of the commission of the Act charged as an offence, nor be subjected to a penalty greater than that which might have been inflicted under the law in force at the time of the commission of the offence. (2) No person shall be prosecuted and punished for the same offence more than once. (3) No person accused of any offence shall be compelled to be a witness against himself.",
+      "tags": ["criminal_rights", "double_jeopardy", "self_incrimination", "bail"],
+      "legal_relevance": "Double jeopardy protection (Art 20(2)), right against self-incrimination (Art 20(3)) — accused cannot be forced to give evidence against themselves. Applies in all criminal investigations.",
+      "landmark_cases": [
+        "M.P. Sharma v. Satish Chandra (1954) — Self-incrimination and search & seizure",
+        "Nandini Satpathi v. P.L. Dani (1978) — Right to silence extends to interrogation"
+      ]
+    },
+
+    {
+      "article": "21",
+      "title": "Protection of life and personal liberty",
+      "text": "No person shall be deprived of his life or personal liberty except according to procedure established by law.",
+      "tags": ["personal_liberty", "right_to_life", "bail", "arrest", "dignity"],
+      "legal_relevance": "The most expansive fundamental right. Supreme Court has interpreted 'life' to include right to livelihood, health, education, clean environment, dignity, bail, speedy trial, legal aid. Cornerstone of every criminal defence.",
+      "sub_rights_read_in": [
+        "Right to speedy trial (Hussainara Khatoon, 1979)",
+        "Right to free legal aid",
+        "Right to be informed of grounds of arrest",
+        "Right to privacy (Puttaswamy, 2017 — 9 judge bench)",
+        "Right to live with dignity",
+        "Right to health and medical treatment"
+      ],
+      "landmark_cases": [
+        "Maneka Gandhi v. Union of India (1978) — Procedure must be fair, just, reasonable",
+        "Hussainara Khatoon v. State of Bihar (1979) — Speedy trial is a fundamental right",
+        "K.S. Puttaswamy v. Union of India (2017) — Right to privacy is a fundamental right",
+        "Arnesh Kumar v. State of Bihar (2014) — Arrest must be necessary, not automatic"
+      ]
+    },
+
+    {
+      "article": "22",
+      "title": "Protection against arrest and detention in certain cases",
+      "text": "(1) No person who is arrested shall be detained in custody without being informed, as soon as may be, of the grounds for such arrest nor shall he be denied the right to consult, and to be defended by, a legal practitioner of his choice. (2) Every person who is arrested and detained in custody shall be produced before the nearest magistrate within a period of 24 hours of such arrest.",
+      "tags": ["arrest", "detention", "right_to_counsel", "bail", "criminal_defence"],
+      "legal_relevance": "Every accused has the right to: (a) know the grounds of arrest, (b) hire a lawyer immediately, (c) be produced before a magistrate within 24 hours. Violation of these rights can make the arrest unlawful.",
+      "landmark_cases": [
+        "D.K. Basu v. State of West Bengal (1997) — Police must follow arrest guidelines",
+        "Joginder Kumar v. State of U.P. (1994) — Arrest only if genuinely necessary"
+      ]
+    },
+
+    {
+      "article": "23",
+      "title": "Prohibition of traffic in human beings and forced labour",
+      "text": "Traffic in human beings and begar and other similar forms of forced labour are prohibited and any contravention of this provision shall be an offence punishable in accordance with law.",
+      "tags": ["human_trafficking", "forced_labour", "bonded_labour"],
+      "legal_relevance": "Bonded labour, trafficking, forced unpaid work. Relevant in migrant labour disputes and domestic worker exploitation cases."
+    },
+
+    {
+      "article": "24",
+      "title": "Prohibition of employment of children in factories etc.",
+      "text": "No child below the age of fourteen years shall be employed to work in any factory or mine or engaged in any other hazardous employment.",
+      "tags": ["child_labour", "employment", "children_rights"]
+    },
+
+    {
+      "article": "25",
+      "title": "Freedom of conscience and free profession, practice and propagation of religion",
+      "text": "Subject to public order, morality and health and to the other provisions of this Part, all persons are equally entitled to freedom of conscience and the right freely to profess, practise and propagate religion.",
+      "tags": ["religion", "freedom_of_religion", "minorities"]
+    },
+
+    {
+      "article": "32",
+      "title": "Remedies for enforcement of rights conferred by this Part",
+      "text": "The right to move the Supreme Court by appropriate proceedings for the enforcement of the rights conferred by this Part is guaranteed. The Supreme Court shall have power to issue directions or orders or writs, including writs in the nature of habeas corpus, mandamus, prohibition, quo warranto and certiorari, whichever may be appropriate, for the enforcement of any of the rights conferred by this Part.",
+      "tags": ["writ", "habeas_corpus", "mandamus", "supreme_court", "enforcement"],
+      "legal_relevance": "The 'heart and soul of the Constitution' (Dr Ambedkar). Any person can directly approach the Supreme Court if a fundamental right is violated. For High Courts, see Article 226.",
+      "landmark_cases": [
+        "Romesh Thappar v. State of Madras (1950) — Article 32 is a fundamental right itself"
+      ]
+    }
+  ],
+
+  "directive_principles": [
+
+    {
+      "article": "38",
+      "title": "State to secure a social order for the promotion of welfare of the people",
+      "text": "The State shall strive to promote the welfare of the people by securing and protecting as effectively as it may a social order in which justice, social, economic and political, shall inform all the institutions of the national life.",
+      "tags": ["welfare", "social_justice", "directive_principles"],
+      "note": "DPSPs are not enforceable in court but guide state policy and are used to interpret laws."
+    },
+
+    {
+      "article": "39A",
+      "title": "Equal justice and free legal aid",
+      "text": "The State shall secure that the operation of the legal system promotes justice, on a basis of equal opportunity, and shall, in particular, provide free legal aid, by suitable legislation or schemes or in any other way, to ensure that opportunities for securing justice are not denied to any citizen by reason of economic or other disabilities.",
+      "tags": ["legal_aid", "access_to_justice", "free_legal_aid"],
+      "legal_relevance": "Basis for the National Legal Services Authority (NALSA) and State Legal Services Authorities. Entitles persons below poverty line, women, SC/ST, disabled persons to free legal representation.",
+      "landmark_cases": [
+        "Hussainara Khatoon v. State of Bihar (1979) — Free legal aid is a right under Art 21 read with 39A",
+        "M.H. Hoskot v. State of Maharashtra (1978) — Right to free legal aid for accused"
+      ]
+    },
+
+    {
+      "article": "40",
+      "title": "Organisation of village panchayats",
+      "text": "The State shall take steps to organise village panchayats and endow them with such powers and authority as may be necessary to enable them to function as units of self-government.",
+      "tags": ["panchayat", "local_government"]
+    },
+
+    {
+      "article": "41",
+      "title": "Right to work, to education and to public assistance",
+      "text": "The State shall, within the limits of its economic capacity and development, make effective provision for securing the right to work, to education and to public assistance in cases of unemployment, old age, sickness and disablement.",
+      "tags": ["right_to_work", "employment", "social_security"]
+    },
+
+    {
+      "article": "43",
+      "title": "Living wage etc. for workers",
+      "text": "The State shall endeavour to secure, by suitable legislation or economic organisation or in any other way, to all workers, agricultural, industrial or otherwise, work, a living wage, conditions of work ensuring a decent standard of life and full enjoyment of leisure and social and cultural opportunities.",
+      "tags": ["wages", "workers_rights", "employment_law"]
+    }
+  ],
+
+  "other_key_articles": [
+
+    {
+      "article": "226",
+      "title": "Power of High Courts to issue certain writs",
+      "text": "Notwithstanding anything in article 32, every High Court shall have power, throughout the territories in relation to which it exercises jurisdiction, to issue to any person or authority, including in appropriate cases, any Government, within those territories directions, orders or writs.",
+      "tags": ["writ", "high_court", "habeas_corpus", "enforcement"],
+      "legal_relevance": "High Courts can issue habeas corpus to secure release of an unlawfully detained person. Faster to approach a HC under 226 than SC under 32 in urgent cases."
+    },
+
+    {
+      "article": "300A",
+      "title": "Persons not to be deprived of property save by authority of law",
+      "text": "No person shall be deprived of his property save by authority of law.",
+      "tags": ["property_rights", "landlord_tenant", "eviction"],
+      "legal_relevance": "Tenants cannot be evicted without due process of law. Arbitrary dispossession by a landlord is unconstitutional. This article is the basis for all rent control and eviction challenge proceedings.",
+      "landmark_cases": [
+        "State of Maharashtra v. Chandrabhan (1983) — Property right as constitutional right",
+        "K.T. Plantation v. State of Karnataka (2011) — Deprivation must follow fair procedure"
+      ]
+    },
+
+    {
+      "article": "21A",
+      "title": "Right to education",
+      "text": "The State shall provide free and compulsory education to all children of the age of 6 to 14 years in such manner as the State may, by law, determine.",
+      "tags": ["education", "children_rights", "right_to_education"],
+      "note": "Implemented by the Right to Education Act (RTE), 2009."
+    },
+
+    {
+      "article": "51A",
+      "title": "Fundamental Duties",
+      "text": "It shall be the duty of every citizen of India: (a) to abide by the Constitution and respect its ideals and institutions, the National Flag and the National Anthem; (b) to cherish and follow the noble ideals which inspired our national struggle for freedom; ... (g) to protect and improve the natural environment; ... (j) to strive towards excellence in all spheres of individual and collective activity.",
+      "tags": ["duties", "citizens", "fundamental_duties"]
+    },
+
+    {
+      "article": "368",
+      "title": "Power of Parliament to amend the Constitution",
+      "text": "Parliament may in exercise of its constituent power amend by way of addition, variation or repeal any provision of this Constitution in accordance with the procedure laid down in this article.",
+      "tags": ["amendment", "parliament", "constitutional_law"],
+      "landmark_cases": [
+        "Kesavananda Bharati v. State of Kerala (1973) — Basic Structure doctrine: Parliament cannot destroy the basic structure of the Constitution"
+      ]
+    }
+  ],
+
+  "quick_reference": {
+    "arrest_rights":       ["Article 22 (Right to counsel, produced before magistrate within 24hrs)", "Article 21 (Personal liberty)", "Article 20(3) (No self-incrimination)"],
+    "tenant_eviction":     ["Article 300A (Cannot be deprived of property without law)", "Article 21 (Right to shelter as part of right to life)"],
+    "equality_workplace":  ["Article 14 (Equality before law)", "Article 15 (No discrimination)", "Article 16 (Equal opportunity in public employment)"],
+    "free_legal_aid":      ["Article 39A (Free legal aid — DPSP)", "Article 21 read with Hussainara Khatoon"],
+    "free_speech":         ["Article 19(1)(a) (Freedom of speech)", "Subject to Article 19(2) (Reasonable restrictions)"],
+    "religion_minority":   ["Article 25 (Freedom of religion)", "Articles 29–30 (Minority rights)"],
+    "child_rights":        ["Article 21A (Right to education)", "Article 24 (No child labour)"],
+    "privacy":             ["Article 21 as interpreted in Puttaswamy (2017)", "No separate article — read into Art 21"],
+    "writ_petition":       ["Article 32 (Supreme Court)", "Article 226 (High Court)"]
+  },
+
+  "landmark_cases_master": [
+    {
+      "name": "Kesavananda Bharati v. State of Kerala",
+      "year": 1973,
+      "court": "Supreme Court of India (13-judge bench)",
+      "principle": "Basic Structure Doctrine — Parliament cannot destroy the basic structure of the Constitution",
+      "tags": ["constitutional_law", "amendment", "basic_structure"]
+    },
+    {
+      "name": "Maneka Gandhi v. Union of India",
+      "year": 1978,
+      "court": "Supreme Court",
+      "principle": "Article 21 requires procedure to be fair, just and reasonable; Articles 14, 19 and 21 are interconnected",
+      "tags": ["article_21", "personal_liberty", "procedure"]
+    },
+    {
+      "name": "Hussainara Khatoon v. State of Bihar",
+      "year": 1979,
+      "court": "Supreme Court",
+      "principle": "Speedy trial is a fundamental right under Article 21; free legal aid flows from Articles 21 and 39A",
+      "tags": ["bail", "speedy_trial", "legal_aid", "article_21"]
+    },
+    {
+      "name": "D.K. Basu v. State of West Bengal",
+      "year": 1997,
+      "court": "Supreme Court",
+      "principle": "Detailed guidelines for arrest procedure. Police must follow 11 mandatory requirements. Violation = contempt of court",
+      "tags": ["arrest", "police_powers", "article_22"]
+    },
+    {
+      "name": "Arnesh Kumar v. State of Bihar",
+      "year": 2014,
+      "court": "Supreme Court",
+      "principle": "Mechanical arrests under IPC 498A (now BNS 85) prohibited. Magistrate must apply mind before authorising detention",
+      "tags": ["arrest", "domestic_violence", "bail", "habeas_corpus"]
+    },
+    {
+      "name": "K.S. Puttaswamy v. Union of India",
+      "year": 2017,
+      "court": "Supreme Court (9-judge bench)",
+      "principle": "Right to Privacy is a fundamental right under Article 21. This decision impacted Aadhaar and data protection law.",
+      "tags": ["privacy", "article_21", "data_protection"]
+    },
+    {
+      "name": "Shreya Singhal v. Union of India",
+      "year": 2015,
+      "court": "Supreme Court",
+      "principle": "Section 66A IT Act struck down as unconstitutional — vague law cannot restrict speech under Article 19",
+      "tags": ["free_speech", "internet", "article_19"]
+    }
+  ]
+}

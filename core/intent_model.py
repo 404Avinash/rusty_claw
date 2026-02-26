@@ -43,6 +43,7 @@ ACTION_LABELS: dict[str, str] = {
     "misrepresent_law":                "Misrepresent the Law",
     "advise_illegal_activity":         "Advise Illegal Activity",
     "summarize_precedents":            "Summarise Legal Precedents",
+    "search_legal_knowledge":          "Search BNS 2023 / Constitution",
 }
 
 # Plain English explanations for each action (shown in the chat panel)
