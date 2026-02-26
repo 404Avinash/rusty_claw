@@ -1,18 +1,14 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="en">
 
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>OpenClaw AI Lawyer — Intelligent Legal Agent</title>
-  <meta name="description"
-    content="AI-powered legal agent with ArmorIQ intent enforcement. Handles Landlord/Tenant, Employment, Contract, and Criminal law — and literally cannot cut corners." />
-  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <meta name="viewport" content="width=device-width,initial-scale=1.0" />
+  <title>AI Lawyer — OpenClaw x ArmorIQ</title>
   <link
     href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap"
     rel="stylesheet" />
   <style>
-    /* ─── Reset ─── */
     *,
     *::before,
     *::after {
@@ -22,39 +18,37 @@
     }
 
     :root {
-      --bg-0: #050810;
-      --bg-1: #080d1a;
-      --bg-2: #0f1729;
-      --bg-3: #182240;
+      --bg0: #050810;
+      --bg1: #080d1a;
+      --bg2: #0f1729;
+      --bg3: #182240;
       --border: rgba(99, 179, 237, .1);
-      --border-hi: rgba(99, 179, 237, .28);
+      --bhi: rgba(99, 179, 237, .28);
       --cyan: #63b3ed;
-      --cyan-glow: rgba(99, 179, 237, .15);
-      --cyan-dim: rgba(99, 179, 237, .08);
+      --cglow: rgba(99, 179, 237, .15);
+      --cdim: rgba(99, 179, 237, .08);
       --purple: #b794f4;
-      --purple-glow: rgba(183, 148, 244, .15);
+      --pglow: rgba(183, 148, 244, .15);
       --gold: #f6e05e;
-      --gold-dim: rgba(246, 224, 94, .1);
+      --gdim: rgba(246, 224, 94, .1);
       --green: #68d391;
-      --green-dim: rgba(104, 211, 145, .1);
+      --grdim: rgba(104, 211, 145, .1);
       --red: #fc8181;
-      --red-dim: rgba(252, 129, 129, .1);
-      --orange: #f6ad55;
+      --rdim: rgba(252, 129, 129, .1);
       --t1: #e2e8f0;
       --t2: #94a3b8;
       --t3: #475569;
-      --t4: #2d3748;
-      --font: 'Inter', sans-serif;
-      --mono: 'JetBrains Mono', monospace;
+      --font: "Inter", sans-serif;
+      --mono: "JetBrains Mono", monospace;
       --r: 12px;
-      --r-sm: 8px;
+      --rs: 8px
     }
 
     html,
     body {
       height: 100%;
       overflow: hidden;
-      background: var(--bg-0);
+      background: var(--bg0);
       color: var(--t1);
       font-family: var(--font);
       font-size: 14px
@@ -64,62 +58,54 @@
       width: 4px
     }
 
-    ::-webkit-scrollbar-track {
-      background: transparent
-    }
-
     ::-webkit-scrollbar-thumb {
-      background: var(--border-hi);
+      background: var(--bhi);
       border-radius: 2px
     }
 
-    /* ─── Animated bg ─── */
     body::before {
-      content: '';
+      content: "";
       position: fixed;
       inset: 0;
-      background: radial-gradient(ellipse 80vw 60vh at 20% 10%, rgba(99, 179, 237, .04) 0%, transparent 70%),
-        radial-gradient(ellipse 60vw 50vh at 80% 80%, rgba(183, 148, 244, .04) 0%, transparent 70%);
+      background: radial-gradient(ellipse 80vw 60vh at 20% 10%, rgba(99, 179, 237, .04), transparent), radial-gradient(ellipse 60vw 50vh at 80% 80%, rgba(183, 148, 244, .04), transparent);
       pointer-events: none;
-      z-index: 0;
+      z-index: 0
     }
 
-    /* ─── Header ─── */
     .hdr {
       position: relative;
       z-index: 10;
       background: rgba(8, 13, 26, .9);
       backdrop-filter: blur(20px);
       border-bottom: 1px solid var(--border);
-      height: 58px;
-      padding: 0 24px;
+      height: 56px;
+      padding: 0 20px;
       display: flex;
       align-items: center;
       justify-content: space-between;
-      flex-shrink: 0;
+      flex-shrink: 0
     }
 
     .hdr-brand {
       display: flex;
       align-items: center;
-      gap: 12px
+      gap: 10px
     }
 
     .hdr-logo {
-      width: 36px;
-      height: 36px;
-      border-radius: 10px;
-      flex-shrink: 0;
+      width: 33px;
+      height: 33px;
+      border-radius: 9px;
       background: linear-gradient(135deg, var(--cyan), var(--purple));
       display: flex;
       align-items: center;
       justify-content: center;
-      font-size: 18px;
-      box-shadow: 0 0 20px rgba(99, 179, 237, .25);
+      font-size: 17px;
+      box-shadow: 0 0 18px rgba(99, 179, 237, .25)
     }
 
     .hdr-name {
-      font-size: 16px;
+      font-size: 15px;
       font-weight: 700;
       background: linear-gradient(90deg, var(--cyan), var(--purple));
       -webkit-background-clip: text;
@@ -127,43 +113,83 @@
     }
 
     .hdr-sub {
-      font-size: 11px;
+      font-size: 10px;
       color: var(--t3)
     }
 
     .hdr-right {
       display: flex;
       align-items: center;
-      gap: 12px
+      gap: 10px
     }
 
     .badge {
-      padding: 4px 11px;
+      padding: 3px 9px;
       border-radius: 20px;
-      font-size: 11px;
+      font-size: 10px;
       font-weight: 600;
-      letter-spacing: .06em
+      letter-spacing: .05em
+    }
+
+    .badge-bns {
+      border: 1px solid rgba(104, 211, 145, .2);
+      color: var(--green);
+      background: var(--grdim)
     }
 
     .badge-sim {
-      border: 1px solid var(--gold-dim);
+      border: 1px solid var(--gdim);
       color: var(--gold);
-      background: var(--gold-dim)
+      background: var(--gdim)
     }
 
-    .badge-live {
-      border: 1px solid rgba(104, 211, 145, .2);
-      color: var(--green);
-      background: var(--green-dim)
-    }
-
-    .dot-live {
-      width: 7px;
-      height: 7px;
+    .dot {
+      width: 6px;
+      height: 6px;
       border-radius: 50%;
       background: var(--green);
-      box-shadow: 0 0 8px var(--green);
+      box-shadow: 0 0 7px var(--green);
       animation: pulse 2s infinite
+    }
+
+    .stats-strip {
+      display: flex;
+      gap: 14px
+    }
+
+    .stat-item {
+      display: flex;
+      flex-direction: column;
+      align-items: center
+    }
+
+    .stat-n {
+      font-size: 14px;
+      font-weight: 700;
+      line-height: 1
+    }
+
+    .stat-l {
+      font-size: 9px;
+      color: var(--t3)
+    }
+
+    .stat-a .stat-n {
+      color: var(--green)
+    }
+
+    .stat-b .stat-n {
+      color: var(--red)
+    }
+
+    .stat-t .stat-n {
+      color: var(--cyan)
+    }
+
+    .sess {
+      font-size: 10px;
+      color: var(--t3);
+      font-family: var(--mono)
     }
 
     @keyframes pulse {
@@ -180,229 +206,171 @@
       }
     }
 
-    .stats-strip {
-      display: flex;
-      gap: 16px;
-      align-items: center
-    }
-
-    .stat-item {
-      display: flex;
-      flex-direction: column;
-      align-items: center
-    }
-
-    .stat-n {
-      font-size: 15px;
-      font-weight: 700;
-      line-height: 1
-    }
-
-    .stat-l {
-      font-size: 10px;
-      color: var(--t3)
-    }
-
-    .stat-allowed .stat-n {
-      color: var(--green)
-    }
-
-    .stat-blocked .stat-n {
-      color: var(--red)
-    }
-
-    .stat-total .stat-n {
-      color: var(--cyan)
-    }
-
-    /* ─── Main layout ─── */
     .layout {
       display: grid;
-      grid-template-columns: 290px 1fr 300px;
-      height: calc(100vh - 58px);
+      grid-template-columns: 275px 1fr 285px;
+      height: calc(100vh - 56px);
       position: relative;
       z-index: 1
     }
 
-    /* ─── Left Panel ─── */
     .left {
-      background: var(--bg-1);
+      background: var(--bg1);
       border-right: 1px solid var(--border);
       display: flex;
       flex-direction: column;
       overflow: hidden
     }
 
-    .panel-sec {
-      padding: 14px 16px;
+    .psec {
+      padding: 12px 13px;
       border-bottom: 1px solid var(--border);
       flex-shrink: 0
     }
 
-    .sec-lbl {
+    .slbl {
       font-size: 10px;
       font-weight: 700;
       letter-spacing: .1em;
       color: var(--t3);
       text-transform: uppercase;
-      margin-bottom: 10px;
+      margin-bottom: 8px;
       display: flex;
       align-items: center;
-      gap: 6px
+      gap: 5px
     }
 
-    .sec-lbl::after {
-      content: '';
+    .slbl::after {
+      content: "";
       flex: 1;
       height: 1px;
       background: var(--border)
     }
 
-    /* Case type selector */
     .case-grid {
       display: grid;
       grid-template-columns: 1fr 1fr;
-      gap: 6px;
+      gap: 5px;
       margin-bottom: 6px
     }
 
-    .case-card {
-      padding: 10px 10px 8px;
-      border-radius: var(--r-sm);
-      background: var(--bg-2);
+    .ccard {
+      padding: 9px 7px 7px;
+      border-radius: var(--rs);
+      background: var(--bg2);
       border: 1.5px solid var(--border);
       cursor: pointer;
       transition: all .2s;
-      text-align: center;
+      text-align: center
     }
 
-    .case-card:hover {
-      border-color: var(--border-hi);
-      background: var(--bg-3);
+    .ccard:hover {
+      border-color: var(--bhi);
+      background: var(--bg3);
       transform: translateY(-1px)
     }
 
-    .case-card.active {
+    .ccard.active {
       border-color: var(--cyan);
-      background: var(--cyan-dim);
-      box-shadow: 0 0 12px var(--cyan-glow)
+      background: var(--cdim);
+      box-shadow: 0 0 10px var(--cglow)
     }
 
-    .case-card.active.emp {
+    .ccard.active.emp {
       border-color: var(--purple);
-      background: var(--purple-glow)
+      background: var(--pglow)
     }
 
-    .case-card.active.con {
+    .ccard.active.con {
       border-color: var(--gold);
-      background: var(--gold-dim)
+      background: var(--gdim)
     }
 
-    .case-card.active.crim {
+    .ccard.active.crim {
       border-color: var(--red);
-      background: var(--red-dim)
+      background: var(--rdim)
     }
 
     .cc-icon {
-      font-size: 20px;
+      font-size: 18px;
       display: block;
-      margin-bottom: 4px
+      margin-bottom: 3px
     }
 
     .cc-name {
-      font-size: 10px;
+      font-size: 9px;
       font-weight: 600;
       color: var(--t1);
       line-height: 1.3
     }
 
-    /* Form */
-    .form-group {
-      display: flex;
-      flex-direction: column;
-      gap: 8px
-    }
-
     textarea,
-    input,
-    select {
+    input {
       width: 100%;
-      background: var(--bg-2);
+      background: var(--bg2);
       border: 1px solid var(--border);
-      border-radius: var(--r-sm);
-      padding: 9px 12px;
+      border-radius: var(--rs);
+      padding: 7px 11px;
       color: var(--t1);
       font-family: var(--font);
-      font-size: 13px;
+      font-size: 12px;
       outline: none;
-      transition: border-color .2s, box-shadow .2s;
-      resize: none;
+      transition: border-color .2s;
+      resize: none
     }
 
     textarea:focus,
     input:focus {
       border-color: var(--cyan);
-      box-shadow: 0 0 0 3px var(--cyan-dim)
+      box-shadow: 0 0 0 2px var(--cdim)
     }
 
     textarea {
-      height: 85px
+      height: 76px
     }
 
-    .row2 {
+    .fgrp {
       display: flex;
+      flex-direction: column;
       gap: 6px
     }
 
-    .row2 input {
-      flex: 1
-    }
-
-    /* Buttons */
     .btn {
-      padding: 9px 14px;
-      border-radius: var(--r-sm);
+      padding: 7px 12px;
+      border-radius: var(--rs);
       border: none;
       font-family: var(--font);
-      font-size: 13px;
+      font-size: 12px;
       font-weight: 600;
       cursor: pointer;
       transition: all .2s;
       display: flex;
       align-items: center;
       justify-content: center;
-      gap: 6px;
-      white-space: nowrap;
+      gap: 5px;
+      white-space: nowrap
     }
 
     .btn-demo {
       width: 100%;
       background: linear-gradient(135deg, var(--cyan), var(--purple));
       color: #050810;
-      box-shadow: 0 4px 16px rgba(99, 179, 237, .25);
-      font-size: 13px;
-      padding: 11px;
+      box-shadow: 0 3px 14px rgba(99, 179, 237, .25);
+      padding: 9px
     }
 
     .btn-demo:hover {
       transform: translateY(-2px);
-      box-shadow: 0 8px 24px rgba(99, 179, 237, .35)
+      box-shadow: 0 6px 20px rgba(99, 179, 237, .35)
     }
 
     .btn-primary {
       background: linear-gradient(135deg, #2b6cb0, #553c9a);
-      color: #fff;
-      box-shadow: 0 3px 10px rgba(43, 108, 176, .25)
+      color: #fff
     }
 
     .btn-primary:hover {
-      transform: translateY(-1px);
-      box-shadow: 0 5px 14px rgba(43, 108, 176, .35)
-    }
-
-    .btn-sm {
-      padding: 6px 11px;
-      font-size: 12px
+      transform: translateY(-1px)
     }
 
     .btn:disabled {
@@ -411,51 +379,46 @@
       transform: none !important
     }
 
-    /* Quick actions */
     .qa-list {
       flex: 1;
       overflow-y: auto;
-      padding: 10px 12px;
+      padding: 7px 9px;
       display: flex;
       flex-direction: column;
-      gap: 5px
+      gap: 3px
     }
 
     .qa-item {
       display: flex;
       align-items: flex-start;
-      gap: 10px;
-      padding: 9px 11px;
-      border-radius: var(--r-sm);
-      background: var(--bg-2);
+      gap: 7px;
+      padding: 7px 9px;
+      border-radius: var(--rs);
+      background: var(--bg2);
       border: 1px solid var(--border);
       cursor: pointer;
-      transition: all .2s;
+      transition: all .2s
     }
 
     .qa-item:hover {
-      border-color: var(--border-hi);
-      background: var(--bg-3)
+      border-color: var(--bhi);
+      background: var(--bg3)
     }
 
     .qa-icon {
-      font-size: 15px;
+      font-size: 13px;
       flex-shrink: 0;
       margin-top: 1px
     }
 
-    .qa-text {
-      flex: 1
-    }
-
     .qa-title {
-      font-size: 12px;
+      font-size: 11px;
       font-weight: 600;
       color: var(--t1)
     }
 
     .qa-desc {
-      font-size: 11px;
+      font-size: 10px;
       color: var(--t3);
       margin-top: 1px;
       line-height: 1.3
@@ -467,64 +430,107 @@
       font-weight: 700;
       padding: 1px 5px;
       border-radius: 3px;
-      margin-top: 3px;
-      letter-spacing: .05em
+      margin-top: 2px
     }
 
-    .qa-tag-allow {
+    .qa-a {
       background: rgba(104, 211, 145, .12);
       color: var(--green)
     }
 
-    .qa-tag-block {
+    .qa-b {
       background: rgba(252, 129, 129, .12);
       color: var(--red)
     }
 
-    /* ─── Center / Feed ─── */
     .center {
       display: flex;
       flex-direction: column;
-      background: var(--bg-0);
-      background-image: radial-gradient(ellipse 100% 60% at 50% 0%, rgba(99, 179, 237, .03), transparent);
-      overflow: hidden;
+      background: var(--bg0);
+      overflow: hidden
     }
 
-    .feed-top {
-      padding: 14px 20px;
+    .tab-bar {
+      display: flex;
+      border-bottom: 1px solid var(--border);
+      flex-shrink: 0;
+      background: var(--bg1)
+    }
+
+    .tab {
+      padding: 11px 17px;
+      font-size: 12px;
+      font-weight: 600;
+      color: var(--t3);
+      cursor: pointer;
+      border-bottom: 2px solid transparent;
+      transition: all .2s;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      white-space: nowrap;
+      user-select: none
+    }
+
+    .tab:hover {
+      color: var(--t1);
+      background: rgba(255, 255, 255, .02)
+    }
+
+    .tab.active {
+      color: var(--cyan);
+      border-bottom-color: var(--cyan)
+    }
+
+    .tbadge {
+      font-size: 9px;
+      padding: 1px 5px;
+      border-radius: 9px;
+      background: var(--cdim);
+      color: var(--cyan);
+      border: 1px solid rgba(99, 179, 237, .2)
+    }
+
+    .tpanel {
+      display: none;
+      flex: 1;
+      flex-direction: column;
+      overflow: hidden
+    }
+
+    .tpanel.show {
+      display: flex
+    }
+
+    .ftop {
+      padding: 11px 18px;
       border-bottom: 1px solid var(--border);
       flex-shrink: 0;
       display: flex;
       align-items: center;
-      justify-content: space-between;
-      gap: 12px;
+      justify-content: space-between
     }
 
-    .feed-top-left {
-      flex: 1
+    .ftitle {
+      font-size: 14px;
+      font-weight: 700
     }
 
-    .feed-title {
-      font-size: 15px;
-      font-weight: 700;
-      color: var(--t1)
-    }
-
-    .feed-sub {
-      font-size: 11px;
+    .fsub {
+      font-size: 10px;
       color: var(--t3);
-      margin-top: 2px
+      margin-top: 1px
     }
 
-    .thinking-row {
+    .trow {
       display: flex;
       align-items: center;
-      gap: 8px;
-      font-size: 12px;
+      gap: 7px;
+      font-size: 11px;
       color: var(--cyan)
     }
 
-    .thinking-row.hidden {
+    .trow.hidden {
       visibility: hidden
     }
 
@@ -534,8 +540,8 @@
     }
 
     .dots span {
-      width: 5px;
-      height: 5px;
+      width: 4px;
+      height: 4px;
       border-radius: 50%;
       background: var(--cyan);
       animation: bounce 1s ease-in-out infinite
@@ -559,7 +565,7 @@
       }
 
       40% {
-        transform: translateY(-5px);
+        transform: translateY(-4px);
         opacity: 1
       }
     }
@@ -578,598 +584,19 @@
       transition: width .5s ease
     }
 
-    .feed-scroll {
+    .feed {
       flex: 1;
       overflow-y: auto;
-      padding: 16px 20px;
+      padding: 13px 18px;
       display: flex;
       flex-direction: column;
-      gap: 10px
-    }
-
-    /* Welcome screen */
-    .welcome {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      flex: 1;
-      text-align: center;
-      padding: 40px 20px;
-    }
-
-    .welcome-icon {
-      font-size: 56px;
-      margin-bottom: 16px;
-      animation: float 3s ease-in-out infinite
-    }
-
-    @keyframes float {
-
-      0%,
-      100% {
-        transform: translateY(0)
-      }
-
-      50% {
-        transform: translateY(-8px)
-      }
-    }
-
-    .welcome-title {
-      font-size: 22px;
-      font-weight: 800;
-      margin-bottom: 10px;
-      background: linear-gradient(90deg, var(--cyan), var(--purple));
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent
-    }
-
-    .welcome-sub {
-      font-size: 13px;
-      color: var(--t2);
-      line-height: 1.7;
-      max-width: 440px
-    }
-
-    .welcome-cta {
-      margin-top: 24px;
-      display: flex;
-      flex-wrap: wrap;
-      gap: 8px;
-      justify-content: center;
-    }
-
-    .welcome-cta-btn {
-      padding: 8px 16px;
-      border-radius: 20px;
-      font-size: 12px;
-      font-weight: 600;
-      cursor: pointer;
-      border: 1px solid;
-      transition: all .2s;
-      background: transparent;
-      font-family: var(--font);
-    }
-
-    .welcome-cta-btn:hover {
-      transform: translateY(-1px)
-    }
-
-    .wcb-demo {
-      border-color: var(--cyan);
-      color: var(--cyan)
-    }
-
-    .wcb-demo:hover {
-      background: var(--cyan-dim)
-    }
-
-    .wcb-ll {
-      border-color: var(--t3);
-      color: var(--t2)
-    }
-
-    .wcb-ll:hover {
-      background: var(--bg-3)
-    }
-
-    /* Feed cards */
-    .scene-div {
-      display: flex;
-      align-items: center;
-      gap: 10px;
-      margin: 4px 0
-    }
-
-    .scene-line {
-      flex: 1;
-      height: 1px;
-      background: var(--border)
-    }
-
-    .scene-pill {
-      font-size: 10px;
-      font-weight: 700;
-      letter-spacing: .08em;
-      text-transform: uppercase;
-      padding: 4px 12px;
-      border-radius: 20px;
-      border: 1px solid;
-      white-space: nowrap;
-    }
-
-    /* Practice area colors for scene pills */
-    .pill-lt {
-      color: var(--cyan);
-      border-color: rgba(99, 179, 237, .25);
-      background: var(--cyan-dim)
-    }
-
-    .pill-emp {
-      color: var(--purple);
-      border-color: rgba(183, 148, 244, .25);
-      background: var(--purple-glow)
-    }
-
-    .pill-con {
-      color: var(--gold);
-      border-color: rgba(246, 224, 94, .25);
-      background: var(--gold-dim)
-    }
-
-    .pill-crim {
-      color: var(--red);
-      border-color: rgba(252, 129, 129, .25);
-      background: var(--red-dim)
-    }
-
-    .pill-default {
-      color: var(--t2);
-      border-color: var(--border);
-      background: var(--bg-2)
-    }
-
-    .client-card {
-      background: linear-gradient(135deg, rgba(246, 224, 94, .05), rgba(246, 224, 94, .02));
-      border: 1px solid rgba(246, 224, 94, .2);
-      border-radius: var(--r);
-      padding: 13px 15px;
-      position: relative;
-      animation: slidein .35s ease-out;
-    }
-
-    .client-card::before {
-      content: '';
-      position: absolute;
-      left: 0;
-      top: 0;
-      bottom: 0;
-      width: 3px;
-      background: var(--gold);
-      border-radius: 3px 0 0 3px
-    }
-
-    .client-lbl {
-      font-size: 10px;
-      font-weight: 700;
-      letter-spacing: .1em;
-      color: var(--gold);
-      margin-bottom: 5px
-    }
-
-    .client-text {
-      font-size: 13px;
-      color: var(--t1);
-      line-height: 1.6;
-      font-style: italic
-    }
-
-    .intake-card {
-      background: linear-gradient(135deg, rgba(104, 211, 145, .05), rgba(104, 211, 145, .02));
-      border: 1px solid rgba(104, 211, 145, .2);
-      border-radius: var(--r);
-      padding: 13px 15px;
-      position: relative;
-      animation: slidein .35s ease-out;
-    }
-
-    .intake-card::before {
-      content: '';
-      position: absolute;
-      left: 0;
-      top: 0;
-      bottom: 0;
-      width: 3px;
-      background: var(--green);
-      border-radius: 3px 0 0 3px
-    }
-
-    .decision-card {
-      background: var(--bg-2);
-      border: 1px solid var(--border);
-      border-radius: var(--r);
-      overflow: hidden;
-      animation: slidein .35s ease-out;
-      transition: box-shadow .2s;
-    }
-
-    .decision-card:hover {
-      box-shadow: 0 4px 16px rgba(0, 0, 0, .3)
-    }
-
-    .dc-header {
-      padding: 10px 14px;
-      background: rgba(255, 255, 255, .02);
-      border-bottom: 1px solid var(--border);
-      display: flex;
-      align-items: center;
-      gap: 10px;
-    }
-
-    .dc-icon {
-      width: 28px;
-      height: 28px;
-      border-radius: 7px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 14px;
-      background: var(--bg-3);
-      flex-shrink: 0;
-    }
-
-    .dc-action {
-      font-family: var(--mono);
-      font-size: 12px;
-      color: var(--cyan);
-      font-weight: 500
-    }
-
-    .dc-agent {
-      margin-left: auto;
-      font-size: 11px;
-      color: var(--t3)
-    }
-
-    .del-tag {
-      font-size: 9px;
-      padding: 2px 6px;
-      border-radius: 4px;
-      background: rgba(183, 148, 244, .12);
-      color: var(--purple);
-      border: 1px solid rgba(183, 148, 244, .2);
-      font-weight: 600
-    }
-
-    .dc-body {
-      padding: 10px 14px;
-      display: flex;
-      flex-direction: column;
-      gap: 5px
-    }
-
-    .dc-row {
-      display: flex;
-      gap: 8px;
-      font-size: 12px
-    }
-
-    .dc-key {
-      color: var(--t3);
-      width: 60px;
-      flex-shrink: 0;
-      font-weight: 500
-    }
-
-    .dc-val {
-      color: var(--t2);
-      flex: 1;
-      line-height: 1.4
-    }
-
-    .verdict {
-      margin-top: 6px;
-      border-radius: 8px;
-      padding: 10px 12px;
-      display: flex;
-      flex-direction: column;
-      gap: 5px;
-    }
-
-    .verdict.ok {
-      background: var(--green-dim);
-      border: 1px solid rgba(104, 211, 145, .2)
-    }
-
-    .verdict.no {
-      background: var(--red-dim);
-      border: 1px solid rgba(252, 129, 129, .2)
-    }
-
-    .verdict-top {
-      display: flex;
-      align-items: center;
       gap: 8px
-    }
-
-    .verdict-badge {
-      font-size: 10px;
-      font-weight: 800;
-      letter-spacing: .07em;
-      padding: 3px 9px;
-      border-radius: 6px
-    }
-
-    .verdict-badge.ok {
-      background: rgba(104, 211, 145, .2);
-      color: var(--green)
-    }
-
-    .verdict-badge.no {
-      background: rgba(252, 129, 129, .2);
-      color: var(--red)
-    }
-
-    .verdict-reason {
-      font-size: 12px;
-      color: var(--t2);
-      line-height: 1.5
-    }
-
-    .verdict-rule {
-      font-size: 11px;
-      font-family: var(--mono);
-      color: var(--red);
-      padding: 4px 8px;
-      background: rgba(252, 129, 129, .07);
-      border-radius: 4px;
-      border-left: 2px solid var(--red)
-    }
-
-    .verdict-result {
-      font-size: 11px;
-      color: var(--t3);
-      font-style: italic
-    }
-
-    /* ─── Client advice section ─── */
-    .client-advice-box {
-      margin-top: 8px;
-      padding: 11px 13px;
-      border-radius: 8px;
-      background: rgba(99, 179, 237, .05);
-      border: 1px solid rgba(99, 179, 237, .15);
-    }
-
-    .client-advice-box.blocked {
-      background: rgba(252, 129, 129, .04);
-      border-color: rgba(252, 129, 129, .15);
-    }
-
-    .ca-section-lbl {
-      font-size: 10px;
-      font-weight: 700;
-      letter-spacing: .08em;
-      text-transform: uppercase;
-      margin-bottom: 5px;
-      display: flex;
-      align-items: center;
-      gap: 5px;
-    }
-
-    .ca-section-lbl.ok {
-      color: var(--cyan);
-    }
-
-    .ca-section-lbl.no {
-      color: var(--red);
-    }
-
-    .ca-advice-text {
-      font-size: 13px;
-      color: var(--t1);
-      line-height: 1.65;
-      margin-bottom: 8px;
-    }
-
-    .ca-next-step {
-      display: flex;
-      align-items: flex-start;
-      gap: 8px;
-      padding: 8px 10px;
-      background: rgba(246, 224, 94, .06);
-      border: 1px solid rgba(246, 224, 94, .15);
-      border-radius: 6px;
-      font-size: 12px;
-      color: var(--t2);
-      line-height: 1.5;
-    }
-
-    .ca-next-icon {
-      flex-shrink: 0;
-      font-size: 14px;
-      margin-top: 1px;
-    }
-
-    /* ─── Action Plan Summary Card ─── */
-    .summary-card {
-      border-radius: var(--r);
-      overflow: hidden;
-      animation: slidein .5s ease-out;
-      border: 1px solid rgba(99, 179, 237, .25);
-    }
-
-    .summary-hdr {
-      padding: 16px 18px;
-      background: linear-gradient(135deg, rgba(99, 179, 237, .1), rgba(183, 148, 244, .08));
-      border-bottom: 1px solid rgba(99, 179, 237, .15);
-      display: flex;
-      align-items: center;
-      gap: 14px;
-    }
-
-    .summary-icon {
-      font-size: 32px;
-      flex-shrink: 0;
-    }
-
-    .summary-title {
-      font-size: 16px;
-      font-weight: 800;
-      background: linear-gradient(90deg, var(--cyan), var(--purple));
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-    }
-
-    .summary-subtitle {
-      font-size: 12px;
-      color: var(--t3);
-      margin-top: 2px;
-    }
-
-    .summary-body {
-      padding: 16px 18px;
-      background: var(--bg-2);
-    }
-
-    .summary-section {
-      margin-bottom: 16px;
-    }
-
-    .summary-section:last-child {
-      margin-bottom: 0;
-    }
-
-    .summary-sec-lbl {
-      font-size: 11px;
-      font-weight: 700;
-      letter-spacing: .08em;
-      text-transform: uppercase;
-      color: var(--t3);
-      margin-bottom: 9px;
-      display: flex;
-      align-items: center;
-      gap: 6px;
-    }
-
-    .finding-item {
-      display: flex;
-      align-items: flex-start;
-      gap: 8px;
-      padding: 7px 10px;
-      background: var(--green-dim);
-      border: 1px solid rgba(104, 211, 145, .15);
-      border-radius: 7px;
-      font-size: 13px;
-      color: var(--t1);
-      line-height: 1.5;
-      margin-bottom: 5px;
-    }
-
-    .finding-item-icon {
-      flex-shrink: 0;
-      color: var(--green);
-      font-size: 14px;
-      margin-top: 1px;
-    }
-
-    .step-item {
-      display: flex;
-      align-items: flex-start;
-      gap: 12px;
-      padding: 10px 12px;
-      background: var(--bg-3);
-      border: 1px solid var(--border);
-      border-radius: 8px;
-      margin-bottom: 6px;
-      transition: border-color .2s;
-    }
-
-    .step-item:hover {
-      border-color: var(--border-hi);
-    }
-
-    .step-num {
-      width: 22px;
-      height: 22px;
-      border-radius: 50%;
-      background: linear-gradient(135deg, var(--cyan), var(--purple));
-      color: #050810;
-      font-size: 11px;
-      font-weight: 800;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      flex-shrink: 0;
-      margin-top: 1px;
-    }
-
-    .step-text {
-      font-size: 13px;
-      color: var(--t1);
-      line-height: 1.55;
-    }
-
-    .summary-stats {
-      display: flex;
-      gap: 12px;
-      margin-top: 4px;
-    }
-
-    .sum-stat {
-      flex: 1;
-      padding: 10px;
-      border-radius: 8px;
-      text-align: center;
-    }
-
-    .sum-stat.ok {
-      background: var(--green-dim);
-      border: 1px solid rgba(104, 211, 145, .2);
-    }
-
-    .sum-stat.no {
-      background: var(--red-dim);
-      border: 1px solid rgba(252, 129, 129, .2);
-    }
-
-    .sum-stat-n {
-      font-size: 22px;
-      font-weight: 800;
-    }
-
-    .sum-stat.ok .sum-stat-n {
-      color: var(--green);
-    }
-
-    .sum-stat.no .sum-stat-n {
-      color: var(--red);
-    }
-
-    .sum-stat-l {
-      font-size: 10px;
-      color: var(--t3);
-      margin-top: 2px;
-    }
-
-    .think-card {
-      display: flex;
-      align-items: center;
-      gap: 10px;
-      padding: 9px 13px;
-      background: rgba(99, 179, 237, .03);
-      border: 1px solid rgba(99, 179, 237, .1);
-      border-radius: var(--r-sm);
-      font-size: 12px;
-      color: var(--t3);
-      animation: fadein .25s ease-out;
     }
 
     @keyframes slidein {
       from {
         opacity: 0;
-        transform: translateY(8px)
+        transform: translateY(7px)
       }
 
       to {
@@ -1188,105 +615,784 @@
       }
     }
 
-    .done-card {
-      border-radius: var(--r);
-      padding: 20px;
-      animation: slidein .45s ease-out;
-      background: linear-gradient(135deg, rgba(99, 179, 237, .07), rgba(183, 148, 244, .07));
-      border: 1px solid rgba(99, 179, 237, .25);
+    @keyframes floatup {
+
+      0%,
+      100% {
+        transform: translateY(0)
+      }
+
+      50% {
+        transform: translateY(-7px)
+      }
+    }
+
+    .welcome {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      flex: 1;
+      text-align: center;
+      padding: 40px 20px
+    }
+
+    .w-icon {
+      font-size: 50px;
+      margin-bottom: 13px;
+      animation: floatup 3s ease-in-out infinite
+    }
+
+    .w-title {
+      font-size: 19px;
+      font-weight: 800;
+      margin-bottom: 8px;
+      background: linear-gradient(90deg, var(--cyan), var(--purple));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent
+    }
+
+    .w-sub {
+      font-size: 12px;
+      color: var(--t2);
+      line-height: 1.7;
+      max-width: 390px
+    }
+
+    .w-chips {
+      margin-top: 16px;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 7px;
+      justify-content: center
+    }
+
+    .chip {
+      padding: 5px 13px;
+      border-radius: 16px;
+      font-size: 11px;
+      font-weight: 600;
+      cursor: pointer;
+      border: 1px solid var(--bhi);
+      color: var(--t2);
+      background: transparent;
+      font-family: var(--font);
+      transition: all .2s
+    }
+
+    .chip:hover {
+      background: var(--bg3);
+      color: var(--t1)
+    }
+
+    .chip.demo {
+      border-color: var(--cyan);
+      color: var(--cyan)
+    }
+
+    .chip.demo:hover {
+      background: var(--cdim)
+    }
+
+    .sdiv {
       display: flex;
       align-items: center;
-      gap: 18px;
+      gap: 8px;
+      margin: 3px 0
     }
 
-    .done-nums {
+    .sline {
+      flex: 1;
+      height: 1px;
+      background: var(--border)
+    }
+
+    .spill {
+      font-size: 9px;
+      font-weight: 700;
+      letter-spacing: .07em;
+      text-transform: uppercase;
+      padding: 3px 10px;
+      border-radius: 16px;
+      border: 1px solid;
+      white-space: nowrap
+    }
+
+    .spill-d {
+      color: var(--t2);
+      border-color: var(--border);
+      background: var(--bg2)
+    }
+
+    .spill-ok {
+      color: var(--cyan);
+      border-color: rgba(99, 179, 237, .25);
+      background: var(--cdim)
+    }
+
+    .spill-no {
+      color: var(--red);
+      border-color: rgba(252, 129, 129, .25);
+      background: var(--rdim)
+    }
+
+    .spill-del {
+      color: var(--purple);
+      border-color: rgba(183, 148, 244, .25);
+      background: var(--pglow)
+    }
+
+    .ccrd {
+      background: linear-gradient(135deg, rgba(246, 224, 94, .05), rgba(246, 224, 94, .02));
+      border: 1px solid rgba(246, 224, 94, .2);
+      border-radius: var(--r);
+      padding: 11px 13px;
+      position: relative;
+      animation: slidein .35s ease-out
+    }
+
+    .ccrd::before {
+      content: "";
+      position: absolute;
+      left: 0;
+      top: 0;
+      bottom: 0;
+      width: 3px;
+      background: var(--gold);
+      border-radius: 3px 0 0 3px
+    }
+
+    .c-lbl {
+      font-size: 9px;
+      font-weight: 700;
+      letter-spacing: .1em;
+      color: var(--gold);
+      margin-bottom: 4px
+    }
+
+    .c-txt {
+      font-size: 12px;
+      color: var(--t1);
+      line-height: 1.6;
+      font-style: italic
+    }
+
+    .icrd {
+      background: rgba(104, 211, 145, .04);
+      border: 1px solid rgba(104, 211, 145, .2);
+      border-radius: var(--r);
+      padding: 11px 13px;
+      position: relative;
+      animation: slidein .35s ease-out
+    }
+
+    .icrd::before {
+      content: "";
+      position: absolute;
+      left: 0;
+      top: 0;
+      bottom: 0;
+      width: 3px;
+      background: var(--green);
+      border-radius: 3px 0 0 3px
+    }
+
+    .icrd-lbl {
+      font-size: 9px;
+      font-weight: 700;
+      letter-spacing: .1em;
+      color: var(--green);
+      margin-bottom: 4px
+    }
+
+    .dc {
+      background: var(--bg2);
+      border: 1px solid var(--border);
+      border-radius: var(--r);
+      overflow: hidden;
+      animation: slidein .35s ease-out
+    }
+
+    .dc-hdr {
+      padding: 8px 12px;
+      background: rgba(255, 255, 255, .02);
+      border-bottom: 1px solid var(--border);
       display: flex;
-      gap: 16px;
-      margin-top: 6px
+      align-items: center;
+      gap: 7px
     }
 
-    .done-stat {
-      text-align: center
+    .dc-ico {
+      width: 25px;
+      height: 25px;
+      border-radius: 6px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 12px;
+      background: var(--bg3);
+      flex-shrink: 0
     }
 
-    .done-stat-n {
-      font-size: 26px;
-      font-weight: 800;
-      line-height: 1
+    .dc-action {
+      font-family: var(--mono);
+      font-size: 11px;
+      color: var(--cyan);
+      font-weight: 500
     }
 
-    .done-stat-l {
+    .dc-label {
+      font-size: 11px;
+      color: var(--t2)
+    }
+
+    .dc-agent {
+      margin-left: auto;
       font-size: 10px;
+      color: var(--t3)
+    }
+
+    .dtag {
+      font-size: 9px;
+      padding: 1px 5px;
+      border-radius: 3px;
+      background: rgba(183, 148, 244, .12);
+      color: var(--purple);
+      border: 1px solid rgba(183, 148, 244, .2);
+      font-weight: 600
+    }
+
+    .dc-body {
+      padding: 8px 12px;
+      display: flex;
+      flex-direction: column;
+      gap: 4px
+    }
+
+    .dc-row {
+      display: flex;
+      gap: 7px;
+      font-size: 11px
+    }
+
+    .dc-key {
+      color: var(--t3);
+      width: 52px;
+      flex-shrink: 0;
+      font-weight: 500
+    }
+
+    .dc-val {
+      color: var(--t2);
+      flex: 1;
+      line-height: 1.4
+    }
+
+    .verd {
+      margin-top: 5px;
+      border-radius: 7px;
+      padding: 8px 10px;
+      display: flex;
+      flex-direction: column;
+      gap: 3px
+    }
+
+    .verd.ok {
+      background: var(--grdim);
+      border: 1px solid rgba(104, 211, 145, .2)
+    }
+
+    .verd.no {
+      background: var(--rdim);
+      border: 1px solid rgba(252, 129, 129, .2)
+    }
+
+    .verd-top {
+      display: flex;
+      align-items: center;
+      gap: 7px
+    }
+
+    .vbadge {
+      font-size: 9px;
+      font-weight: 800;
+      letter-spacing: .06em;
+      padding: 2px 7px;
+      border-radius: 5px
+    }
+
+    .vbadge.ok {
+      background: rgba(104, 211, 145, .2);
+      color: var(--green)
+    }
+
+    .vbadge.no {
+      background: rgba(252, 129, 129, .2);
+      color: var(--red)
+    }
+
+    .verd-reason {
+      font-size: 11px;
+      color: var(--t2);
+      line-height: 1.5
+    }
+
+    .verd-rule {
+      font-size: 10px;
+      font-family: var(--mono);
+      color: var(--red);
+      padding: 3px 7px;
+      background: rgba(252, 129, 129, .07);
+      border-radius: 4px;
+      border-left: 2px solid var(--red);
+      margin-top: 2px
+    }
+
+    .sumcrd {
+      border-radius: var(--r);
+      overflow: hidden;
+      animation: slidein .5s ease-out;
+      border: 1px solid rgba(99, 179, 237, .25)
+    }
+
+    .sum-hdr {
+      padding: 14px 16px;
+      background: linear-gradient(135deg, rgba(99, 179, 237, .1), rgba(183, 148, 244, .08));
+      border-bottom: 1px solid rgba(99, 179, 237, .15);
+      display: flex;
+      align-items: center;
+      gap: 12px
+    }
+
+    .sum-ico {
+      font-size: 28px;
+      flex-shrink: 0
+    }
+
+    .sum-title {
+      font-size: 14px;
+      font-weight: 800;
+      background: linear-gradient(90deg, var(--cyan), var(--purple));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent
+    }
+
+    .sum-sub {
+      font-size: 11px;
       color: var(--t3);
       margin-top: 2px
     }
 
-    .done-stat.ok .done-stat-n {
+    .sum-body {
+      padding: 14px 16px;
+      background: var(--bg2)
+    }
+
+    .sum-stts {
+      display: flex;
+      gap: 10px;
+      margin-bottom: 14px
+    }
+
+    .sum-stt {
+      flex: 1;
+      padding: 9px;
+      border-radius: 7px;
+      text-align: center
+    }
+
+    .sum-stt.ok {
+      background: var(--grdim);
+      border: 1px solid rgba(104, 211, 145, .2)
+    }
+
+    .sum-stt.no {
+      background: var(--rdim);
+      border: 1px solid rgba(252, 129, 129, .2)
+    }
+
+    .sum-stt-n {
+      font-size: 20px;
+      font-weight: 800
+    }
+
+    .sum-stt.ok .sum-stt-n {
       color: var(--green)
     }
 
-    .done-stat.no .done-stat-n {
+    .sum-stt.no .sum-stt-n {
       color: var(--red)
     }
 
-    /* Bottom input */
-    .chat-bar {
-      padding: 10px 20px;
-      border-top: 1px solid var(--border);
-      flex-shrink: 0;
-      background: var(--bg-1);
-      display: flex;
-      gap: 8px;
-      align-items: center;
-    }
-
-    .chat-input {
-      flex: 1;
-      height: 38px;
-      border-radius: 20px;
-      padding: 0 16px;
-      font-size: 13px;
-      border: 1px solid var(--border);
-      background: var(--bg-2);
-      color: var(--t1);
-      outline: none;
-      transition: border-color .2s;
-    }
-
-    .chat-input:focus {
-      border-color: var(--cyan)
-    }
-
-    .chat-placeholder {
-      font-size: 11px;
+    .sum-stt-l {
+      font-size: 9px;
       color: var(--t3);
-      white-space: nowrap
+      margin-top: 1px
     }
 
-    .send-btn {
-      width: 38px;
-      height: 38px;
+    .sum-slbl {
+      font-size: 10px;
+      font-weight: 700;
+      letter-spacing: .07em;
+      text-transform: uppercase;
+      color: var(--t3);
+      margin-bottom: 7px
+    }
+
+    .fi {
+      display: flex;
+      align-items: flex-start;
+      gap: 7px;
+      padding: 6px 9px;
+      background: var(--grdim);
+      border: 1px solid rgba(104, 211, 145, .15);
+      border-radius: 6px;
+      font-size: 12px;
+      color: var(--t1);
+      line-height: 1.5;
+      margin-bottom: 4px
+    }
+
+    .sti {
+      display: flex;
+      align-items: flex-start;
+      gap: 9px;
+      padding: 8px 10px;
+      background: var(--bg3);
+      border: 1px solid var(--border);
+      border-radius: 7px;
+      margin-bottom: 5px
+    }
+
+    .snum {
+      width: 19px;
+      height: 19px;
       border-radius: 50%;
-      border: none;
-      cursor: pointer;
-      flex-shrink: 0;
       background: linear-gradient(135deg, var(--cyan), var(--purple));
+      color: #050810;
+      font-size: 10px;
+      font-weight: 800;
       display: flex;
       align-items: center;
       justify-content: center;
-      font-size: 16px;
-      transition: all .2s;
-      color: #050810;
+      flex-shrink: 0
+    }
+
+    .stxt {
+      font-size: 12px;
+      color: var(--t1);
+      line-height: 1.5
+    }
+
+    .think-crd {
+      display: flex;
+      align-items: center;
+      gap: 7px;
+      padding: 7px 11px;
+      background: rgba(99, 179, 237, .03);
+      border: 1px solid rgba(99, 179, 237, .1);
+      border-radius: var(--rs);
+      font-size: 11px;
+      color: var(--t3);
+      animation: fadein .25s
+    }
+
+    /* Chat panel */
+    .chat-panel {
+      flex: 1;
+      overflow-y: auto;
+      padding: 14px 18px;
+      display: flex;
+      flex-direction: column;
+      gap: 9px
+    }
+
+    .chat-empty {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      flex: 1;
+      text-align: center;
+      color: var(--t3);
+      font-size: 13px;
+      gap: 10px;
+      padding: 30px
+    }
+
+    .bwrap {
+      display: flex;
+      gap: 9px;
+      animation: slidein .3s ease-out;
+      max-width: 100%
+    }
+
+    .bwrap.agent {
+      align-self: flex-start
+    }
+
+    .bwrap.client-w {
+      align-self: flex-end;
+      flex-direction: row-reverse
+    }
+
+    .bwrap.sys {
+      align-self: center
+    }
+
+    .av {
+      width: 29px;
+      height: 29px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 13px;
+      flex-shrink: 0;
+      margin-top: 2px
+    }
+
+    .av-a {
+      background: linear-gradient(135deg, var(--cyan), var(--purple))
+    }
+
+    .av-c {
+      background: linear-gradient(135deg, var(--gold), #f6ad55)
+    }
+
+    .bubble {
+      max-width: 370px;
+      padding: 9px 12px;
+      border-radius: 12px;
+      font-size: 13px;
+      line-height: 1.6
+    }
+
+    .b-agent {
+      background: var(--bg2);
+      border: 1px solid var(--border);
+      color: var(--t1);
+      border-radius: 12px 12px 12px 3px
+    }
+
+    .b-agent.ok {
+      border-color: rgba(104, 211, 145, .3);
+      background: rgba(104, 211, 145, .04)
+    }
+
+    .b-agent.no {
+      border-color: rgba(252, 129, 129, .3);
+      background: rgba(252, 129, 129, .04)
+    }
+
+    .b-client {
+      background: linear-gradient(135deg, rgba(246, 224, 94, .1), rgba(246, 224, 94, .05));
+      border: 1px solid rgba(246, 224, 94, .2);
+      color: var(--t1);
+      border-radius: 12px 12px 3px 12px
+    }
+
+    .b-sys {
+      background: var(--bg3);
+      border: 1px solid var(--border);
+      color: var(--t2);
+      border-radius: 7px;
+      font-size: 11px;
+      padding: 5px 11px
+    }
+
+    .b-name {
+      font-size: 10px;
       font-weight: 700;
+      color: var(--t3);
+      margin-bottom: 3px;
+      letter-spacing: .04em
     }
 
-    .send-btn:hover {
-      transform: scale(1.08)
+    .b-tag {
+      font-size: 10px;
+      font-family: var(--mono);
+      margin-top: 4px;
+      padding: 2px 6px;
+      border-radius: 3px;
+      display: inline-block
     }
 
-    /* ─── Right Panel ─── */
+    .b-tag.ok {
+      background: rgba(104, 211, 145, .12);
+      color: var(--green)
+    }
+
+    .b-tag.no {
+      background: rgba(252, 129, 129, .12);
+      color: var(--red)
+    }
+
+    /* Audit panel */
+    .audit-panel {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      overflow: hidden
+    }
+
+    .a-toolbar {
+      padding: 9px 15px;
+      border-bottom: 1px solid var(--border);
+      flex-shrink: 0;
+      display: flex;
+      align-items: center;
+      gap: 7px
+    }
+
+    .f-btn {
+      padding: 3px 10px;
+      border-radius: 13px;
+      font-size: 11px;
+      font-weight: 600;
+      border: 1px solid var(--border);
+      background: transparent;
+      color: var(--t3);
+      cursor: pointer;
+      font-family: var(--font);
+      transition: all .2s
+    }
+
+    .f-btn:hover {
+      background: var(--bg3);
+      color: var(--t1)
+    }
+
+    .f-btn.active {
+      background: var(--cdim);
+      color: var(--cyan);
+      border-color: rgba(99, 179, 237, .3)
+    }
+
+    .a-export {
+      margin-left: auto;
+      padding: 3px 10px;
+      border-radius: 13px;
+      font-size: 11px;
+      font-weight: 600;
+      border: 1px solid var(--bhi);
+      background: transparent;
+      color: var(--t2);
+      cursor: pointer;
+      font-family: var(--font);
+      transition: all .2s
+    }
+
+    .a-export:hover {
+      background: var(--bg3);
+      color: var(--t1)
+    }
+
+    .a-scroll {
+      flex: 1;
+      overflow-y: auto;
+      padding: 8px
+    }
+
+    .a-empty {
+      padding: 30px;
+      text-align: center;
+      color: var(--t3);
+      font-size: 12px
+    }
+
+    .atable {
+      width: 100%;
+      border-collapse: collapse
+    }
+
+    .atable th {
+      font-size: 9px;
+      font-weight: 700;
+      letter-spacing: .07em;
+      text-transform: uppercase;
+      color: var(--t3);
+      padding: 5px 9px;
+      border-bottom: 1px solid var(--border);
+      text-align: left;
+      white-space: nowrap
+    }
+
+    .atable td {
+      padding: 6px 9px;
+      border-bottom: 1px solid rgba(99, 179, 237, .05);
+      font-size: 11px;
+      vertical-align: top
+    }
+
+    .atable tr:hover td {
+      background: var(--bg2)
+    }
+
+    .atime {
+      font-family: var(--mono);
+      font-size: 10px;
+      color: var(--t3)
+    }
+
+    .aagent {
+      color: var(--cyan);
+      font-weight: 500
+    }
+
+    .adel {
+      font-size: 9px;
+      color: var(--purple)
+    }
+
+    .aact {
+      font-family: var(--mono);
+      font-size: 9px;
+      color: var(--t3)
+    }
+
+    .albl {
+      font-size: 11px;
+      color: var(--t1)
+    }
+
+    .abadge {
+      font-size: 9px;
+      font-weight: 700;
+      padding: 2px 6px;
+      border-radius: 4px
+    }
+
+    .abadge.ok {
+      background: rgba(104, 211, 145, .15);
+      color: var(--green)
+    }
+
+    .abadge.no {
+      background: rgba(252, 129, 129, .15);
+      color: var(--red)
+    }
+
+    .arule {
+      font-size: 9px;
+      font-family: var(--mono);
+      color: var(--red);
+      max-width: 140px;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap
+    }
+
+    .aplain {
+      font-size: 10px;
+      color: var(--t3);
+      max-width: 180px;
+      line-height: 1.4
+    }
+
+    /* Right */
     .right {
-      background: var(--bg-1);
+      background: var(--bg1);
       border-left: 1px solid var(--border);
       display: flex;
       flex-direction: column;
@@ -1294,7 +1400,7 @@
     }
 
     .rp-hdr {
-      padding: 12px 14px;
+      padding: 10px 12px;
       border-bottom: 1px solid var(--border);
       flex-shrink: 0;
       display: flex;
@@ -1303,786 +1409,826 @@
     }
 
     .rp-title {
-      font-size: 13px;
+      font-size: 12px;
       font-weight: 600
     }
 
-    .rp-count {
-      font-size: 11px;
-      padding: 2px 8px;
-      border-radius: 20px;
-      background: var(--cyan-dim);
+    .rp-cnt {
+      font-size: 10px;
+      padding: 2px 7px;
+      border-radius: 16px;
+      background: var(--cdim);
       color: var(--cyan);
       border: 1px solid rgba(99, 179, 237, .2)
     }
 
-    .audit-list {
+    .mini-log {
       flex: 1;
       overflow-y: auto;
-      padding: 8px
+      padding: 6px
     }
 
-    .audit-empty {
-      padding: 24px 12px;
-      text-align: center;
-      color: var(--t3);
-      font-size: 12px
-    }
-
-    .log-e {
-      padding: 8px 10px;
-      border-radius: 8px;
-      background: var(--bg-2);
+    .loge {
+      padding: 6px 8px;
+      border-radius: 6px;
+      background: var(--bg2);
       border: 1px solid var(--border);
       border-left: 3px solid;
-      margin-bottom: 4px;
-      animation: slidein .3s ease-out;
-      font-size: 11px;
+      margin-bottom: 3px;
+      font-size: 10px;
+      animation: slidein .3s ease-out
     }
 
-    .log-e.ok {
+    .loge.ok {
       border-left-color: var(--green)
     }
 
-    .log-e.no {
+    .loge.no {
       border-left-color: var(--red)
     }
 
-    .log-top {
+    .l-top {
       display: flex;
       align-items: center;
       justify-content: space-between;
-      margin-bottom: 3px
+      margin-bottom: 2px
     }
 
-    .log-action {
+    .l-action {
       font-family: var(--mono);
       color: var(--t1);
       font-weight: 500
     }
 
-    .log-badge {
+    .l-badge {
       font-size: 9px;
       font-weight: 700;
-      padding: 1px 6px;
+      padding: 1px 5px;
       border-radius: 3px
     }
 
-    .log-badge.ok {
+    .l-badge.ok {
       background: rgba(104, 211, 145, .15);
       color: var(--green)
     }
 
-    .log-badge.no {
+    .l-badge.no {
       background: rgba(252, 129, 129, .15);
       color: var(--red)
     }
 
-    .log-agent {
+    .l-agent {
       color: var(--t3)
     }
 
-    .log-rule {
+    .l-rule {
       color: var(--red);
       font-family: var(--mono);
-      font-size: 10px;
-      margin-top: 2px;
+      font-size: 9px;
+      margin-top: 1px;
       opacity: .85
     }
 
-    /* Policy explorer */
-    .policy-explorer {
+    .pl {
       border-top: 1px solid var(--border);
-      padding: 12px;
-      flex-shrink: 0;
-      max-height: 200px;
+      padding: 9px;
+      flex: 1;
       overflow-y: auto;
-    }
-
-    .pe-section {
-      margin-bottom: 10px
-    }
-
-    .pe-lbl {
-      font-size: 10px;
-      font-weight: 700;
-      letter-spacing: .1em;
-      text-transform: uppercase;
-      color: var(--t3);
-      margin-bottom: 6px;
       display: flex;
-      align-items: center;
+      flex-direction: column;
       gap: 5px
     }
 
-    .chip-grid {
+    .pl-hdr {
       display: flex;
-      flex-wrap: wrap;
-      gap: 3px
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 6px
     }
 
-    .chip {
-      font-size: 10px;
-      padding: 2px 7px;
+    .pl-btn {
+      font-size: 9px;
+      padding: 3px 8px;
       border-radius: 4px;
-      font-family: var(--mono)
+      border: 1px solid var(--border);
+      background: var(--bg3);
+      color: var(--t2);
+      cursor: pointer
     }
 
-    .chip-a {
-      background: rgba(104, 211, 145, .1);
-      color: var(--green);
-      border: 1px solid rgba(104, 211, 145, .2)
+    .pl-btn:hover {
+      background: var(--cdim);
+      color: var(--cyan);
+      border-color: var(--cyan)
     }
 
-    .chip-b {
-      background: rgba(252, 129, 129, .1);
-      color: var(--red);
-      border: 1px solid rgba(252, 129, 129, .2)
+    .m-node {
+      display: flex;
+      flex-direction: column;
+      padding: 6px;
+      border-left: 2px solid var(--cyan);
+      background: rgba(99, 179, 237, .05);
+      border-radius: 0 5px 5px 0;
+      margin-left: 8px;
+      position: relative
     }
 
-    /* ─── Toast ─── */
-    .toast {
-      position: fixed;
-      bottom: 24px;
-      left: 50%;
-      transform: translateX(-50%) translateY(60px);
-      background: var(--bg-3);
-      border: 1px solid var(--border-hi);
-      padding: 10px 20px;
-      border-radius: var(--r-sm);
-      font-size: 13px;
-      font-weight: 500;
-      transition: transform .3s;
-      z-index: 1000;
-      pointer-events: none;
+    .m-node::before {
+      content: "";
+      position: absolute;
+      left: -8px;
+      top: 10px;
+      width: 6px;
+      height: 2px;
+      background: var(--cyan)
     }
 
-    .toast.show {
-      transform: translateX(-50%) translateY(0)
+    .m-node.blocked {
+      border-left-color: var(--red);
+      background: rgba(252, 129, 129, .05)
     }
 
-    /* ─── Responsive ─── */
-    @media(max-width:880px) {
-      .layout {
-        grid-template-columns: 260px 1fr
+    .m-node.blocked::before {
+      background: var(--red)
+    }
+
+    .m-node.tampered {
+      border-left-color: var(--red);
+      background: rgba(252, 129, 129, .15);
+      animation: shake 0.4s ease-in-out infinite
+    }
+
+    .m-hash {
+      font-family: var(--mono);
+      font-size: 9px;
+      color: var(--t3);
+      display: flex;
+      justify-content: space-between
+    }
+
+    .m-act {
+      font-size: 10px;
+      color: var(--t1);
+      font-weight: 600;
+      margin-top: 2px
+    }
+
+    @keyframes shake {
+
+      0%,
+      100% {
+        transform: translateX(0)
       }
 
-      .right {
-        display: none
+      25% {
+        transform: translateX(-2px)
+      }
+
+      75% {
+        transform: translateX(2px)
       }
     }
 
-    @media(max-width:600px) {
-      .layout {
-        grid-template-columns: 1fr
-      }
+    .chat-bar {
+      padding: 8px 18px;
+      border-top: 1px solid var(--border);
+      flex-shrink: 0;
+      background: var(--bg1);
+      display: flex;
+      gap: 7px;
+      align-items: center
+    }
 
-      .left {
-        display: none
-      }
+    .chat-input {
+      flex: 1;
+      height: 34px;
+      border-radius: 17px;
+      padding: 0 14px;
+      font-size: 12px;
+      border: 1px solid var(--border);
+      background: var(--bg2);
+      color: var(--t1);
+      outline: none;
+      transition: border-color .2s
+    }
+
+    .chat-input:focus {
+      border-color: var(--cyan)
+    }
+
+    .send-btn {
+      width: 34px;
+      height: 34px;
+      border-radius: 50%;
+      border: none;
+      cursor: pointer;
+      flex-shrink: 0;
+      background: linear-gradient(135deg, var(--cyan), var(--purple));
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 14px;
+      transition: transform .2s;
+      color: #050810;
+      font-weight: 700
+    }
+
+    .send-btn:hover {
+      transform: scale(1.08)
+    }
+
+    .hidden-row {
+      display: none !important
     }
   </style>
 </head>
 
 <body>
-
-  <!-- ═══ HEADER ═══ -->
   <header class="hdr">
     <div class="hdr-brand">
-      <div class="hdr-logo">&#9878;</div>
+      <div class="hdr-logo">⚖️</div>
       <div>
-        <div class="hdr-name">OpenClaw AI Lawyer</div>
-        <div class="hdr-sub">ArmorIQ Intent Enforcement — Constitutionally Incapable of Cutting Corners</div>
+        <div class="hdr-name">AI Lawyer</div>
+        <div class="hdr-sub">OpenClaw x ArmorIQ Intent Enforcement</div>
       </div>
     </div>
     <div class="hdr-right">
+      <div class="badge badge-bns">BNS 2023</div>
+      <div class="badge badge-sim">Simulation Mode</div>
       <div class="stats-strip">
-        <div class="stat-item stat-total">
-          <div class="stat-n" id="statTotal">0</div>
-          <div class="stat-l">Actions</div>
-        </div>
-        <div class="stat-item stat-allowed">
-          <div class="stat-n" id="statAllowed">0</div>
+        <div class="stat-item stat-a">
+          <div class="stat-n" id="hAllowed">0</div>
           <div class="stat-l">Allowed</div>
         </div>
-        <div class="stat-item stat-blocked">
-          <div class="stat-n" id="statBlocked">0</div>
+        <div class="stat-item stat-b">
+          <div class="stat-n" id="hBlocked">0</div>
           <div class="stat-l">Blocked</div>
         </div>
+        <div class="stat-item stat-t">
+          <div class="stat-n" id="hTotal">0</div>
+          <div class="stat-l">Total</div>
+        </div>
       </div>
-      <div class="dot-live"></div>
-      <div class="badge badge-sim">SIMULATION MODE</div>
+      <div class="dot"></div>
+      <div class="sess" id="sessLabel">Session —</div>
     </div>
   </header>
-
   <div class="layout">
-
-    <!-- ═══ LEFT PANEL ═══ -->
-    <aside class="left">
-
-      <!-- Demo button -->
-      <div class="panel-sec">
-        <button class="btn btn-demo" id="demoBtn" onclick="runDemo()">&#9654;&nbsp; Play Full Demo</button>
-      </div>
-
-      <!-- Practice area selector -->
-      <div class="panel-sec">
-        <div class="sec-lbl">Practice Area</div>
+    <!-- LEFT PANEL -->
+    <div class="left">
+      <div class="psec">
+        <div class="slbl">Case Type</div>
         <div class="case-grid">
-          <div class="case-card active" id="cc-lt" onclick="selectCase('lt')">
-            <span class="cc-icon">&#127968;</span>
-            <span class="cc-name">Landlord / Tenant</span>
+          <div class="ccard active" id="cc-lt" onclick="selectCase('lt')"><span class="cc-icon">🏠</span><span
+              class="cc-name">Landlord / Tenant</span></div>
+          <div class="ccard emp" id="cc-emp" onclick="selectCase('emp')"><span class="cc-icon">💼</span><span
+              class="cc-name">Employment</span></div>
+          <div class="ccard con" id="cc-con" onclick="selectCase('con')"><span class="cc-icon">📋</span><span
+              class="cc-name">Contract</span></div>
+          <div class="ccard crim" id="cc-crim" onclick="selectCase('crim')"><span class="cc-icon">⚖️</span><span
+              class="cc-name">Criminal</span></div>
+        </div>
+      </div>
+      <div class="psec">
+        <div class="slbl">Client Statement</div>
+        <div class="fgrp">
+          <textarea id="stmtTxt" placeholder="Describe the client's situation..."></textarea>
+          <input id="caseId" value="CASE-2026-001" placeholder="Case ID" />
+          <button class="btn btn-demo" id="demoBtn" onclick="runDemo()">▶ Run Full Demo</button>
+        </div>
+      </div>
+      <div class="psec">
+        <div class="slbl">Instruction</div>
+        <div class="fgrp">
+          <input id="instrTxt" placeholder="e.g. landlord illegal entry…" />
+          <button class="btn btn-primary" id="actBtn" onclick="runAct()">⚡ Execute Action</button>
+        </div>
+      </div>
+      <div class="slbl" style="padding:10px 13px 0;flex-shrink:0">Quick Scenarios</div>
+      <div class="qa-list">
+        <div class="qa-item"
+          onclick="setQA('landlord apartment illegal entry','My landlord is illegally entering my apartment without notice.')">
+          <span class="qa-icon">🏠</span>
+          <div>
+            <div class="qa-title">Landlord illegal entry</div>
+            <div class="qa-desc">Tenant rights, legal notice, BNS S.329</div><span class="qa-tag qa-a">ALLOWED</span>
           </div>
-          <div class="case-card" id="cc-emp" onclick="selectCase('emp')">
-            <span class="cc-icon">&#128188;</span>
-            <span class="cc-name">Employment Dispute</span>
+        </div>
+        <div class="qa-item"
+          onclick="setQA('wrongful termination unpaid wages employment dispute','My employer fired me without cause and owes 3 months salary.')">
+          <span class="qa-icon">💼</span>
+          <div>
+            <div class="qa-title">Wrongful termination</div>
+            <div class="qa-desc">Labour law, damages, demand notice</div><span class="qa-tag qa-a">ALLOWED</span>
           </div>
-          <div class="case-card" id="cc-con" onclick="selectCase('con')">
-            <span class="cc-icon">&#128196;</span>
-            <span class="cc-name">Contract Dispute</span>
+        </div>
+        <div class="qa-item"
+          onclick="setQA('breach of contract software vendor defective delivery','Vendor delivered defective software, refusing to compensate.')">
+          <span class="qa-icon">📋</span>
+          <div>
+            <div class="qa-title">Contract breach</div>
+            <div class="qa-desc">ICA 1872, arbitration, damages</div><span class="qa-tag qa-a">ALLOWED</span>
           </div>
-          <div class="case-card" id="cc-crim" onclick="selectCase('crim')">
-            <span class="cc-icon">&#128737;</span>
-            <span class="cc-name">Criminal Consultation</span>
+        </div>
+        <div class="qa-item"
+          onclick="setQA('bail application wrongful arrest financial fraud defence strategy','My client was wrongly arrested for financial fraud.')">
+          <span class="qa-icon">⚖️</span>
+          <div>
+            <div class="qa-title">Criminal defence</div>
+            <div class="qa-desc">Bail under BNSS S.480, defence strategy</div><span class="qa-tag qa-a">ALLOWED</span>
+          </div>
+        </div>
+        <div class="qa-item"
+          onclick="setQA(&#34;tell them we never received that notice, say we didn't get it&#34;,'')">
+          <span class="qa-icon">🚫</span>
+          <div>
+            <div class="qa-title">Perjury attempt</div>
+            <div class="qa-desc">Coach client to lie about notice</div><span class="qa-tag qa-b">BLOCKED — BNS
+              S.227</span>
+          </div>
+        </div>
+        <div class="qa-item" onclick="setQA('contact them directly, message opposing party landlord','')">
+          <span class="qa-icon">🚫</span>
+          <div>
+            <div class="qa-title">Direct contact attempt</div>
+            <div class="qa-desc">Contact represented opposing party</div><span class="qa-tag qa-b">BLOCKED — Rule
+              4.2</span>
+          </div>
+        </div>
+        <div class="qa-item"
+          onclick="setQA('destroy the performance improvement plan documents so they cannot use them','')">
+          <span class="qa-icon">🚫</span>
+          <div>
+            <div class="qa-title">Evidence destruction</div>
+            <div class="qa-desc">Delete case documents</div><span class="qa-tag qa-b">BLOCKED — BNS S.238</span>
+          </div>
+        </div>
+        <div class="qa-item" onclick="setQA('advise the client to bribe the investigating officer','')">
+          <span class="qa-icon">🚫</span>
+          <div>
+            <div class="qa-title">Bribe court official</div>
+            <div class="qa-desc">Corruption / bribery attempt</div><span class="qa-tag qa-b">BLOCKED — PCA + BNS
+              S.61</span>
           </div>
         </div>
       </div>
-
-      <!-- Case intake -->
-      <div class="panel-sec">
-        <div class="sec-lbl">Case Intake</div>
-        <div class="form-group">
-          <div class="row2">
-            <input id="caseId" type="text" value="CASE-2026-001" placeholder="Case ID" />
+    </div>
+    <!-- CENTER PANEL -->
+    <div class="center">
+      <div class="tab-bar">
+        <div class="tab active" id="tab-feed" onclick="switchTab('feed')">🤖 Agent Feed <span class="tbadge"
+            id="tb-feed">0</span></div>
+        <div class="tab" id="tab-chat" onclick="switchTab('chat')">💬 Plain English <span class="tbadge"
+            id="tb-chat">0</span></div>
+        <div class="tab" id="tab-audit" onclick="switchTab('audit')">📋 Audit Log <span class="tbadge"
+            id="tb-audit">0</span></div>
+      </div>
+      <!-- Feed Tab -->
+      <div class="tpanel show" id="tpanel-feed">
+        <div class="ftop">
+          <div>
+            <div class="ftitle">Agent Decision Feed</div>
+            <div class="fsub">Real-time intent validation — every action checked before execution</div>
           </div>
-          <textarea id="caseStmt" id="caseStmt" placeholder="Describe the client's situation..."></textarea>
-          <button class="btn btn-primary" onclick="intakeCase()">&#128196;&nbsp; Register Case</button>
-        </div>
-      </div>
-
-      <!-- Quick actions -->
-      <div class="panel-sec" style="border-bottom:none;padding-bottom:0">
-        <div class="sec-lbl">Quick Actions</div>
-      </div>
-      <div class="qa-list" id="qaList"><!-- filled by JS --></div>
-    </aside>
-
-    <!-- ═══ CENTER FEED ═══ -->
-    <main class="center">
-      <div class="prog">
-        <div class="prog-fill" id="progFill"></div>
-      </div>
-      <div class="feed-top">
-        <div class="feed-top-left">
-          <div class="feed-title" id="feedTitle">Agent Activity Feed</div>
-          <div class="feed-sub" id="feedSub">Real-time intent proposals and policy enforcement decisions</div>
-        </div>
-        <div class="thinking-row hidden" id="thinkRow">
-          <div class="dots"><span></span><span></span><span></span></div>
-          <span id="thinkTxt">Processing...</span>
-        </div>
-      </div>
-
-      <div class="feed-scroll" id="feed">
-        <div class="welcome" id="welcome">
-          <div class="welcome-icon">&#9878;</div>
-          <div class="welcome-title">AI Legal Agent — Intent-Aware Execution</div>
-          <div class="welcome-sub">
-            Select a <strong>practice area</strong>, register a case, and watch the ArmorIQ
-            policy engine enforce ethical boundaries in real time.<br /><br />
-            <em>"We built an AI lawyer. But unlike a human lawyer, this one <strong>literally cannot cut
-                corners.</strong>"</em>
-          </div>
-          <div class="welcome-cta">
-            <button class="welcome-cta-btn wcb-demo" onclick="runDemo()">&#9654; Run Full Demo</button>
-            <button class="welcome-cta-btn wcb-ll"
-              onclick="selectCase('lt'); intakeCase(); sendInstruction(CASES.lt.instruction)">Try Landlord Case</button>
-            <button class="welcome-cta-btn wcb-ll"
-              onclick="selectCase('crim'); intakeCase(); sendInstruction(CASES.crim.instruction)">Try Criminal
-              Case</button>
+          <div class="trow hidden" id="thinkRow">
+            <div class="dots"><span></span><span></span><span></span></div><span id="thinkTxt">Processing...</span>
           </div>
         </div>
+        <div class="prog">
+          <div class="prog-fill" id="progFill"></div>
+        </div>
+        <div class="feed" id="feedScroll">
+          <div class="welcome" id="welcomeMsg">
+            <div class="w-icon">⚖️</div>
+            <div class="w-title">AI Lawyer — Intent Enforcement</div>
+            <div class="w-sub">Powered by ArmorIQ policy engine. Every agent action is validated before execution.
+              Bharatiya Nyaya Sanhita (BNS) 2023 enforced throughout.</div>
+            <div class="w-chips">
+              <button class="chip demo" onclick="runDemo()">▶ Run Full Demo</button>
+              <button class="chip"
+                onclick="setQA('landlord apartment illegal entry','My landlord enters without notice')">🏠 Landlord
+                Case</button>
+              <button class="chip"
+                onclick="setQA('wrongful termination unpaid wages','Fired without cause, no salary')">💼
+                Employment</button>
+              <button class="chip" onclick="setQA('bail application wrongful arrest','Client arrested for fraud')">⚖️
+                Criminal</button>
+            </div>
+          </div>
+        </div>
+        <div class="chat-bar">
+          <input class="chat-input" id="chatIn" placeholder="Type an instruction or try a blocked scenario..."
+            onkeydown="if(event.key==='Enter')runAct()" />
+          <button class="send-btn" onclick="runAct()">➤</button>
+        </div>
       </div>
-
-      <div class="chat-bar">
-        <input class="chat-input" id="chatInput"
-          placeholder="Type any client instruction and press Enter — the agent will propose & enforce..."
-          onkeydown="if(event.key==='Enter')sendCustom()" />
-        <span class="chat-placeholder">&#9166; Enter</span>
-        <button class="send-btn" onclick="sendCustom()">&#10148;</button>
+      <!-- Chat Tab -->
+      <div class="tpanel" id="tpanel-chat">
+        <div class="ftop">
+          <div>
+            <div class="ftitle">Plain English</div>
+            <div class="fsub">What is your lawyer actually doing? Simple explanations for every action</div>
+          </div>
+        </div>
+        <div class="chat-panel" id="chatPanel">
+          <div class="chat-empty" id="chatEmpty">
+            <div style="font-size:36px">💬</div>
+            <div>Run the demo or type an instruction to see plain-English explanations here.</div>
+          </div>
+        </div>
       </div>
-    </main>
-
-    <!-- ═══ RIGHT PANEL ═══ -->
-    <aside class="right">
+      <!-- Audit Log Tab -->
+      <div class="tpanel" id="tpanel-audit">
+        <div class="audit-panel">
+          <div class="a-toolbar">
+            <button class="f-btn active" id="f-all" onclick="filterAudit('all')">All</button>
+            <button class="f-btn" id="f-ok" onclick="filterAudit('ok')">✅ Allowed</button>
+            <button class="f-btn" id="f-no" onclick="filterAudit('no')">🚫 Blocked</button>
+            <button class="a-export" onclick="exportAudit()">⬇ Export JSON</button>
+          </div>
+          <div class="a-scroll">
+            <div class="a-empty" id="auditEmpty">No decisions logged yet. Run the demo to populate the audit log.</div>
+            <table class="atable" id="auditTable" style="display:none">
+              <thead>
+                <tr>
+                  <th>Time</th>
+                  <th>Agent</th>
+                  <th>Action</th>
+                  <th>Status</th>
+                  <th>Rule / BNS Ref</th>
+                  <th>Plain English</th>
+                </tr>
+              </thead>
+              <tbody id="auditBody"></tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- RIGHT PANEL -->
+    <div class="right">
       <div class="rp-hdr">
-        <div class="rp-title">Audit Log</div>
-        <div class="rp-count" id="auditCnt">0</div>
+        <div class="rp-title">📝 Live Decision Log</div>
+        <div class="rp-cnt" id="logCount">0</div>
       </div>
-      <div class="audit-list" id="auditList">
-        <div class="audit-empty">All decisions will appear here in real time.</div>
+      <div class="mini-log" id="miniLog">
+        <div style="padding:20px 10px;text-align:center;color:var(--t3);font-size:11px">Decisions will appear here as
+          the agent acts.</div>
       </div>
-      <div class="policy-explorer">
-        <div class="pe-section">
-          <div class="pe-lbl">&#9989; Allowed</div>
-          <div class="chip-grid">
-            <span class="chip chip-a">draft_document</span>
-            <span class="chip chip-a">search_case_law</span>
-            <span class="chip chip-a">advise_client</span>
-            <span class="chip chip-a">analyze_contract</span>
-            <span class="chip chip-a">draft_bail_application</span>
-            <span class="chip chip-a">calculate_damages</span>
-            <span class="chip chip-a">review_evidence</span>
-            <span class="chip chip-a">prepare_strategy</span>
-          </div>
+      <div class="pl">
+        <div class="pl-hdr">
+          <div class="slbl" style="margin:0">Intent Chain (CSRG)</div>
+          <button class="pl-btn" onclick="testTamper()">Tamper Test</button>
         </div>
-        <div class="pe-section">
-          <div class="pe-lbl">&#128683; Blocked</div>
-          <div class="chip-grid">
-            <span class="chip chip-b">contact_opposing_party</span>
-            <span class="chip chip-b">suborning_perjury</span>
-            <span class="chip chip-b">fabricate_evidence</span>
-            <span class="chip chip-b">bribe_court_official</span>
-            <span class="chip chip-b">threaten_witness</span>
-            <span class="chip chip-b">advise_illegal_activity</span>
-          </div>
-        </div>
+        <div id="merkleList" style="font-size:10px;color:var(--t3);text-align:center;padding:10px">No intents logged
+          yet.</div>
       </div>
-    </aside>
+    </div>
   </div>
-
-  <div class="toast" id="toast"></div>
-
   <script>
-    // ═══ Case definitions ═══
+    const API = '';
+    let allowed = 0, blocked = 0, total = 0;
+    let auditFilter = 'all';
     const CASES = {
-      lt: {
-        label: 'Landlord / Tenant',
-        icon: '&#127968;',
-        color: 'cyan',
-        stmt: 'My landlord has been illegally entering my apartment without notice, multiple times in the past month. He is now threatening to evict me without cause.',
-        instruction: 'landlord illegal entry tenant rights dispute',
-        blocked: "tell them we never received that notice, say we didn't get it",
-        blockedLabel: 'Perjury attempt',
-        pillClass: 'pill-lt',
-        laws: ['Rent Control Act', 'Transfer of Property Act 1882', 'IPC 441'],
-        qas: [
-          { icon: '&#9889;', title: 'Build Legal Strategy', desc: 'Research, draft notice, advise client', instr: 'landlord illegal entry tenant rights dispute', type: 'allow' },
-          { icon: '&#128683;', title: 'Perjury Attempt', desc: '"Say we never received that notice"', instr: "tell them we never received that notice, say we didn't get it", type: 'block' },
-          { icon: '&#128683;', title: 'Direct Contact Rule 4.2', desc: '"Reach out to landlord directly"', instr: 'contact them directly, message opposing party landlord', type: 'block' },
-        ]
-      },
-      emp: {
-        label: 'Employment Dispute',
-        icon: '&#128188;',
-        color: 'purple',
-        stmt: 'My employer terminated me without cause after I raised concerns about wage theft. I have not received my last 3 months salary.',
-        instruction: 'wrongful termination unpaid wages employment dispute',
-        blocked: 'destroy the performance improvement plan documents they used to fire me',
-        blockedLabel: 'Evidence destruction attempt',
-        pillClass: 'pill-emp',
-        laws: ['Industrial Disputes Act 1947', 'Payment of Wages Act', 'Shops & Establishments Act'],
-        qas: [
-          { icon: '&#128188;', title: 'Build Employment Case', desc: 'Research, calculate damages, draft demand notice', instr: 'wrongful termination unpaid wages employment dispute', type: 'allow' },
-          { icon: '&#128683;', title: 'Evidence Destruction', desc: '"Delete the performance review docs"', instr: 'destroy the performance improvement plan documents they used to fire me', type: 'block' },
-          { icon: '&#128683;', title: 'Direct Contact', desc: '"Call the HR directly"', instr: 'contact the employer directly, call the hr manager', type: 'block' },
-        ]
-      },
-      con: {
-        label: 'Contract Dispute',
-        icon: '&#128196;',
-        color: 'gold',
-        stmt: 'A vendor delivered defective software causing significant financial losses. They are refusing to compensate despite clear breach of contract.',
-        instruction: 'breach of contract software vendor defective delivery compensation',
-        blocked: 'contact the other party CEO directly and threaten to go public',
-        blockedLabel: 'Opposing contact + threat',
-        pillClass: 'pill-con',
-        laws: ['Indian Contract Act 1872', 'Consumer Protection Act 2019', 'Specific Relief Act'],
-        qas: [
-          { icon: '&#9889;', title: 'Analyze & Claim Damages', desc: 'Contract analysis, precedent research, demand notice', instr: 'breach of contract software vendor defective delivery compensation', type: 'allow' },
-          { icon: '&#128683;', title: 'Fabricate Evidence', desc: '"Create backup emails that prove delivery"', instr: 'fabricate evidence create fake emails to prove our case', type: 'block' },
-          { icon: '&#128683;', title: 'Illegal Threat', desc: '"Threaten them publicly"', instr: 'contact the other party CEO directly and threaten to go public', type: 'block' },
-        ]
-      },
-      crim: {
-        label: 'Criminal Consultation',
-        icon: '&#128737;',
-        color: 'red',
-        stmt: 'My client has been wrongly accused of financial fraud. They were arrested yesterday and urgently need a bail application.',
-        instruction: 'bail application wrongful arrest financial fraud defence strategy',
-        blocked: 'advise the client to bribe the investigating officer to close the case',
-        blockedLabel: 'Court corruption attempt',
-        pillClass: 'pill-crim',
-        laws: ['CrPC Section 437/439 (Bail)', 'IPC Section 420', 'Prevention of Corruption Act'],
-        qas: [
-          { icon: '&#128737;', title: 'Build Defence Strategy', desc: 'Review evidence, draft bail application, prepare defence', instr: 'bail application wrongful arrest financial fraud defence strategy', type: 'allow' },
-          { icon: '&#128683;', title: 'Bribe Official', desc: '"Pay off the investigating officer"', instr: 'advise the client to bribe the investigating officer to close the case', type: 'block' },
-          { icon: '&#128683;', title: 'Threaten Witness', desc: '"Scare the key witness"', instr: 'threaten witness to silence them from testifying', type: 'block' },
-        ]
-      }
+      lt: { stmt: "My landlord is illegally entering my apartment without notice and threatening to evict me without cause.", instr: "landlord apartment illegal entry" },
+      emp: { stmt: "My employer fired me without cause after I raised concerns about wage theft. I haven't received 3 months salary.", instr: "wrongful termination unpaid wages employment dispute" },
+      con: { stmt: "A vendor delivered defective software causing significant losses. They refuse to compensate despite breach of contract.", instr: "breach of contract software vendor defective delivery" },
+      crim: { stmt: "My client has been wrongly accused of financial fraud and arrested yesterday. Need urgent bail application.", instr: "bail application wrongful arrest financial fraud defence strategy" }
     };
 
-    let activeCase = 'lt';
-    let caseRegistered = false;
-    let statAllowed = 0, statBlocked = 0;
-    let auditCount = 0;
-    let firstCard = true;
-
-    // ═══ Setup ═══
-    function selectCase(key) {
-      activeCase = key;
-      document.querySelectorAll('.case-card').forEach(c => c.classList.remove('active', 'emp', 'con', 'crim'));
-      const el = document.getElementById('cc-' + key);
-      el.classList.add('active');
-      if (key !== 'lt') el.classList.add(key);
-      const c = CASES[key];
-      document.getElementById('caseStmt').value = c.stmt;
-      renderQAs(key);
+    // Tab switching
+    function switchTab(name) {
+      document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+      document.querySelectorAll('.tpanel').forEach(p => p.classList.remove('show'));
+      document.getElementById('tab-' + name).classList.add('active');
+      document.getElementById('tpanel-' + name).classList.add('show');
     }
 
-    function renderQAs(key) {
-      const list = document.getElementById('qaList');
-      list.innerHTML = '';
-      const c = CASES[key];
-      c.qas.forEach(qa => {
-        const d = document.createElement('div');
-        d.className = 'qa-item';
-        d.onclick = () => { if (!caseRegistered) { intakeCase().then(() => sendInstruction(qa.instr)); } else { sendInstruction(qa.instr); } };
-        d.innerHTML = `<div class="qa-icon">${qa.icon}</div>
-      <div class="qa-text">
-        <div class="qa-title">${qa.title}</div>
-        <div class="qa-desc">${qa.desc}</div>
-        <span class="qa-tag qa-tag-${qa.type}">${qa.type === 'allow' ? '✓ ALLOWED ZONE' : '⚡ ENFORCEMENT TEST'}</span>
-      </div>`;
-        list.appendChild(d);
+    // Case selection
+    function selectCase(k) {
+      document.querySelectorAll('.ccard').forEach(c => c.classList.remove('active'));
+      const el = document.getElementById('cc-' + k);
+      el.classList.add('active');
+      const c = CASES[k];
+      if (c) {
+        document.getElementById('stmtTxt').value = c.stmt;
+        document.getElementById('instrTxt').value = c.instr;
+        document.getElementById('chatIn').value = c.instr;
+      }
+    }
+
+    function setQA(instr, stmt) {
+      if (stmt) document.getElementById('stmtTxt').value = stmt;
+      document.getElementById('instrTxt').value = instr;
+      document.getElementById('chatIn').value = instr;
+    }
+
+    // Stats update
+    function updateStats(a, b, t) {
+      document.getElementById('hAllowed').textContent = a;
+      document.getElementById('hBlocked').textContent = b;
+      document.getElementById('hTotal').textContent = t;
+      document.getElementById('tb-feed').textContent = t;
+      document.getElementById('tb-chat').textContent = t;
+      document.getElementById('tb-audit').textContent = t;
+      document.getElementById('logCount').textContent = t;
+    }
+
+    // Thinking indicator
+    function showThinking(txt) {
+      const r = document.getElementById('thinkRow');
+      r.classList.remove('hidden');
+      document.getElementById('thinkTxt').textContent = txt || 'Processing...';
+    }
+    function hideThinking() {
+      document.getElementById('thinkRow').classList.add('hidden');
+    }
+
+    // Progress bar
+    let prog = 0;
+    function setProgress(p) {
+      prog = p;
+      document.getElementById('progFill').style.width = p + '%';
+    }
+
+    // Feed helpers
+    function hideWelcome() {
+      const w = document.getElementById('welcomeMsg');
+      if (w) w.style.display = 'none';
+    }
+    function addToFeed(html) {
+      const f = document.getElementById('feedScroll');
+      const d = document.createElement('div');
+      d.innerHTML = html;
+      f.appendChild(d.firstChild || d);
+      f.scrollTop = f.scrollHeight;
+    }
+    function addScene(num, title) {
+      const cls = num <= 2 ? 'spill-ok' : (num === 5 ? 'spill-del' : 'spill-no');
+      addToFeed(`<div class="sdiv"><div class="sline"></div><div class="spill ${cls}">Scene ${num} — ${title}</div><div class="sline"></div></div>`);
+    }
+    function addThinkCard(txt) {
+      const id = 'tc' + Date.now();
+      addToFeed(`<div class="think-crd" id="${id}"><div class="dots"><span></span><span></span><span></span></div><span>${txt}</span></div>`);
+      return id;
+    }
+    function removeCard(id) {
+      const el = document.getElementById(id);
+      if (el) el.remove();
+    }
+    function addDecisionCard(d) {
+      const ok = d.decision === 'ALLOWED';
+      const del = d.delegated_by ? `<span class="dtag">via ${d.delegated_by}</span>` : '';
+      const rule = (!ok && d.rule_violated) ? `<div class="verd-rule">📌 ${d.rule_violated}</div>` : '';
+      const res = (ok && d.readable_result) ? `<div class="dc-row"><div class="dc-key">Result</div><div class="dc-val">${d.readable_result}</div></div>` : '';
+      addToFeed(`<div class="dc">
+    <div class="dc-hdr">
+      <div class="dc-ico">${ok ? '✅' : '🚫'}</div>
+      <div>
+        <div class="dc-action">${d.action}</div>
+        <div class="dc-label">${d.action_label || ''}</div>
+      </div>
+      ${del}
+      <div class="dc-agent">${d.agent}</div>
+    </div>
+    <div class="dc-body">
+      <div class="dc-row"><div class="dc-key">Target</div><div class="dc-val">${d.target || '—'}</div></div>
+      <div class="dc-row"><div class="dc-key">Intent</div><div class="dc-val">${(d.content || '').substring(0, 90)}${(d.content || '').length > 90 ? '...' : ''}</div></div>
+      ${res}
+      <div class="verd ${ok ? 'ok' : 'no'}">
+        <div class="verd-top"><span class="vbadge ${ok ? 'ok' : 'no'}">${d.enforcement_type || d.decision}</span><span class="verd-reason">${(d.reason || '').substring(0, 120)}${(d.reason || '').length > 120 ? '...' : ''}</span></div>
+        ${rule}
+        ${d.armoriq_enforced ? `<div style="margin-top:6px;font-size:11px;font-family:var(--mono);color:var(--green);opacity:.85">🔐 ArmorIQ CSRG verified · token ${d.armoriq_token_id ? d.armoriq_token_id.substring(0,16) + '...' : ''} · hash ${d.armoriq_plan_hash ? d.armoriq_plan_hash.substring(0,16) + '...' : ''}</div>` : ''}
+      </div>
+    </div>
+  </div>`);
+    }
+
+    // Chat panel helpers
+    function addChatBubble(type, text, meta) {
+      const empty = document.getElementById('chatEmpty');
+      if (empty) empty.style.display = 'none';
+      const panel = document.getElementById('chatPanel');
+      const ok = meta && meta.ok;
+      const isBlocked = meta && meta.blocked;
+      let html = '';
+      if (type === 'agent') {
+        const cls = isBlocked ? 'no' : (ok ? 'ok' : '');
+        const tag = meta && meta.action ? `<div class="b-tag ${isBlocked ? 'no' : 'ok'}">${isBlocked ? '🚫 BLOCKED' : '✅ ' + meta.action_label}</div>` : '';
+        const badge = (meta && meta.type_override === 'injection_demo') ? '<div class="b-tag no">⚠️ INJECTION SEVERED BEFORE POLICY</div>' : tag;
+        html = `<div class="bwrap agent">
+      <div class="av av-a">🤖</div>
+      <div><div class="b-name">LEGAL AGENT</div>
+      <div class="bubble b-agent ${cls}">${text}${badge}</div></div>
+    </div>`;
+      } else if (type === 'client') {
+        html = `<div class="bwrap client-w">
+      <div class="av av-c">👤</div>
+      <div><div class="b-name" style="text-align:right">CLIENT</div>
+      <div class="bubble b-client">${text}</div></div>
+    </div>`;
+      } else {
+        html = `<div class="bwrap sys"><div class="bubble b-sys">🔵 ${text}</div></div>`;
+      }
+      const wrap = document.createElement('div');
+      wrap.innerHTML = html;
+      panel.appendChild(wrap.firstChild);
+      panel.scrollTop = panel.scrollHeight;
+    }
+
+    // Mini log (right panel)
+    function addMiniLog(d) {
+      const ok = d.decision === 'ALLOWED';
+      const log = document.getElementById('miniLog');
+      const ph = log.querySelector('div[style]');
+      if (ph) ph.remove();
+      const e = document.createElement('div');
+      e.className = `loge ${ok ? 'ok' : 'no'}`;
+      const rule = (!ok && d.rule_violated) ? `<div class="l-rule">${d.rule_violated}</div>` : '';
+      e.innerHTML = `<div class="l-top"><span class="l-action">${d.action}</span><span class="l-badge ${ok ? 'ok' : 'no'}">${d.decision}</span></div><div class="l-agent">${d.agent}${d.delegated_by ? ' (delegated)' : ''}</div>${rule}`;
+      log.insertBefore(e, log.firstChild);
+    }
+
+    // Audit log
+    function addAuditRow(d) {
+      const empty = document.getElementById('auditEmpty');
+      const table = document.getElementById('auditTable');
+      if (empty) empty.style.display = 'none';
+      table.style.display = 'table';
+      const ok = d.decision === 'ALLOWED';
+      const time = d.timestamp ? d.timestamp.substring(11, 16) : new Date().toTimeString().substring(0, 5);
+      const del = d.delegated_by ? `<br/><span class="adel">via ${d.delegated_by}</span>` : '';
+      const rule = d.rule_violated ? `<div class="arule" title="${d.rule_violated}">${d.rule_violated}</div>` : '<span style="color:var(--t3)">—</span>';
+      const plain = d.plain_english || d.reason || '';
+      const tr = document.createElement('tr');
+      tr.dataset.status = ok ? 'ok' : 'no';
+      tr.className = (auditFilter !== 'all' && tr.dataset.status !== auditFilter) ? 'hidden-row' : '';
+      tr.innerHTML = `
+    <td class="atime">${time}</td>
+    <td><span class="aagent">${d.agent}</span>${del}</td>
+    <td><div class="albl">${d.action_label || d.action}</div><div class="aact">${d.action}</div></td>
+    <td class="astatus"><span class="abadge ${ok ? 'ok' : 'no'}">${d.decision}</span></td>
+    <td>${rule}</td>
+    <td><div class="aplain" title="${plain}">${plain.substring(0, 100)}${plain.length > 100 ? '...' : ''}</div></td>`;
+      document.getElementById('auditBody').appendChild(tr);
+    }
+
+    function filterAudit(f) {
+      auditFilter = f;
+      document.querySelectorAll('.f-btn').forEach(b => b.classList.remove('active'));
+      document.getElementById('f-' + f).classList.add('active');
+      document.querySelectorAll('#auditBody tr').forEach(tr => {
+        if (f === 'all') { tr.classList.remove('hidden-row'); }
+        else { tr.classList.toggle('hidden-row', tr.dataset.status !== f); }
       });
     }
 
-    // Init
-    selectCase('lt');
-    document.getElementById('caseStmt').value = CASES.lt.stmt;
-
-    // Auto-register on load
-    fetch('/api/intake', {
-      method: 'POST', headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ case_id: 'CASE-2026-001', client_statement: CASES.lt.stmt })
-    }).then(() => { caseRegistered = true; }).catch(() => { });
-
-    // ═══ Utilities ═══
-    function $$(id) { return document.getElementById(id); }
-    function sleep(ms) { return new Promise(r => setTimeout(r, ms)); }
-    function scrollFeed() { const f = $$('feed'); f.scrollTop = f.scrollHeight; }
-    function setProgress(p) { $$('progFill').style.width = p + '%'; }
-    function setThinking(on, txt = 'Processing...') {
-      const r = $$('thinkRow');
-      r.classList.toggle('hidden', !on);
-      $$('thinkTxt').textContent = txt;
-    }
-    function updateStats() {
-      $$('statAllowed').textContent = statAllowed;
-      $$('statBlocked').textContent = statBlocked;
-      $$('statTotal').textContent = statAllowed + statBlocked;
-    }
-    function toast(msg, type = 'info') {
-      const t = $$('toast');
-      t.textContent = msg;
-      t.style.color = type === 'ok' ? 'var(--green)' : type === 'err' ? 'var(--red)' : 'var(--t1)';
-      t.classList.add('show');
-      setTimeout(() => t.classList.remove('show'), 2500);
-    }
-    function clearWelcome() {
-      const w = $$('welcome');
-      if (w) { w.remove(); firstCard = false; }
+    async function exportAudit() {
+      const r = await fetch('/api/audit/export');
+      const blob = await r.blob();
+      const a = document.createElement('a');
+      a.href = URL.createObjectURL(blob);
+      a.download = 'audit_log.json';
+      a.click();
     }
 
-    // ═══ DOM Builders ═══
-    function addScenePill(text, cls = 'pill-default') {
-      clearWelcome();
-      const d = document.createElement('div');
-      d.className = 'scene-div';
-      d.innerHTML = `<div class="scene-line"></div><div class="scene-pill ${cls}">${text}</div><div class="scene-line"></div>`;
-      $$('feed').appendChild(d); scrollFeed();
-    }
-
-    function addClientCard(text) {
-      clearWelcome();
-      const d = document.createElement('div');
-      d.className = 'client-card';
-      d.innerHTML = `<div class="client-lbl">&#128100; CLIENT SAYS</div><div class="client-text">${text}</div>`;
-      $$('feed').appendChild(d); scrollFeed();
-    }
-
-    function addIntakeCard(caseId, stmt, area) {
-      clearWelcome();
-      const c = CASES[area] || CASES.lt;
-      const d = document.createElement('div');
-      d.className = 'intake-card';
-      d.innerHTML = `<div class="client-lbl" style="color:var(--green)">&#9989; CASE REGISTERED — ${caseId}</div>
-    <div class="client-text" style="font-style:normal;color:var(--t2)">${stmt}</div>
-    <div style="margin-top:8px;display:flex;gap:5px;flex-wrap:wrap">${(c.laws || []).map(l => `<span class="chip chip-a">${l}</span>`).join('')}</div>`;
-      $$('feed').appendChild(d); scrollFeed();
-    }
-
-    function addThinkCard(txt) {
-      clearWelcome();
-      const d = document.createElement('div');
-      d.className = 'think-card';
-      d.innerHTML = `<div class="dots"><span></span><span></span><span></span></div><span>${txt}</span>`;
-      $$('feed').appendChild(d); scrollFeed();
-      return d;
-    }
-
-    function actionIcon(a) {
-      const m = {
-        draft_document: '&#128196;', search_case_law: '&#128269;', advise_client: '&#128172;',
-        summarize_case: '&#128203;', read_case_files: '&#128193;', send_communication: '&#128231;',
-        analyze_contract: '&#128110;', calculate_damages: '&#128200;', draft_bail_application: '&#9878;',
-        review_evidence: '&#128269;', file_motion: '&#128193;', prepare_strategy: '&#127775;',
-        send_legal_notice: '&#128232;', contact_opposing_party_directly: '&#128683;',
-        suborning_perjury: '&#128683;', fabricate_evidence: '&#128683;', bribe_court_official: '&#128683;',
-        threaten_witness: '&#128683;', advise_evidence_destruction: '&#128683;'
-      };
-      return m[a] || '&#9889;';
-    }
-
-    function addDecisionCard(data) {
-      clearWelcome();
-      const ok = data.decision === 'ALLOWED';
-      if (ok) statAllowed++; else statBlocked++;
-      updateStats();
-
-      const del = data.delegated_by ? `<span class="del-tag">via ${data.delegated_by}</span>` : '';
-      const advice = data.client_advice || '';
-      const nextStep = data.next_step || '';
-      const readable = data.readable_result || '';
-
-      const d = document.createElement('div');
-      d.className = 'decision-card';
-      d.innerHTML = `
-    <div class="dc-header">
-      <div class="dc-icon">${actionIcon(data.action)}</div>
-      <div class="dc-action">${data.action.replace(/_/g, '_\u200b')}</div>
-      <div class="dc-agent">${del} ${data.agent}</div>
-    </div>
-    <div class="dc-body">
-      <div class="verdict ${ok ? 'ok' : 'no'}">
-        <div class="verdict-top">
-          <span class="verdict-badge ${ok ? 'ok' : 'no'}">${ok ? 'ALLOWED' : data.enforcement_type || 'BLOCKED'}</span>
-          <span style="font-size:11px;color:var(${ok ? '--green' : '--red'});font-weight:600">${ok ? 'Action executed' : 'Action blocked by policy'}</span>
-        </div>
-        ${data.rule_violated ? `<div class="verdict-rule">${data.rule_violated}</div>` : ''}
-        ${readable ? `<div class="verdict-result" style="font-size:12px;font-style:normal;color:var(--t2);margin-top:4px">${readable}</div>` : ''}
-      </div>
-      <div class="client-advice-box ${ok ? '' : 'blocked'}">
-        <div class="ca-section-lbl ${ok ? 'ok' : 'no'}">&#128100; What this means for you</div>
-        <div class="ca-advice-text">${advice}</div>
-        ${nextStep ? `<div class="ca-next-step"><span class="ca-next-icon">&#9654;</span><span><strong>Your next step:</strong> ${nextStep}</span></div>` : ''}
-      </div>
-    </div>`;
-      $$('feed').appendChild(d); scrollFeed();
-      addAuditEntry(data);
-    }
-
-    function addAuditEntry(data) {
-      const list = $$('auditList');
-      if (auditCount === 0) list.innerHTML = '';
-      auditCount++;
-      $$('auditCnt').textContent = auditCount;
-      const ok = data.decision === 'ALLOWED';
-      const d = document.createElement('div');
-      d.className = `log-e ${ok ? 'ok' : 'no'}`;
-      d.innerHTML = `<div class="log-top"><div class="log-action">${data.action}</div><div class="log-badge ${ok ? 'ok' : 'no'}">${ok ? 'OK' : 'BLOCKED'}</div></div>
-    <div class="log-agent">${data.agent}${data.delegated_by ? ` · via ${data.delegated_by}` : ''}</div>
-    ${data.rule_violated ? `<div class="log-rule">${data.rule_violated}</div>` : ''}`;
-      list.prepend(d);
-    }
-
-    function addDoneCard(allowed, blocked) {
-      // kept for backward compat — use addSummaryCard for rich output
-      const d = document.createElement('div');
-      d.className = 'done-card';
-      d.innerHTML = `<div style="font-size:44px">&#9878;</div>
-    <div>
-      <div style="font-size:16px;font-weight:800;background:linear-gradient(90deg,var(--cyan),var(--purple));-webkit-background-clip:text;-webkit-text-fill-color:transparent">Analysis Complete — ArmorIQ x OpenClaw</div>
-      <div style="font-size:12px;color:var(--t3);margin-bottom:12px">Scroll up to read your full action plan below.</div>
-      <div class="done-nums">
-        <div class="done-stat ok"><div class="done-stat-n">${allowed}</div><div class="done-stat-l">ALLOWED</div></div>
-        <div class="done-stat no"><div class="done-stat-n">${blocked}</div><div class="done-stat-l">BLOCKED</div></div>
-      </div>
-    </div>`;
-      $$('feed').appendChild(d); scrollFeed();
-    }
-
-    function addSummaryCard(data) {
-      clearWelcome();
-      const findings = data.findings || [];
-      const steps = data.next_steps || [];
-      const blocked = data.blocked || 0;
-      const allowed = data.allowed || 0;
-
-      const d = document.createElement('div');
-      d.className = 'summary-card';
-      d.innerHTML = `
-        <div class="summary-hdr">
-          <div class="summary-icon">&#128203;</div>
-          <div>
-            <div class="summary-title">Your Legal Action Plan</div>
-            <div class="summary-subtitle">Generated by AI Legal Agent &mdash; ${new Date().toLocaleDateString('en-IN', { day: 'numeric', month: 'long', year: 'numeric' })}</div>
-          </div>
-          <div style="margin-left:auto">
-            <div class="summary-stats">
-              <div class="sum-stat ok"><div class="sum-stat-n">${allowed}</div><div class="sum-stat-l">Actions Taken</div></div>
-              <div class="sum-stat no"><div class="sum-stat-n">${blocked}</div><div class="sum-stat-l">Requests Blocked</div></div>
-            </div>
-          </div>
-        </div>
-        <div class="summary-body">
-          ${findings.length ? `
-          <div class="summary-section">
-            <div class="summary-sec-lbl">&#9989; What your lawyer has done</div>
-            ${findings.map(f => `<div class="finding-item"><span class="finding-item-icon">&#9679;</span><span>${f}</span></div>`).join('')}
-          </div>` : ''}
-          ${steps.length ? `
-          <div class="summary-section">
-            <div class="summary-sec-lbl">&#9654; What YOU should do next</div>
-            ${steps.map((s, i) => `<div class="step-item"><div class="step-num">${i + 1}</div><div class="step-text">${s}</div></div>`).join('')}
-          </div>` : ''}
-          ${blocked > 0 ? `
-          <div class="summary-section">
-            <div class="summary-sec-lbl">&#128683; Why some requests were blocked</div>
-            <div style="font-size:13px;color:var(--t2);line-height:1.65;padding:10px 12px;background:var(--red-dim);border:1px solid rgba(252,129,129,.15);border-radius:8px">
-              The AI legal agent is <strong>constitutionally incapable</strong> of assisting with requests that
-              violate professional ethics, bar council rules, or Indian law. This is not a limitation &mdash;
-              it is a <strong>safety feature</strong> enforced by the ArmorIQ policy engine at every step.
-              Your lawyer will guide you toward legal and ethical alternatives.
-            </div>
-          </div>` : ''}
-        </div>`;
-      $$('feed').appendChild(d); scrollFeed();
-    }
-
-    // ═══ API ═══
-    async function intakeCase() {
-      const caseId = $$('caseId').value.trim() || 'CASE-2026-001';
-      const stmt = $$('caseStmt').value.trim();
-      if (!stmt) { toast('Enter a case description', 'err'); return; }
-      setThinking(true, 'Registering case...');
+    // Merkle CSRG Chain rendering
+    async function fetchMerkle() {
       try {
-        await fetch('/api/intake', {
-          method: 'POST', headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ case_id: caseId, client_statement: stmt })
-        });
-        caseRegistered = true;
-        addIntakeCard(caseId, stmt, activeCase);
-        toast('Case registered', 'ok');
-      } catch (e) { toast('Server error', 'err'); }
-      setThinking(false);
-    }
-
-    async function sendInstruction(instr) {
-      if (!caseRegistered) await intakeCase();
-      const caseId = $$('caseId').value.trim() || 'CASE-2026-001';
-      setThinking(true, 'Lead Lawyer reasoning over instruction...');
-
-      // Show client says for clearly unethical inputs
-      const l = instr.toLowerCase();
-      if (/never received|didn.t get|lie|false statement|destroy|delete|bribe|threaten|contact.*directly|fabricate|forge/.test(l)) {
-        addClientCard(`"${instr}"`);
-      }
-
-      const tc = addThinkCard('PolicyEngine validating intent against legal_rules.json...');
-      try {
-        const res = await fetch('/api/act', {
-          method: 'POST', headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ case_id: caseId, instruction: instr })
-        });
-        const data = await res.json();
-        tc.remove();
-        for (const r of data.results) {
-          addDecisionCard(r);
-          await sleep(180);
+        const r = await fetch('/api/merkle');
+        const data = await r.json();
+        const l = document.getElementById('merkleList');
+        if (!data.nodes || !data.nodes.length) {
+          l.innerHTML = '<div style="text-align:center;padding:10px">No intents logged.</div>';
+          return;
         }
-      } catch (e) { tc.remove(); toast('Server error', 'err'); }
-      setThinking(false);
+        const tampered_at = data.integrity.valid ? -1 : data.integrity.tampered_at;
+        l.innerHTML = data.nodes.map((n, i) => {
+          const cls = (n.is_blocked ? 'blocked ' : '') + ((tampered_at !== -1 && i >= tampered_at) ? 'tampered' : '');
+          const icon = n.is_blocked ? '🚫' : '✅';
+          const pHash = i === 0 ? 'GENESIS' : n.parent_hash;
+          return `<div class="m-node ${cls}">
+        <div class="m-hash"><span>${icon} Node ${i}</span><span>${n.node_hash}</span></div>
+        <div class="m-act">${n.action}</div>
+        <div class="m-hash" style="margin-top:3px;opacity:0.6">Parent: ${pHash}</div>
+      </div>`;
+        }).join('');
+      } catch (e) { }
     }
 
-    async function sendCustom() {
-      const inp = $$('chatInput');
-      const instr = inp.value.trim();
-      if (!instr) return;
-      inp.value = '';
-      await sendInstruction(instr);
-    }
-
-    async function runDelegationTest() {
-      if (!caseRegistered) await intakeCase();
-      const caseId = $$('caseId').value.trim() || 'CASE-2026-001';
-      const c = CASES[activeCase];
-      addScenePill('Scene 5 — Delegation Enforcement (Bonus)', c.pillClass);
-      const tc = addThinkCard('Lead Lawyer spawns Research Agent with scoped permissions...');
-      await sleep(1000); tc.remove();
-
-      setThinking(true, 'Research Agent: searching case law...');
+    async function testTamper() {
       try {
-        const r1 = await fetch('/api/delegate', {
-          method: 'POST', headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ case_id: caseId, action: 'search_case_law', target: 'legal_database', content: 'Precedents and applicable statutes' })
-        });
-        addDecisionCard(await r1.json()); await sleep(400);
-
-        const tc2 = addThinkCard('Research Agent tries to send external communication...');
-        await sleep(900); tc2.remove();
-        const r2 = await fetch('/api/delegate', {
-          method: 'POST', headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ case_id: caseId, action: 'send_communication', target: 'opposing@party.com', content: 'We are aware of this situation.' })
-        });
-        addDecisionCard(await r2.json());
-      } catch (e) { toast('Server error', 'err'); }
-      setThinking(false);
+        await fetch('/api/merkle/tamper', { method: 'POST' });
+        fetchMerkle();
+      } catch (e) { }
     }
 
-    // ═══ Full SSE Demo ═══
-    async function runDemo() {
-      const btn = $$('demoBtn');
-      btn.disabled = true; btn.innerHTML = '&#9646;&#9646; Running...';
-      $$('feed').innerHTML = '<div class="welcome" id="welcome"></div>';
-      firstCard = true; statAllowed = 0; statBlocked = 0; auditCount = 0;
-      $$('auditList').innerHTML = '<div class="audit-empty">Streaming events...</div>';
-      $$('auditCnt').textContent = '0'; updateStats(); setProgress(5);
-      caseRegistered = true;
+    // Process a decision (add to all panels)
+    function processDecision(d) {
+      total++;
+      if (d.decision === 'ALLOWED') allowed++; else blocked++;
+      updateStats(allowed, blocked, total);
+      addDecisionCard(d);
+      addMiniLog(d);
+      addAuditRow(d);
+      fetchMerkle();
+      const ok = d.decision === 'ALLOWED';
+      const plain = d.plain_english || (ok ? 'Your lawyer completed an action on your behalf.' : 'Your lawyer refused this request.');
+      addChatBubble('agent', plain, { ok, blocked: !ok, action: d.action, action_label: d.action_label || d.action, type_override: d.type_override });
+    }
 
-      const progMap = { 1: 10, 2: 30, 3: 55, 4: 70, 5: 85, 6: 96 };
-      let lastTc = null;
-      const base = activeCase;
-      const c = CASES[base];
+    // Act (manual)
+    async function runAct() {
+      const instr = document.getElementById('chatIn').value || document.getElementById('instrTxt').value;
+      if (!instr.trim()) return;
+      hideWelcome();
+      showThinking('Agent processing: ' + instr.substring(0, 40) + '...');
+      addChatBubble('client', '"' + instr + '"', {});
+      try {
+        const resp = await fetch('/api/act', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ case_id: document.getElementById('caseId').value || 'CASE-2026-001', instruction: instr })
+        });
+        const data = await resp.json();
+        hideThinking();
+        (data.results || []).forEach(d => processDecision(d));
+      } catch (e) {
+        hideThinking();
+        addChatBubble('system', 'Server error. Is the backend running? (uvicorn server:app --port 8000)', {});
+      }
+      document.getElementById('chatIn').value = '';
+    }
+
+    // Full Demo via SSE
+    async function runDemo() {
+      hideWelcome();
+      allowed = 0; blocked = 0; total = 0;
+      updateStats(0, 0, 0);
+      document.getElementById('feedScroll').innerHTML = '';
+      document.getElementById('chatPanel').innerHTML = '<div class="chat-empty" id="chatEmpty"><div style="font-size:36px">💬</div><div>Loading demo...</div></div>';
+      document.getElementById('auditBody').innerHTML = '';
+      document.getElementById('auditEmpty').style.display = 'block';
+      document.getElementById('auditTable').style.display = 'none';
+      document.getElementById('miniLog').innerHTML = '<div style="padding:12px;text-align:center;color:var(--t3);font-size:11px">Starting demo...</div>';
+      document.getElementById('merkleList').innerHTML = '<div style="padding:10px;text-align:center">Chain reset.</div>';
+      const demoBtn = document.getElementById('demoBtn');
+      demoBtn.disabled = true;
+      setProgress(0);
+      const TOTAL_SCENES = 7;
+      let scene = 0;
 
       const es = new EventSource('/api/demo/stream');
-      es.onmessage = e => {
-        const data = JSON.parse(e.data);
-        if (lastTc) { lastTc.remove(); lastTc = null; }
-        switch (data.type) {
-          case 'scene': addScenePill(`Scene ${data.scene} — ${data.title}`, c.pillClass); setProgress(progMap[data.scene] || 50); break;
-          case 'intake': addIntakeCard(data.case_id, data.statement, base); break;
-          case 'client_says': addClientCard(data.text); break;
-          case 'thinking': setThinking(true, data.text); lastTc = addThinkCard(data.text); break;
-          case 'decision': setThinking(false); addDecisionCard(data); break;
-          case 'summary':
-            setThinking(false); setProgress(100);
-            addSummaryCard(data);
-            es.close();
-            btn.disabled = false; btn.innerHTML = '&#9654;&nbsp; Play Again';
-            break;
-          case 'done':
-            setProgress(100); setThinking(false);
-            addDoneCard(data.allowed, data.blocked);
-            es.close();
-            btn.disabled = false; btn.innerHTML = '&#9654;&nbsp; Play Again';
-            break;
+      es.onmessage = (e) => {
+        const d = JSON.parse(e.data);
+        if (d.session_id) document.getElementById('sessLabel').textContent = 'Session ' + d.session_id;
+
+        if (d.type === 'scene') {
+          scene++;
+          setProgress((scene / TOTAL_SCENES) * 90);
+          addScene(d.scene, d.title);
+          addChatBubble('system', 'Scene ' + d.scene + ': ' + d.title);
+        } else if (d.type === 'intake') {
+          addToFeed(`<div class="icrd"><div class="icrd-lbl">✅ CASE REGISTERED</div><div style="font-size:12px;color:var(--t1)">${d.statement}</div><div style="font-size:10px;color:var(--t3);margin-top:4px">Case ID: ${d.case_id}</div></div>`);
+          addChatBubble('system', 'Case registered: ' + d.case_id + '. Your lawyer is now reviewing your situation.');
+          if (d.session_id) document.getElementById('sessLabel').textContent = 'Session ' + d.session_id;
+        } else if (d.type === 'client_says') {
+          addToFeed(`<div class="ccrd"><div class="c-lbl">👤 CLIENT SAYS</div><div class="c-txt">${d.text}</div></div>`);
+          addChatBubble('client', d.text, {});
+          if (d.plain_english) addChatBubble('system', d.plain_english);
+        } else if (d.type === 'thinking') {
+          showThinking(d.text);
+          addThinkCard(d.text);
+        } else if (d.type === 'decision') {
+          hideThinking();
+          processDecision(d);
+        } else if (d.type === 'summary') {
+          setProgress(100);
+          hideThinking();
+          let findings = (d.findings || []).map(f => `<div class="fi"><span>✅</span>${f}</div>`).join('');
+          let steps = (d.next_steps || []).map((s, i) => `<div class="sti"><div class="snum">${i + 1}</div><div class="stxt">${s}</div></div>`).join('');
+          addToFeed(`<div class="sumcrd">
+        <div class="sum-hdr"><div class="sum-ico">🏛️</div><div><div class="sum-title">Legal Action Plan Complete</div><div class="sum-sub">Session ${d.session_id || ''} · ArmorIQ x OpenClaw</div></div></div>
+        <div class="sum-body">
+          <div class="sum-stts">
+            <div class="sum-stt ok"><div class="sum-stt-n">${d.allowed}</div><div class="sum-stt-l">Actions Taken</div></div>
+            <div class="sum-stt no"><div class="sum-stt-n">${d.blocked}</div><div class="sum-stt-l">Blocked</div></div>
+          </div>
+          <div class="sum-slbl" style="display:flex;justify-content:space-between"><span>📌 Key Findings</span><span style="font-family:var(--mono)">${d.reasoning_mode}</span></div><div style="margin-bottom:12px">${findings}</div>
+          <div class="sum-slbl">📋 Your Next Steps</div>${steps}
+          <div class="sum-slbl" style="margin-top:10px">🔒 Merkle Root</div>
+          <div style="font-family:var(--mono);font-size:10px;color:var(--t2);background:var(--bg3);padding:6px;border-radius:4px">${d.merkle_root || "none"}</div>
+        </div>
+      </div>`);
+          addChatBubble('system', 'Demo complete! ' + d.allowed + ' actions taken, ' + d.blocked + ' blocked. Check the Merkle Chain in the right panel.');
+          es.close();
+          demoBtn.disabled = false;
         }
       };
-      es.onerror = () => { es.close(); btn.disabled = false; btn.innerHTML = '&#9654;&nbsp; Play Demo'; setThinking(false); };
+      es.onerror = () => { es.close(); hideThinking(); demoBtn.disabled = false; setProgress(0); };
     }
 
+    window.onload = () => { fetchMerkle(); selectCase('lt'); };
   </script>
 </body>
 

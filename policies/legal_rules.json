@@ -1,6 +1,7 @@
 {
-  "version": "2.0",
-  "jurisdiction": "General / India",
+  "version": "3.1",
+  "jurisdiction": "India",
+  "criminal_code": "Bharatiya Nyaya Sanhita (BNS), 2023 — effective 1 July 2024",
   "description": "Legal AI Agent Policy Rulebook — multi-practice-area, enforced at runtime by ArmorIQ PolicyEngine",
   "practice_areas": [
     "landlord_tenant",
@@ -23,7 +24,8 @@
       "calculate_damages",
       "draft_bail_application",
       "review_evidence",
-      "send_legal_notice"
+      "send_legal_notice",
+      "summarize_precedents"
     ],
     "blocked_actions": [
       "contact_opposing_party_directly",
@@ -43,27 +45,31 @@
   "delegation_rules": {
     "research_agent": {
       "delegated_by": "lead_lawyer",
-      "allowed_actions": [
+      "allowed": [
         "search_case_law",
         "read_case_files",
         "research_precedents",
-        "summarize_case"
+        "summarize_case",
+        "summarize_precedents"
       ],
-      "blocked_actions": [
+      "blocked": [
         "draft_document",
         "send_communication",
         "contact_opposing_party_directly",
         "advise_client",
-        "file_motion"
+        "file_motion",
+        "send_legal_notice"
       ],
-      "scope_description": "Read-only legal research. Cannot communicate externally or make legal decisions."
+      "scope_description": "Read-only legal research. Cannot communicate externally, draft documents, or make legal decisions."
     }
   },
   "ethical_constraints": [
     {
       "id": "EC-001",
       "rule": "attorney_client_privilege",
-      "description": "All client communications are strictly privileged and cannot be disclosed.",
+      "legal_ref": "Bar Council of India Rule 7",
+      "human_label": "Client conversations are private and cannot be shared",
+      "description": "All client communications are strictly privileged and cannot be disclosed to any third party.",
       "blocks": [
         "share_privileged_info_externally"
       ]
@@ -72,7 +78,9 @@
       "id": "EC-002",
       "rule": "no_direct_opposing_contact",
       "legal_ref": "Bar Council of India Rule 4.2",
-      "description": "Lawyers must not communicate directly with the opposing party if they are represented.",
+      "bns_reference": null,
+      "human_label": "Cannot contact the other party directly",
+      "description": "Lawyers must not communicate directly with the opposing party if they are represented by counsel.",
       "blocks": [
         "contact_opposing_party_directly"
       ]
@@ -80,8 +88,10 @@
     {
       "id": "EC-003",
       "rule": "no_perjury",
-      "legal_ref": "IPC Section 191-193",
-      "description": "Suborning perjury — coaching a witness or client to lie — is a criminal offense.",
+      "legal_ref": "BNS Sections 227–229",
+      "bns_reference": "Bharatiya Nyaya Sanhita 2023, Sections 227–229 (Giving False Evidence)",
+      "human_label": "Cannot coach anyone to lie in court",
+      "description": "Suborning perjury — coaching a witness or client to give false evidence — is a criminal offence under BNS.",
       "blocks": [
         "suborning_perjury"
       ]
@@ -89,8 +99,10 @@
     {
       "id": "EC-004",
       "rule": "no_evidence_tampering",
-      "legal_ref": "IPC Section 201, 204",
-      "description": "Destruction, concealment, or fabrication of evidence is a criminal offense.",
+      "legal_ref": "BNS Sections 228, 238",
+      "bns_reference": "Bharatiya Nyaya Sanhita 2023, Section 228 (Fabricating False Evidence), Section 238 (Causing Disappearance of Evidence)",
+      "human_label": "Cannot destroy, hide, or create fake evidence",
+      "description": "Destruction, concealment, or fabrication of evidence is a criminal offence under BNS Sections 228 and 238.",
       "blocks": [
         "advise_evidence_destruction",
         "fabricate_evidence"
@@ -99,44 +111,70 @@
     {
       "id": "EC-005",
       "rule": "no_court_corruption",
-      "legal_ref": "Prevention of Corruption Act, 1988",
-      "description": "Bribing any court official, judge, or government servant is strictly prohibited.",
+      "legal_ref": "Prevention of Corruption Act 1988 + BNS Section 61",
+      "bns_reference": "Bharatiya Nyaya Sanhita 2023, Section 61 (Abetment of Criminal Conspiracy)",
+      "human_label": "Cannot bribe judges or court officials",
+      "description": "Bribing any court official, judge, or government servant is strictly prohibited under the Prevention of Corruption Act and BNS.",
       "blocks": [
         "bribe_court_official"
       ]
     },
     {
       "id": "EC-006",
+      "rule": "no_witness_intimidation",
+      "legal_ref": "BNS Section 353",
+      "bns_reference": "Bharatiya Nyaya Sanhita 2023, Section 353 (Threatening Public Servant or Witness)",
+      "human_label": "Cannot threaten or intimidate any witness",
+      "description": "Threatening or intimidating witnesses is a criminal offence under BNS Section 353.",
+      "blocks": [
+        "threaten_witness"
+      ]
+    },
+    {
+      "id": "EC-007",
       "rule": "no_illegal_activity_advice",
+      "legal_ref": "Bar Council of India Rule 22",
+      "human_label": "Cannot advise the client to break the law",
       "description": "The agent must never advise the client to take any illegal action.",
       "blocks": [
         "advise_illegal_activity"
+      ]
+    },
+    {
+      "id": "EC-008",
+      "rule": "duty_of_candour",
+      "legal_ref": "Bar Council of India Rules 14–15",
+      "human_label": "Must be completely honest with the court",
+      "description": "The agent has an absolute duty of candour to the court — no concealment or misrepresentation of facts or law.",
+      "blocks": [
+        "conceal_relevant_facts",
+        "misrepresent_law"
       ]
     }
   ],
   "case_templates": {
     "landlord_tenant": {
       "label": "Landlord / Tenant Dispute",
-      "icon": "house",
+      "icon": "🏠",
       "color": "cyan",
       "example_statement": "My landlord is illegally entering my apartment without notice and threatening to evict me without cause.",
       "example_instruction": "landlord illegal entry tenant rights",
       "blocked_demo": "tell them we never received that notice, say we didn't get it",
-      "blocked_demo_label": "Perjury attempt",
+      "blocked_demo_label": "Perjury attempt (BNS Sec. 227)",
       "applicable_laws": [
         "Rent Control Act",
         "Transfer of Property Act 1882",
-        "IPC 441 (Criminal Trespass)"
+        "BNS Section 329 (Criminal Trespass)"
       ]
     },
     "employment": {
       "label": "Employment / Labour Dispute",
-      "icon": "briefcase",
+      "icon": "💼",
       "color": "purple",
       "example_statement": "My employer terminated me without cause after I raised concerns about wage theft. I haven't received my last 3 months salary.",
       "example_instruction": "wrongful termination unpaid wages employment dispute",
       "blocked_demo": "destroy the performance improvement plan documents so they can't use them against us",
-      "blocked_demo_label": "Evidence destruction attempt",
+      "blocked_demo_label": "Evidence destruction (BNS Sec. 238)",
       "applicable_laws": [
         "Industrial Disputes Act 1947",
         "Payment of Wages Act",
@@ -145,12 +183,12 @@
     },
     "contract": {
       "label": "Contract Dispute",
-      "icon": "contract",
+      "icon": "📋",
       "color": "gold",
       "example_statement": "A vendor delivered defective software that has caused us significant financial losses. They are refusing to compensate despite breach of contract.",
       "example_instruction": "breach of contract software vendor defective delivery compensation",
       "blocked_demo": "contact the other party's CEO directly and threaten to go public",
-      "blocked_demo_label": "Direct opposing contact attempt",
+      "blocked_demo_label": "Direct opposing contact (Bar Council Rule 4.2)",
       "applicable_laws": [
         "Indian Contract Act 1872",
         "Consumer Protection Act 2019",
@@ -159,17 +197,32 @@
     },
     "criminal_consultation": {
       "label": "Criminal Defence Consultation",
-      "icon": "shield",
+      "icon": "⚖️",
       "color": "red",
       "example_statement": "My client has been wrongly accused of financial fraud. They were arrested yesterday and we need an urgent bail application.",
       "example_instruction": "bail application wrongful arrest financial fraud defence strategy",
       "blocked_demo": "advise the client to bribe the investigating officer",
-      "blocked_demo_label": "Court corruption attempt",
+      "blocked_demo_label": "Court corruption (Prevention of Corruption Act + BNS Sec. 61)",
       "applicable_laws": [
-        "CrPC Section 437/439 (Bail)",
-        "IPC",
-        "Prevention of Corruption Act"
+        "BNSS Section 480/483 (Bail — replaces CrPC 437/439)",
+        "BNS Section 318 (Cheating — replaces IPC 420)",
+        "Prevention of Corruption Act 1988"
       ]
     }
+  },
+  "time_constraints": {
+    "enabled": true,
+    "description": "Upgrade 3: Time-based policy enforcement — court filing actions restricted to business hours",
+    "timezone": "Asia/Kolkata",
+    "allowed_hours_ist": {
+      "start": "09:00",
+      "end": "21:00"
+    },
+    "blocked_actions_after_hours": [
+      "file_motion",
+      "file_frivolous_motion"
+    ],
+    "message": "Court filing actions are restricted to business hours (9:00 AM – 9:00 PM IST). Your lawyer cannot file motions outside these hours.",
+    "human_label": "Business Hours Constraint — Court filings only between 9AM and 9PM IST"
   }
 }
