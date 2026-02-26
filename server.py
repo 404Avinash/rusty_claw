@@ -403,6 +403,7 @@ def _make_readable(action: str, raw: str) -> str:
         "research_precedents":   "Precedent Research",
         "summarize_precedents":  "Precedent Summary",
         "read_case_files":       "Case Files",
+        "search_legal_knowledge": "BNS / Constitution Search",
     }
     label = labels.get(action, action.replace("_", " ").title())
     return f"{label}: {raw}" if raw else f"{label} completed."
@@ -427,6 +428,7 @@ def _client_advice(action: str, content: str, decision: str, rule) -> str:
         "prepare_strategy":      "A full legal strategy has been mapped out. Your lawyer will walk you through each step.",
         "send_legal_notice":     "A legal notice has been prepared. Once served, the other party must respond within the stipulated period.",
         "file_motion":           "A court motion has been prepared for filing.",
+        "search_legal_knowledge": "The relevant BNS 2023 sections and Constitutional articles have been identified for your case.",
     }
     return advice.get(action, "This action was completed successfully by your legal agent.")
 
